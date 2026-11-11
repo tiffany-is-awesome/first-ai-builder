@@ -71,7 +71,7 @@ button{font:inherit;cursor:pointer}
 .bk-dots{display:flex;gap:7px;justify-content:center;margin:14px 0 4px}.bk-dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.3);transition:.3s}.bk-dots i.on{background:var(--gold);transform:scale(1.35)}.bk-dots i.end{border-radius:3px}
 .bk-ctl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}.bk-ctl .btn,.bk-ctl .ghost{font-size:17px;padding:8px 16px}
 .bk-lv{display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:12px;font:600 15px Fredoka,sans-serif}.bk-lv .ghost{font-size:14px}
-.bk-flr{text-align:center;font-size:19px;margin-top:10px;min-height:1em}.bk-tip{text-align:center;opacity:.75;font-size:14px;margin-top:6px}
+.bk-w.sr{background:#cfeccf}.bk-w.sk{background:#fde3b0}.bk-w.cur{box-shadow:0 3px 0 0 #2f9c95;background:#e3f4f1}#bkself.on{background:#2f9c95;color:#fff}.bk-flr{text-align:center;font-size:19px;margin-top:10px;min-height:1em}.bk-tip{text-align:center;opacity:.75;font-size:14px;margin-top:6px}
 .bk-txt{font-family:Andika,Fredoka,sans-serif;color:#3a2418;line-height:1.6;cursor:pointer}.bk-txt.lv0{font-size:31px;line-height:1.55}.bk-txt.lv1{font-size:23px}.bk-txt.lv2{font-size:19px}
 .bk-r>.bk-txt>.bk-w:first-child,.bk-st>.bk-txt>.bk-w:first-child{font-family:"Almendra Display",Georgia,serif;font-size:1.6em;color:#b3202a;line-height:1}
 .bk-w{border-radius:6px;padding:0 2px;margin:0 -2px;transition:background .12s,box-shadow .12s}.bk-w:hover{background:#fbe7a6}.bk-w.bk-on{background:#ffd34d;box-shadow:0 0 0 3px #ffd34d}
@@ -1044,7 +1044,7 @@ d.style[low?"top":"bottom"]="10px"});talk(txt)}
 function app(h){$("#app").innerHTML=h;try{const a=areaOf();document.body.dataset.area=a;document.body.style.setProperty("--uc",scr=="lesson"&&L&&!L.place&&L.u!=null&&UCOL[L.u]?UCOL[L.u]:"");MZ.play(a)}catch(e){}}
 const bar=(back)=>`<div class="top">${back?`<button class="ghost l" onclick="go('home')">← Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Acorns">${ACN} ${S.coins}</span><button class="ghost" onclick="S.music=!S.music;music();save();render()" aria-label="Music">${S.music?"🎵":"🔇"}</button><button class="ghost" onclick="ALL.cur=null;save();scr='home';render()" aria-label="Switch explorer">👤<span class="nm"> ${S.name}</span></button><button class="ghost" onclick="go('set')" aria-label="Settings">⚙️</button></div>`;
 async function wipeAll(){if(!confirm("Delete this account and ALL progress? This cannot be undone."))return;try{localStorage.removeItem("acorn2")}catch(e){}ALL={cur:null,kids:{},ts:Date.now()};S=clone();try{if(DB)await DB.set({all:JSON.stringify(ALL)})}catch(e){}scr="home";render()}
-function go(s){sfx.click();scr=s;cgStop();bkStop();BK=null;render()}
+function go(s){sfx.click();scr=s;cgStop();bkStop();selfOff();BK=null;render()}
 function render(){document.documentElement.dataset.theme=S.theme;if(!ALL.cur||!ALL.kids[ALL.cur])return who();if(!S.placed)return onboard();migShop();
 if(scr=="lesson"){return}
 ({home,map,shop,books,games,awards,quizzes,set,done})[scr]()}
@@ -1087,7 +1087,7 @@ let BK=null,BKS=0,BKT=0,BKF="all";
 const bkMode=()=>matchMedia("(min-width:700px)").matches?"spread":"single";
 const bkKind=k=>k=="a"?"Aesop’s Fable":k=="f"?"Fantasy":"Adventure";
 function bkStop(){BKS++;clearTimeout(BKT);try{speechSynthesis.cancel()}catch(e){}document.querySelectorAll(".bk-w.bk-on").forEach(x=>x.classList.remove("bk-on"));if(BK){BK.auto=false;bkBtns()}}
-function bkClose(){bkStop();try{if(FR)FR.stop()}catch(e){}BK=null;sfx.click();render()}
+function bkClose(){bkStop();selfOff();try{if(FR)FR.stop()}catch(e){}BK=null;sfx.click();render()}
 function bkFilt(k){BKF=k;sfx.click();render()}
 function books(){if(BK)return bkRender();
  const L=BOOKS.map((b,i)=>[b,i]).filter(([b])=>BKF=="all"||(BKF=="a"?b.k=="a":b.k!="a"));
@@ -1100,7 +1100,7 @@ function bkRender(){const b=BOOKS[BK.i];BK.mode=bkMode();
 <div class="bk-book ${BK.mode}" id="bkb">${BK.mode=="spread"?`<div class="bk-pg bk-l">${bkL(BK.pg)}</div><div class="bk-pg bk-r">${bkR(BK.pg,1)}</div>`:`<div class="bk-pg bk-s">${bkS(BK.pg,1)}</div>`}
 <button class="bk-arrow l" id="bkpv" onclick="bkTurn(-1)" aria-label="Previous page">‹</button><button class="bk-arrow r" id="bknx" onclick="bkTurn(1)" aria-label="Next page">›</button></div>
 <div class="bk-dots" id="bkdots"></div>
-<div class="bk-ctl"><button class="btn" onclick="bkReadBtn()">🔊 Read to me</button><button class="ghost" id="bkau" onclick="bkAuto()"></button><button class="ghost" id="flb" onclick="flRead(${BK.i})">🎤 I’ll read it!</button></div>
+<div class="bk-ctl"><button class="btn" onclick="bkReadBtn()">🔊 Read to me</button><button class="ghost" id="bkau" onclick="bkAuto()"></button><button class="ghost${SELF.on?" on":""}" id="bkself" onclick="selfTog()">${SELF.on?"⏹ Stop reading by myself":"🙋 I can read by myself"}</button><button class="ghost" id="flb" onclick="flRead(${BK.i})"${SELF.on?" hidden":""}>🎤 I’ll read it!</button></div>
 <div class="bk-lv"><span>Words:</span>${["Stage 1","Stage 2","Stage 3"].map((l,j)=>`<button class="ghost${BK.lv==j?" on":""}" onclick="bkLv(${j})">${l}</button>`).join("")}</div>
 <div id="flr" class="bk-flr"></div><p class="bk-tip">Tip: tap any word to hear it. Swipe or use the arrows to turn the page.</p></div>`);bkWire()}
 const bkTxt=(t,lv,live)=>`<div class="bk-txt lv${lv}"${live?` id="flt" onclick="bkWord(event)"`:""}>${t.split(/\s+/).map(w=>`<span class="fw bk-w">${w}</span>`).join(" ")}</div>`;
@@ -1112,7 +1112,7 @@ function bkBtns(){const a=$("#bkau");if(a)a.textContent=BK&&BK.auto?"⏸ Stop re
 function bkWire(){if(!BK)return;const n=BOOKS[BK.i].p.length,d=$("#bkdots"),bk=$("#bkb");
  if(d)d.innerHTML=[...Array(n+1)].map((_,j)=>`<i class="${j==BK.pg?"on":""}${j==n?" end":""}"></i>`).join("");
  const pv=$("#bkpv"),nx=$("#bknx");if(pv)pv.disabled=BK.pg<=0;if(nx)nx.disabled=BK.pg>=n;bkBtns();
- const r=$("#flr");if(r)r.textContent="";const fb=$("#flb");if(fb)fb.textContent="🎤 I’ll read it!";
+ const r=$("#flr");if(r)r.textContent="";const fb=$("#flb");if(fb)fb.textContent="🎤 I’ll read it!";if(SELF.on)selfPage();
  if(bk&&!bk.dataset.w){bk.dataset.w=1;let x0=null,y0=0;bk.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});bk.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))bkTurn(dx<0?1:-1)})}}
 function bkSwish(){try{AC=AC||new AudioContext();if(AC.state=="suspended")AC.resume();const d=.42,b=AC.createBuffer(1,AC.sampleRate*d|0,AC.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++){const t=i/x.length;x[i]=(Math.random()*2-1)*Math.pow(Math.sin(Math.PI*t),2)*(1-t*.5)}const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter(),g=AC.createGain(),t0=AC.currentTime;f.type="bandpass";f.Q.value=.7;f.frequency.setValueAtTime(700,t0);f.frequency.exponentialRampToValueAtTime(3600,t0+d);g.gain.value=.5;s.connect(f);f.connect(g);g.connect(AC.destination);s.start()}catch(e){}}
 function bkTurn(d,after){if(!BK)return;if(BK.busy){if(!after)bkStop();return}const n=BOOKS[BK.i].p.length,from=BK.pg,to=from+d;if(to<0||to>n)return;
@@ -1151,15 +1151,63 @@ function bkSpeak(cb){const el=$("#flt");const id=++BKS;clearTimeout(BKT);if(!el)
  u.onend=fin;u.onerror=fin;
  setTimeout(()=>{if(id!=BKS)return;try{speechSynthesis.speak(u)}catch(e){goSolo()}},60);
  setTimeout(()=>{if(id==BKS&&!started&&!fired)goSolo()},2200);return id}
-function bkReadBtn(){if(!BK)return;bkStop();try{if(FR)FR.stop()}catch(e){}const n=BOOKS[BK.i].p.length;
+function bkReadBtn(){if(!BK)return;bkStop();selfOff();try{if(FR)FR.stop()}catch(e){}const n=BOOKS[BK.i].p.length;
  bkSpeak(()=>{if(BK&&BK.pg==n){const q=BOOKS[BK.i].q;talk(fill(q[0])+" "+BK.qo.map(j=>fill(q[j])).join(", or ")+"?")}})}
-function bkAuto(){if(!BK)return;if(BK.auto){bkStop();return}bkStop();try{if(FR)FR.stop()}catch(e){}BK.auto=true;bkBtns();bkLoop()}
+function bkAuto(){if(!BK)return;if(BK.auto){bkStop();return}bkStop();selfOff();try{if(FR)FR.stop()}catch(e){}BK.auto=true;bkBtns();bkLoop()}
 function bkLoop(){if(!BK||!BK.auto)return;const n=BOOKS[BK.i].p.length;let me;me=bkSpeak(()=>{if(!BK||!BK.auto||me!=BKS)return;
  if(BK.pg<n)BKT=setTimeout(()=>{if(BK&&BK.auto&&me==BKS)bkTurn(1,()=>{BKT=setTimeout(bkLoop,450)})},1000);else{BK.auto=false;bkBtns()}})}
-function bkWord(e){const w=e.target.closest(".bk-w");if(!w)return;bkStop();w.classList.add("bk-on");const t=w.textContent.replace(/[^A-Za-z0-9'’-]/g,"");if(!t||!window.speechSynthesis)return;try{const u=mkU(t);u.rate=.75;u.onend=u.onerror=()=>w.classList.remove("bk-on");speechSynthesis.speak(u)}catch(e){}}
-function bkLv(j){if(!BK)return;bkStop();BK.lv=j;sfx.click();document.querySelectorAll(".bk-lv button").forEach((b,k)=>b.classList.toggle("on",k==j));const bk=$("#bkb");if(!bk)return;const R=bk.querySelector(".bk-r"),T=bk.querySelector(".bk-st");if(R)R.innerHTML=bkR(BK.pg,1);if(T)T.innerHTML=bkR(BK.pg,1)}
+function bkWord(e){const w=e.target.closest(".bk-w");if(!w)return;bkStop();if(SELF.on)selfHelp(w);w.classList.add("bk-on");const t=w.textContent.replace(/[^A-Za-z0-9'’-]/g,"");if(!t||!window.speechSynthesis)return;try{const u=mkU(t);u.rate=.75;u.onend=u.onerror=()=>w.classList.remove("bk-on");speechSynthesis.speak(u)}catch(e){}}
+function bkLv(j){if(!BK)return;bkStop();BK.lv=j;sfx.click();document.querySelectorAll(".bk-lv button").forEach((b,k)=>b.classList.toggle("on",k==j));const bk=$("#bkb");if(!bk)return;const R=bk.querySelector(".bk-r"),T=bk.querySelector(".bk-st");if(R)R.innerHTML=bkR(BK.pg,1);if(T)T.innerHTML=bkR(BK.pg,1);if(SELF.on){SELF.done=false;selfMatch()}}
 function bkAns(j){if(!BK)return;const q=BOOKS[BK.i].q,r=$("#bkqr");bkStop();if(j==1){BK.ans=1;sfx.ok();if(r)r.textContent="🎉 Yes! Great thinking!";talk("Yes! "+fill(q[1])+". Great thinking!")}else{BK.ans=j;sfx.no();if(r)r.textContent="Not quite. Look back at the story and try again!";talk("Not quite. Try again!")}
  document.querySelectorAll(".bk-opts button").forEach((b,k)=>{const v=BK.qo[k];b.classList.toggle("ok",v==1&&BK.ans==1);b.classList.toggle("no",v==j&&j!=1)})}
+/* ---------- "I can read by myself": live listening, words light up as the child reads ---------- */
+let SELF={on:false,rec:null,base:0,len:0,carry:"",last:"",help:new Set(),cur:0,done:false,words:0,t0:0,stuck:0};
+const selfNm=x=>x.toLowerCase().replace(/[’]/g,"'").replace(/[^a-z0-9']/g,"");
+const NUMW={0:"zero",1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eight",9:"nine",10:"ten",11:"eleven",12:"twelve",20:"twenty",100:"hundred"};
+function selfLev(a,b){if(Math.abs(a.length-b.length)>1)return 9;const d=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let p=d[0];d[0]=i;for(let j=1;j<=b.length;j++){const t=d[j];d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]==b[j-1]?0:1));p=t}}return d[b.length]}
+function selfSame(w,h){if(!w||!h)return false;if(w==h)return true;h=NUMW[h]||h;w=NUMW[w]||w;if(w==h)return true;const a=w.replace(/'/g,""),b=h.replace(/'/g,"");if(a==b)return true;if(a.length>=4&&selfLev(a,b)<=1)return true;if(a.length>=3&&(a==b+"s"||b==a+"s"))return true;return false}
+function selfWords(){return [...document.querySelectorAll("#flt .bk-w")]}
+function selfMsg(t){const r=$("#flr");if(r)r.textContent=t}
+function selfTog(){if(SELF.on){selfOff();selfMsg("Great reading! Tap 🙋 any time to read by yourself again.");return}selfOn()}
+function selfOn(){if(!BK)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){selfMsg("My ears can’t hear on this device. Read it out loud to a grown-up instead!");return}
+ bkStop();try{if(FR)FR.stop()}catch(e){}try{speechSynthesis.cancel()}catch(e){}
+ SELF.on=true;SELF.words=0;SELF.t0=Date.now();selfBtn();selfPage();selfListen()}
+function selfOff(){const was=SELF.on;SELF.on=false;clearInterval(SELF.stuck);const r=SELF.rec;SELF.rec=null;if(r){try{r.onend=null;r.abort()}catch(e){}}
+ document.querySelectorAll(".bk-w.cur").forEach(x=>x.classList.remove("cur"));if(was)selfBtn()}
+function selfBtn(){const b=$("#bkself"),f=$("#flb");if(b){b.textContent=SELF.on?"⏹ Stop reading by myself":"🙋 I can read by myself";b.classList.toggle("on",SELF.on)}if(f)f.hidden=SELF.on}
+function selfListen(){if(!SELF.on)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=new SR();
+ rec.lang="en-US";rec.continuous=true;rec.interimResults=true;SELF.rec=rec;SELF.base=0;SELF.len=0;
+ rec.onresult=e=>{if(rec!=SELF.rec)return;SELF.len=e.results.length;let t="";for(let i=SELF.base;i<e.results.length;i++)t+=" "+e.results[i][0].transcript;SELF.last=(SELF.carry+" "+t).trim();selfMatch()};
+ rec.onerror=e=>{if(e.error=="not-allowed"||e.error=="service-not-allowed"){selfOff();selfMsg("Please let me use the microphone, then tap 🙋 again.")}};
+ rec.onend=()=>{if(rec!=SELF.rec||!SELF.on)return;SELF.carry=SELF.last;setTimeout(selfListen,150)};
+ try{rec.start()}catch(e){setTimeout(selfListen,400)}}
+function selfPage(){if(!BK||!SELF.on)return;const n=BOOKS[BK.i].p.length;
+ SELF.base=SELF.len;SELF.carry="";SELF.last="";SELF.help=new Set();SELF.cur=0;SELF.done=false;
+ if(BK.pg>=n){const w=SELF.words,mins=Math.max(.25,(Date.now()-SELF.t0)/60000),wpm=Math.round(w/mins);selfOff();
+  S.selfRead=S.selfRead||[];if(!S.selfRead.includes(BK.i))S.selfRead.push(BK.i);S.wpm=S.wpm||{};S.wpm[BK.i]=Math.max(S.wpm[BK.i]||0,wpm);save();
+  const m=`You read ${w} words all by yourself! That’s about ${wpm} words a minute. Now answer the question and tap “I finished the book!”`;
+  setTimeout(()=>{selfMsg("🌟 "+m);sfx.win();confetti();talk(m)},900);return}
+ selfMsg("I’m listening… read the page out loud! Tap a word if you get stuck.");selfMatch();
+ clearInterval(SELF.stuck);let lastCur=-1,since=Date.now();
+ SELF.stuck=setInterval(()=>{if(!SELF.on){clearInterval(SELF.stuck);return}if(SELF.cur!=lastCur){lastCur=SELF.cur;since=Date.now();return}
+  if(!SELF.done&&Date.now()-since>7000){since=Date.now();selfMsg("Stuck? Tap the blue word and I’ll help you say it.")}},1000)}
+function selfHelp(w){const ws=selfWords(),k=ws.indexOf(w);if(k<0)return;for(let j=0;j<=k;j++)if(!ws[j].classList.contains("sr"))SELF.help.add(j);selfMatch()}
+function selfMatch(){if(!SELF.on||SELF.done)return;const ws=selfWords();if(!ws.length)return;
+ const h=SELF.last.split(/\s+/).map(selfNm).filter(Boolean);let pos=0,i=0,read=0;
+ for(;i<ws.length;i++){const w=selfNm(ws[i].textContent);ws[i].classList.remove("sr","sk","cur");
+  if(SELF.help.has(i)){ws[i].classList.add("sk");continue}
+  if(!w){ws[i].classList.add("sr");continue}
+  let k=-1;for(let m=pos;m<Math.min(h.length,pos+4);m++)if(selfSame(w,h[m])){k=m;break}
+  if(k>=0){ws[i].classList.add("sr");read++;pos=k+1;continue}
+  let skip=false;for(let a=1;a<=2&&i+a<ws.length&&!skip;a++){const w2=selfNm(ws[i+a].textContent);for(let m=pos;m<Math.min(h.length,pos+4);m++)if(selfSame(w2,h[m])){skip=true;break}}
+  if(skip){ws[i].classList.add("sk");continue}
+  break}
+ for(let j=i+1;j<ws.length;j++)ws[j].classList.remove("sr","sk","cur");
+ SELF.cur=i;if(i<ws.length){ws[i].classList.add("cur");return}
+ SELF.done=true;SELF.words+=read;const sk=ws.filter(x=>x.classList.contains("sk")).length;sfx.ok();
+ selfMsg(sk?`Nice! You read ${read} of ${ws.length} words. On to the next page!`:"Perfect page! On to the next one!");
+ const n=BOOKS[BK.i].p.length;if(BK.pg<n)setTimeout(()=>{if(SELF.on&&BK&&SELF.done)bkTurn(1)},1300)}
 function bkFin(){if(!BK)return;const i=BK.i;bkStop();BK=null;fin(i)}
 addEventListener("keydown",e=>{if(!BK||scr!="books"||/INPUT|TEXTAREA/.test((e.target||{}).tagName||""))return;if(e.key=="ArrowRight")bkTurn(1);else if(e.key=="ArrowLeft")bkTurn(-1)});
 let bkRz;addEventListener("resize",()=>{clearTimeout(bkRz);bkRz=setTimeout(()=>{if(BK&&scr=="books"&&!BK.busy&&bkMode()!=BK.mode){bkStop();bkRender()}},200)});
