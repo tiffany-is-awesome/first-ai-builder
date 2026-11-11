@@ -356,10 +356,13 @@ const R=n=>Math.floor(Math.random()*n),shuf=a=>a.map(x=>[Math.random(),x]).sort(
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const D={name:"",age:6,pet:"Biscuit",level:1,coins:0,earned:0,own:[],eq:{kid:[],dog:[]},skin:"#f1c9a5",shirt:"#2f9c95",fur:"#f7d9e6",theme:"night",music:true,voice:true,books:0,correct:0,lessons:0,treats:0,likes:"",placed:false,read:[],fin:false,girl:false,hair:"#3b2216",m:{}};
 const clone=()=>JSON.parse(JSON.stringify(D));let S=clone(),ALL={cur:null,kids:{},ts:0},DB=null,UID=null,tmr;
-try{if(localStorage.getItem("acorn_reset")!="2026-11-11"){localStorage.removeItem("acorn2");localStorage.removeItem("acorn");localStorage.setItem("acorn_reset","2026-11-11")}}catch(e){}
+/* device saving: localStorage plus a backup copy in IndexedDB, and ask the browser to keep it */
+const IDB=(()=>{let p=null;const op=()=>p=p||new Promise((ok,no)=>{try{const r=indexedDB.open("readtrail",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}});
+return{get:k=>op().then(d=>new Promise(ok=>{const q=d.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>ok(null)})).catch(()=>null),set:(k,v)=>op().then(d=>{d.transaction("kv","readwrite").objectStore("kv").put(v,k)}).catch(()=>{})}})();
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
 try{const o=JSON.parse(localStorage.getItem("acorn2")||"null");if(o)ALL=o;else{const old=JSON.parse(localStorage.getItem("acorn")||"null");if(old&&old.name)ALL.kids.k1=Object.assign(clone(),old,{placed:true})}}catch(e){}
 function adopt(){if(ALL.cur&&ALL.kids[ALL.cur]){S=ALL.kids[ALL.cur]=Object.assign(clone(),ALL.kids[ALL.cur]);S.m=S.m||{};if(!S.mz2){S.mz2=1;S.music=true}}else S=clone()}adopt();
-function save(){ALL.ts=Date.now();try{localStorage.setItem("acorn2",JSON.stringify(ALL))}catch(e){}awSch(400);clearTimeout(tmr);tmr=setTimeout(()=>{if(DB)DB.set({all:JSON.stringify(ALL)}).catch(()=>{})},1500)}
+function save(){ALL.ts=Date.now();IDB.set("acorn2",JSON.stringify(ALL));try{localStorage.setItem("acorn2",JSON.stringify(ALL))}catch(e){}awSch(400);clearTimeout(tmr);tmr=setTimeout(()=>{if(DB)DB.set({all:JSON.stringify(ALL)}).catch(()=>{})},1500)}
 let AC,mt;const tone=(f,d=.12,ty="sine",v=.06,at=0)=>{try{AC=AC||new AudioContext();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}};
 const sfx={ok:()=>{tone(660);tone(880,.15,"sine",.06,.1)},no:()=>tone(200,.25,"triangle"),click:()=>tone(520,.05),win:()=>MZ.sting("yay")};
 /* ---------- music: a small in-browser band (no files to download) ---------- */
@@ -1853,7 +1856,7 @@ app(`<div class="card" style="text-align:center"><div class="row"><svg class="mi
 if(n>=7){MZ.sting(n>=10?"grand":"level");confetti()}else sfx.click();talk(msg)}
 
 setInterval(()=>{if(scr=="home"&&S.name&&S.placed&&$("#bd")&&$("#bk").style.display=="none"){const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent=Math.random()<.5?pu("j",JOKES):pu("t",TRIV)}},40000);
-render();cloud();
+render();IDB.get("acorn2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem("acorn2",JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
 </script></body></html>
 
 </body></html>
