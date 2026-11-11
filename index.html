@@ -756,17 +756,18 @@ const cgPick=a=>a[R(a.length)];
 /* sound effects, made in the browser (no sound files) */
 const cSw=(a,b,d,ty="square",v=.045,at=0)=>{try{AC=AC||new AudioContext();if(AC.state=="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.setValueAtTime(a,s);o.frequency.exponentialRampToValueAtTime(b,s+d);g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d+.02)}catch(e){}};
 const cgSnd={blip:()=>tone(880,.05,"square",.025),jump:()=>cSw(260,720,.18,"square",.035),star:()=>[1047,1319,1568].forEach((f,i)=>tone(f,.16,"triangle",.06,i*.06)),chime:()=>[523,659,784,1047,1319].forEach((f,i)=>tone(f,.35,"sine",.07,i*.11)),boing:()=>cSw(330,110,.4,"triangle",.07),splash:()=>{cSw(900,120,.35,"sawtooth",.02);cSw(500,80,.4,"sine",.05)},pop:()=>cSw(400,1000,.09,"sine",.06)};
-function cgStop(){if(CG){CG.run=0;try{cancelAnimationFrame(CG.raf)}catch(e){}if(CG.off)try{CG.off()}catch(e){}}CG=null;for(const k in CGK)CGK[k]=0;try{speechSynthesis.cancel()}catch(e){}}
-document.addEventListener("keydown",e=>{if(!CG||!CG.run||!CG.keys)return;const k=e.key;if(k=="ArrowLeft"||k=="ArrowRight"||k=="ArrowUp"||k=="ArrowDown"||k==" "){e.preventDefault();if(!CGK[k]&&CG.press)CG.press(k);CGK[k]=1}});
-document.addEventListener("keyup",e=>{CGK[e.key]=0});
+function cgStop(){if(typeof cgRS!="undefined"&&cgRS)cgRS.stop();if(!CG)return;CG.run=0;try{cancelAnimationFrame(CG.raf)}catch(e){}if(CG.off)try{CG.off()}catch(e){}CG=null;for(const k in CGK)CGK[k]=0;try{speechSynthesis.cancel()}catch(e){}}
+const cgGone=()=>CG&&CG.el&&!CG.el.isConnected;
+document.addEventListener("keydown",e=>{if(cgGone())cgStop();if(!CG||!CG.run||!CG.keys||CG.done)return;const k=e.key;if(k=="ArrowLeft"||k=="ArrowRight"||k=="ArrowUp"||k=="ArrowDown"||k==" "){e.preventDefault();if(!CGK[k]&&CG.press)CG.press(k);CGK[k]=1}});
+document.addEventListener("keyup",e=>{CGK[e.key]=0});window.addEventListener("blur",()=>{for(const k in CGK)CGK[k]=0});
 const cgPad=j=>`<div class="cgpad"><button class="cgk" data-k="ArrowLeft" aria-label="Move left">◀</button>${j?'<button class="cgk cgj" data-k="ArrowUp" aria-label="Jump">⤒ Jump</button>':""}<button class="cgk" data-k="ArrowRight" aria-label="Move right">▶</button></div>`;
 function cgPadWire(){document.querySelectorAll(".cgk[data-k]").forEach(b=>{const k=b.dataset.k,dn=e=>{e.preventDefault();if(!CGK[k]&&CG&&CG.press)CG.press(k);CGK[k]=1},up=e=>{e.preventDefault();CGK[k]=0};b.addEventListener("pointerdown",dn);b.addEventListener("pointerup",up);b.addEventListener("pointerleave",up);b.addEventListener("pointercancel",up);b.addEventListener("contextmenu",e=>e.preventDefault())})}
-function cgCanvas(host,W,H){const c=document.createElement("canvas"),d=Math.min(2,window.devicePixelRatio||1);c.width=W*d;c.height=H*d;c.className="cgcv";c.style.aspectRatio=W+"/"+H;host.prepend(c);const x=c.getContext("2d");x.setTransform(d,0,0,d,0,0);return[c,x]}
+function cgCanvas(host,W,H){const c=document.createElement("canvas"),d=Math.min(2,window.devicePixelRatio||1);c.width=W*d;c.height=H*d;c.className="cgcv";c.style.aspectRatio=W+"/"+H;host.prepend(c);const x=c.getContext("2d");x.setTransform(d,0,0,d,0,0);if(CG)CG.el=c;return[c,x]}
 const cgPt=(c,e,W,H)=>{const r=c.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height]};
-function cgLoop(me,step){let t0=0;const f=t=>{if(CG!==me||!me.run||scr!="games")return;const dt=t0?Math.min(.033,(t-t0)/1000):0;t0=t;step(dt,t/1000);if(CG===me&&me.run)me.raf=requestAnimationFrame(f)};me.raf=requestAnimationFrame(f)}
+function cgLoop(me,step){let t0=0;const f=t=>{if(CG!==me||!me.run)return;if(scr!="games"||cgGone()){cgStop();return}const dt=t0?Math.min(.033,(t-t0)/1000):0;t0=t;step(dt,t/1000);if(CG===me&&me.run)me.raf=requestAnimationFrame(f)};me.raf=requestAnimationFrame(f)}
 function cgOver(h){const o=cq("#cgov");if(!o)return;o.innerHTML=h;o.style.display=h?"flex":"none";if(CG)CG.done=!!h}
 function cgStarUI(){document.querySelectorAll(".cgsc b").forEach(b=>b.textContent=cgV().stars)}
-function cgWin(k,n){const s=cgS();s.stars+=n;s.w[k]=(s.w[k]||0)+1;S.coins+=2;S.earned+=2;save();cgSnd.chime();try{confetti()}catch(e){}cgStarUI()}
+function cgWin(k,n){const s=cgS();s.stars+=n;s.w[k]=(s.w[k]||0)+1;S.coins+=2;S.earned+=2;save();cgSnd.chime();try{const co=cq(".top .coin");if(co&&co.lastChild&&co.lastChild.nodeType==3)co.lastChild.textContent=" "+S.coins}catch(e){}try{confetti()}catch(e){}cgStarUI()}
 function cgToast(t){const d=document.createElement("div");d.className="cgtoast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
 const cgEnd=(again,lab)=>`<div class="cgrow"><button class="btn" onclick="${again}">${lab}</button><button class="cgk cgsm" onclick="games()">All games</button></div>`;
 function cgShell(title,ico,help,inner){return bar(1)+`<div class="cg"><div class="cgbar"><button class="ghost" onclick="games()">← All games</button><h2 class="cgt">${ico} ${title}</h2><span class="cgsc" aria-label="Stars">⭐ <b>${cgV().stars}</b></span></div><p class="cghelp">${help}</p>${inner}</div>`}
@@ -816,8 +817,8 @@ function cgHop(){cgStop();const s=cgS(),w=CGHW[(s.w.hop||0)%CGHW.length],L=w.len
  for(let i=0;i<L+2;i++){const k=R(3)?"log":"rock",pw=k=="rock"?96:120+R(40);px+=72+R(38);py=Math.max(205,Math.min(355,py-80+R(150)));pl.push({x:px,y:py,w:pw,k});px+=pw}
  px+=80;const end={x:px,y:360,w:460,k:"bank"};pl.push(end);const WW=px+380,fx=end.x+170;
  const mid=pl.slice(1,-1),ord=shuf(mid.map((_,i)=>i)),AL="abdeghiklmnoprstuw".split("").filter(ch=>!w.includes(ch)),lt=[];
- mid.forEach((_,j)=>{const p=mid[ord[j]];lt.push({c:j<L?w[j]:cgPick(AL),x:p.x+p.w/2,y:p.y-80,ph:Math.random()*6})});
- const G={run:1,keys:1,P:{x:110,y:360,vy:0,on:1,f:1,co:.1,inv:0,mv:0},idx:0,cam:0,parts:[],hint:0,win:0,lit:0,msg:"",mt:0};CG=G;
+ mid.forEach((_,j)=>{const p=mid[ord[j]];lt.push({c:j<L?w[j]:cgPick(AL),x:p.x+p.w/2,y:p.y-112,ph:Math.random()*6})});
+ const G={run:1,keys:1,el:c,lt,pl,P:{x:110,y:360,vy:0,on:1,f:1,co:.1,inv:0,mv:0},idx:0,cam:0,parts:[],hint:0,win:0,lit:0,msg:"",mt:0};CG=G;
  const jump=()=>{const P=G.P;if(G.win)return;if(P.on||P.co>0){P.vy=-760;P.on=0;P.co=0;cgSnd.jump()}};
  G.press=k=>{if(k=="ArrowUp"||k==" ")jump()};c.addEventListener("pointerdown",e=>{e.preventDefault();jump()});
  const say=(m,sp)=>{G.msg=m;G.mt=2.6;if(sp)talk(sp)};
@@ -833,9 +834,9 @@ function cgHop(){cgStop();const s=cgS(),w=CGHW[(s.w.hop||0)%CGHW.length],L=w.len
     let b=pl[0],bd=1e9;for(const p of pl){const d=Math.abs(p.x+p.w/2-P.x);if(d<bd){bd=d;b=p}}
     P.x=Math.max(30,b.x+b.w/2);P.y=b.y;P.vy=0;P.on=1;P.inv=1.2;say("Splash! Back on dry land.")}
    for(const l of lt){if(l.got)continue;l.sh=Math.max(0,(l.sh||0)-dt);l.cd=Math.max(0,(l.cd||0)-dt);const ly=l.y+Math.sin(t*2+l.ph)*5;
-    if(Math.abs(l.x-P.x)<32&&ly+24>P.y-62&&ly-24<P.y){
+    const hit=Math.abs(l.x-P.x)<32&&ly+24>P.y-62&&ly-24<P.y,fresh=hit&&!l.in&&!(l.cd>0);l.in=hit;if(fresh){
      if(l.c==w[G.idx]){l.got=1;G.idx++;G.hint=0;cgSnd.star();cgBurst(G.parts,l.x,ly,"#ffd34d",18);cgWordUI(w,G.idx);if(G.idx>=L){win();break}say(`Yes, ${l.c.toUpperCase()}! Now find ${w[G.idx].toUpperCase()}.`,`${cLN(l.c)}! Now find ${cLN(w[G.idx])}.`)}
-     else if(!l.cd){l.cd=1.5;l.sh=.5;G.hint=3.5;cgSnd.boing();say(`Not ${l.c.toUpperCase()} yet. Look for the glowing ${w[G.idx].toUpperCase()}!`,`Look for ${cLN(w[G.idx])}.`)}}}}
+     else{l.sh=.5;l.cd=1.4;G.hint=3.5;cgSnd.boing();say(`Not ${l.c.toUpperCase()} yet. Look for the glowing ${w[G.idx].toUpperCase()}!`,`Look for ${cLN(w[G.idx])}.`)}}}}
   else{G.lit=Math.min(1,G.lit+dt*.7);if(Math.random()<.5)G.parts.push({x:fx+(Math.random()-.5)*30,y:end.y-40,vx:(Math.random()-.5)*40,vy:-90-Math.random()*90,l:1.1,c:cgPick(["#ffb020","#ff6a00","#fff2a8"]),r:1.5+Math.random()*2})}
   G.hint=Math.max(0,G.hint-dt);G.mt=Math.max(0,G.mt-dt);
   const tg=Math.max(0,Math.min(WW-W,G.win?fx-W/2:P.x-320));G.cam+=(tg-G.cam)*Math.min(1,dt*(G.win?2.5:7));
@@ -863,7 +864,7 @@ function cgBucket(x,bx,by,t,sh){x.save();x.translate(bx+(sh>0?Math.sin(t*50)*6:0
 function cgCatch(){cgStop();const s=cgS(),w=CGCW[(s.w.catch||0)%CGCW.length],L=w.length,W=800,H=450,AL="abcdefghiklmnoprstuw";
  app(cgShell("Falling Stars","🌠","Move your campfire bucket to catch the star letters in order. Wrong stars go boing!",`<div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div><div class="cgwd cgsign" id="cgwd"></div>${cgPad(0)}<p class="cgtip">Move with your mouse, drag on the sky, or use ← →.</p>`));
  const[c,x]=cgCanvas(cq("#cgst"),W,H);cgPadWire();cgWordUI(w,0);
- const G={run:1,keys:1,bx:400,tx:null,idx:0,st:[],sp:.8,rs:3,parts:[],win:0,last:0,shake:0,msg:"",mt:0};CG=G;
+ const G={run:1,keys:1,el:c,bx:400,tx:null,idx:0,st:[],sp:.8,rs:3,parts:[],win:0,last:0,shake:0,msg:"",mt:0};CG=G;
  const mv=e=>{G.tx=cgPt(c,e,W,H)[0]};c.addEventListener("pointerdown",e=>{e.preventDefault();mv(e);try{c.setPointerCapture(e.pointerId)}catch(_){}});c.addEventListener("pointermove",e=>{if(e.pointerType=="mouse"||e.buttons)mv(e)});
  talk(`Catch the stars that spell ${w}. First, ${cLN(w[0])}.`);
  cgLoop(G,(dt,t)=>{const need=w[G.idx];
@@ -885,7 +886,7 @@ function cgCatch(){cgStop();const s=cgS(),w=CGCW[(s.w.catch||0)%CGCW.length],L=w
   for(const q of G.st){x.globalAlpha=.25;x.strokeStyle="#ffe9a0";x.lineWidth=4;x.beginPath();x.moveTo(q.x,q.y-30);x.lineTo(q.x,q.y-60);x.stroke();x.globalAlpha=1;
    cgStarS(x,q.x,q.y,30,q.r);x.fillStyle="#14284b";x.font="700 26px Fredoka, 'Baloo 2', sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText(q.c.toUpperCase(),q.x,q.y+2)}
   cgBucket(x,G.bx,H-92,t,G.shake);cgParts(x,G.parts,dt);
-  x.font="26px sans-serif";x.textAlign="left";x.textBaseline="top";x.fillText("⭐".repeat(G.rs)+"☆".repeat(3-G.rs),14,12);
+  x.font="26px sans-serif";x.textAlign="left";x.textBaseline="top";x.fillStyle="#ffd34d";x.fillText("⭐".repeat(G.rs)+"☆".repeat(3-G.rs),14,12);
   if(G.mt>0)cgPill(x,W,G.msg)})}
 
 /* ---------- 3. S'more Sight Word Sort (drag and drop) ---------- */
@@ -901,7 +902,8 @@ function cgSort(){cgStop();const s=cgS(),r=CGSR[(s.w.sort||0)%CGSR.length],items
   if(m.dataset.b==g.dataset.b){cgSnd.pop();setTimeout(cgSnd.star,140);m.remove();const sm=document.createElement("div");sm.className="smo";sm.innerHTML=`<i class="ck"></i><span class="mr">${m.dataset.w}</span><i class="ch"></i><i class="ck"></i>`;cq("#gcs"+g.dataset.b).appendChild(sm);g.classList.add("good");setTimeout(()=>g.classList.remove("good"),700);talk(m.dataset.w);
    if(!--G.left){cgWin("sort",3);talk("You made all the s'mores! Yum!");setTimeout(()=>{if(CG===G)cgOver(`<div class="cgbig">🍫 Yum!</div><div>Every marshmallow is sorted. <b>+3 ⭐</b></div>`+cgEnd("cgSort()","Next round ▶"))},900)}}
   else{cgSnd.boing();m.classList.add("shake");g.classList.add("bad");setTimeout(()=>{m.classList.remove("shake");g.classList.remove("bad")},450);talk(`Hmm, not that one. ${r[6]}`)}};
- boxes.forEach(g=>g.addEventListener("click",()=>{if(G.sel)drop(G.sel,g)}));
+ boxes.forEach(g=>{g.tabIndex=0;g.setAttribute("role","button");g.setAttribute("aria-label","Put it here: "+g.querySelector("b").textContent);g.addEventListener("click",()=>{if(G.sel)drop(G.sel,g)});g.addEventListener("keydown",e=>{if((e.key=="Enter"||e.key==" ")&&G.sel){e.preventDefault();drop(G.sel,g)}})});
+ document.querySelectorAll(".mm").forEach(m=>m.addEventListener("click",e=>{if(e.detail!==0)return;talk(m.dataset.w);const on=G.sel!==m;document.querySelectorAll(".mm").forEach(o=>o.classList.remove("sel"));G.sel=on?m:null;if(on){m.classList.add("sel");boxes[0].focus()}}));
  document.querySelectorAll(".mm").forEach(m=>m.addEventListener("pointerdown",e=>{e.preventDefault();const r0=m.getBoundingClientRect(),ox=e.clientX-r0.left,oy=e.clientY-r0.top,sx=e.clientX,sy=e.clientY;let drag=0;try{m.setPointerCapture(e.pointerId)}catch(_){}
   const mvf=ev=>{if(!drag&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>8){drag=1;m.classList.add("drag");m.style.width=r0.width+"px";m.style.position="fixed";m.style.zIndex=60}
    if(drag){m.style.left=ev.clientX-ox+"px";m.style.top=ev.clientY-oy+"px";const b=boxAt(ev);boxes.forEach(g=>g.classList.toggle("ov",g==b))}};
@@ -945,7 +947,7 @@ const CGSC={adj:["adjective","a describing word","#2f9c95",[["silly","🤪"],["s
 const cgNm=()=>S.name||"Sam";
 function cgStory(n){cgStop();const s=cgS();CG={run:1,ti:n!=null?n:(s.w.story||0)%CGST.length,ch:{},cur:null};cgStoryUI()}
 const cgKeys=ti=>[...new Set([...CGST[ti][1].matchAll(/\{(\w+)\}/g)].map(m=>m[1]).filter(k=>k!="name"))];
-function cgStoryUI(){const G=CG;if(!G||G.ti==null)return;const t=CGST[G.ti],ks=cgKeys(G.ti),cur=G.cur&&ks.includes(G.cur)?G.cur:ks.find(k=>!G.ch[k]);
+function cgStoryUI(){if(cgRS)cgRS.stop();const G=CG;if(!G||G.ti==null)return;const t=CGST[G.ti],ks=cgKeys(G.ti),cur=G.cur&&ks.includes(G.cur)?G.cur:ks.find(k=>!G.ch[k]);
  const body=t[1].replace(/\{(\w+)\}/g,(m,k)=>k=="name"?`<b>${cgNm()}</b>`:`<button class="sbk${G.ch[k]?" on":""}${k==cur?" now":""}" style="--c:${CGSC[k][2]}" onclick="CG.cur='${k}';cgStoryUI()">${G.ch[k]||CGSC[k][1]}</button>`);
  const pk=cur?`<div class="spk"><p class="spq">Pick ${CGSC[cur][1]} <span class="pos" style="--c:${CGSC[cur][2]}">${CGSC[cur][0]}</span></p><div class="schs">${CGSC[cur][3].map(([w,e])=>`<button class="sch${G.ch[cur]==w?" on":""}" style="--c:${CGSC[cur][2]}" onclick="cgPickW('${cur}','${w}')"><span>${e}</span>${w}</button>`).join("")}</div></div>`:"";
  const all=ks.every(k=>G.ch[k]);
@@ -957,15 +959,27 @@ function cgCard(){const G=CG;if(!G)return;const t=CGST[G.ti],em=k=>(CGSC[k][3].f
  const scene=[ks.includes("place")?em("place"):"🌲","⛺",`<span class="sbig">${em("animal")}</span>`,`<span class="fi">🔥</span>`,ks.includes("thing")?em("thing"):"🌲",em("food")].map(e=>`<span>${e}</span>`).join("");
  app(cgShell("Campfire Story Builder","📖","Here is your story! Press Read to Me to hear it.",`<div class="scard"><div class="scn">${tw}<span class="mo">🌙</span><span class="adj">${em("adj")}</span><div class="sgr">${scene}</div></div><div class="scb"><h3 class="stt">${t[0]}</h3><p id="sttx">${words.map(([p,c])=>`<span class="stw${c?" stc":""}"${c?` style="--c:${c}"`:""}>${p}</span>`).join(" ")}</p></div></div><div class="cgrow"><button class="btn" id="rtm" onclick="cgRead()">🔊 Read to Me</button><button class="cgk cgsm" onclick="cgStoryUI()">✏️ Change words</button><button class="cgk cgsm" onclick="cgStory(${(G.ti+1)%CGST.length})">🎲 New story</button></div>`));
  if(!G.paid){G.paid=1;cgWin("story",2);cgToast("Story finished! +2 ⭐")}}
+let cgRS=null;
 function cgRead(){const sp=[...document.querySelectorAll("#sttx .stw")],btn=cq("#rtm");if(!sp.length)return;
+ if(cgRS){cgRS.stop();return}
  if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){cgToast("This browser can't read aloud. Try Chrome or Safari.");return}
- try{speechSynthesis.cancel()}catch(e){}let pos=0;const st=sp.map(e=>{const a=pos;pos+=e.textContent.length+1;return a}),text=sp.map(e=>e.textContent).join(" ");
- const hl=i=>sp.forEach((e,j)=>e.classList.toggle("hl",j==i));let gotB=0,tm=null;const u=new SpeechSynthesisUtterance(text);
- try{if(typeof VOX!="undefined"&&VOX){u.voice=VOX;u.lang=VOX.lang}else u.lang="en-US"}catch(e){}u.rate=.85;
- u.onboundary=e=>{if(e.name&&e.name!="word")return;gotB=1;clearTimeout(tm);let i=0;while(i+1<st.length&&st[i+1]<=e.charIndex)i++;hl(i)};
- u.onstart=()=>{hl(0);tm=setTimeout(()=>{let i=0;const step=()=>{if(gotB||!sp[i]||!sp[i].isConnected)return;hl(i);const d=300+sp[i].textContent.length*60;i++;if(i<sp.length)tm=setTimeout(step,d)};step()},800)};
- u.onend=u.onerror=()=>{clearTimeout(tm);hl(-1);if(btn)btn.disabled=false};
- if(btn)btn.disabled=true;speechSynthesis.speak(u)}
+ try{speechSynthesis.cancel()}catch(e){}
+ const hl=i=>sp.forEach((e,j)=>e.classList.toggle("hl",j==i));
+ /* read one sentence at a time: long speech gets cut off in some browsers */
+ const parts=[];let cur=[];sp.forEach((e,i)=>{cur.push(i);if(/[.!?]["”]?$/.test(e.textContent)||i==sp.length-1){parts.push(cur);cur=[]}});
+ const R0={on:1,tm:null,safe:null,u:null};cgRS=R0;
+ const fin=()=>{if(cgRS!==R0)return;R0.on=0;cgRS=null;clearTimeout(R0.tm);clearTimeout(R0.safe);hl(-1);if(btn&&btn.isConnected)btn.textContent="🔊 Read to Me"};
+ R0.stop=()=>{try{speechSynthesis.cancel()}catch(e){}fin()};
+ const say=k=>{if(!R0.on||cgRS!==R0)return;if(k>=parts.length||!sp[0].isConnected)return fin();const ids=parts[k];let pos=0;const st=ids.map(i=>{const a=pos;pos+=sp[i].textContent.length+1;return a});
+  const u=new SpeechSynthesisUtterance(ids.map(i=>sp[i].textContent).join(" "));R0.u=u;
+  try{if(typeof VOX!="undefined"&&VOX){u.voice=VOX;u.lang=VOX.lang}else u.lang="en-US"}catch(e){}u.rate=.85;let gotB=0,done=0;
+  u.onboundary=e=>{if(e.name&&e.name!="word")return;gotB=1;let i=0;while(i+1<st.length&&st[i+1]<=e.charIndex)i++;hl(ids[i])};
+  u.onstart=()=>{hl(ids[0]);clearTimeout(R0.tm);R0.tm=setTimeout(()=>{let i=0;const step=()=>{if(gotB||done||!R0.on)return;hl(ids[i]);const d=300+sp[ids[i]].textContent.length*60;i++;if(i<ids.length)R0.tm=setTimeout(step,d)};step()},700)};
+  const next=()=>{if(done)return;done=1;clearTimeout(R0.tm);clearTimeout(R0.safe);say(k+1)};
+  u.onend=next;u.onerror=e=>{if(e&&e.error=="interrupted"||e&&e.error=="canceled")return;next()};
+  clearTimeout(R0.safe);R0.safe=setTimeout(next,4000+pos*140);
+  speechSynthesis.speak(u)};
+ if(btn)btn.textContent="⏹ Stop";say(0)}
 
 /* ---------- menu, stars and badges ---------- */
 const CGL=[["hop","🔥","Campfire Letter Hop","Jump across logs and rocks to spell camp words.","#e0654a","cgHop"],["catch","🌠","Falling Stars","Catch the star letters in your campfire bucket.","#3f78b8","cgCatch"],["sort","🍫","S'more Word Sort","Drag marshmallow words onto the right cracker.","#d9a82a","cgSort"],["search","🏮","Lantern Word Search","Light up the camp words hiding in the grid.","#8a5fb0","cgSearch"],["story","📖","Campfire Story Builder","Pick silly words and hear your story read aloud.","#2f9c95","cgStory"]];
