@@ -35,7 +35,7 @@ button{font:inherit;cursor:pointer}
 .wing{transform-box:fill-box;transform-origin:50% 50%;animation:fw .3s infinite alternate}@keyframes fw{to{transform:scaleX(.55)}}
 .bub{position:absolute;background:#fffaf0;color:var(--ink);border:3px solid var(--gold);border-radius:20px 24px 18px 22px;padding:6px 12px;max-width:46%;font-size:19px;z-index:3;box-shadow:0 3px 0 rgba(0,0,0,.25)}
 .bub::after{content:"";position:absolute;left:26px;bottom:-14px;border:9px solid transparent;border-top:14px solid var(--gold);border-bottom:0}
-.bub input{font:inherit;width:100%;border:0;background:transparent;color:var(--ink)}
+.bub .cb{font-size:15px;padding:2px 9px;margin:5px 5px 0 0}.bub input{font:inherit;width:100%;border:0;background:transparent;color:var(--ink)}
 .nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:14px 0}
 .nb{background:var(--grain),linear-gradient(#fdf4d6,#f1dca4);color:var(--ink);border:3px solid var(--gold);border-radius:18px 22px 18px 24px;padding:12px 6px;font-size:21px;font-weight:700;box-shadow:inset 0 0 0 2px #f8dc8c,0 5px 0 var(--goldD);transition:transform .12s}
 .nb:hover{transform:translateY(-4px) rotate(-1deg)}.nb span{display:block;font-size:38px;line-height:1}.nb svg{display:block;margin:0 auto 4px}
@@ -154,10 +154,56 @@ awards:'<svg viewBox="0 0 48 48" width="52" height="52" filter="url(#grain)"><pa
 const ACN='<svg viewBox="-10 -12 20 22" width="22" height="24" style="vertical-align:-6px"><path d="M-7-2Q-7 9 0 9Q7 9 7-2Z" fill="#c9862e"/><path d="M-8-2Q-8-10 0-10Q8-10 8-2Z" fill="#7a4a2a"/><rect x="-1" y="-13" width="2" height="4" fill="#5a3a24"/></svg>';
 /* ---------- poodle chat ---------- */
 const JOKES=["What do you call a dog magician? A labracadabrador!","Why did the poodle sit in the shade? He didn’t want to be a hot dog!","What’s a dog’s favourite pizza? Pupperoni!","What do you call a sleeping dog? A bull-dozer!","Why are dogs bad dancers? They have two left feet… on four legs!","What’s a pup’s favourite book? Anything with a lot of tails!"],TRIV=["Fun fact: a dog’s nose print is unique, like your fingerprint!","Did you know? The word ‘book’ comes from an old word for beech trees.","Trivia: dogs can learn more than 100 words. Yip!","Fact: the longest English word has over 189,000 letters. Don’t read it aloud!","Did you know? A group of owls is called a parliament!"],TIPS=["Stuck on a word? Say the sounds slowly, then blend them: c… a… t… cat!","Look at the picture and the words around a hard word. They give clues!","Read a little every day, {n}. Even five minutes makes a big difference!"],HI=["Woof! Hi {n}! Ready to read?","Hey hey {n}! My tail is wagging!","Hello, {n}! Sit by the fire with me."],FALL=["Ooh, tell me more!","Hmm, I’m just a pup, but I love hearing that!","Ruff! Want a joke or a fun fact?","I’m listening, {n}. Ask me for a joke or reading tips!"],CHEER=["Woof! Nice one!","Tail wag! You got it!","Yip yip! Smart cookie!","That’s the stuff, {n}!","I knew you could do it!","Pawsome!","You’re on a roll, {n}!"],OOPS=["Ruff, not quite. Let’s try another!","Mistakes help brains grow. Sniff it out!","Almost! Look for the clue.","No worries, {n}. We’ll practice more!","Hmm, tricky one. Take your time!"];
-function reply(t){t=t.toLowerCase();let m;if(m=t.match(/i (?:like|love) (.+)/)){S.likes=esc(m[1].slice(0,30));save();return `Woof! ${S.likes}? I’ll remember that, ${S.name}!`}
-if(/joke|funny/.test(t))return pu("j",JOKES);if(/fact|trivia/.test(t))return pu("t",TRIV);if(/help|read|word|stuck|spell/.test(t))return pu("h",TIPS);if(/name/.test(t))return `I’m ${esc(S.pet)}! And you’re ${S.name}.`;if(/\b(hi|hello|hey)\b/.test(t))return pu("hi",HI);if(S.likes&&Math.random()<.3)return `Remember you like ${S.likes}? Me too! Well… I like treats.`;return pu("f",FALL)}
+let RB="";const cb=(l,f)=>`<button class="ghost cb" onclick="${f}">${l}</button>`,say=t=>`<button class="ghost cb" onclick="$('#ci').value='${t}';sendC()">${t}</button>`;
+const RHY={at:"cat hat bat mat sat rat",an:"can man fan pan ran van",ap:"cap map tap nap lap",ag:"bag tag rag wag",ig:"big pig dig wig fig",in:"pin tin win fin bin",ip:"hip lip sip tip zip ship",it:"sit hit bit fit kit",op:"hop top mop pop stop",ot:"hot pot dot not cot",og:"dog log fog frog jog",ug:"bug hug mug rug jug",un:"sun fun run bun",ub:"cub rub tub",et:"wet pet net jet get",en:"ten hen pen men",ed:"red bed fed led",ell:"bell tell well shell yell",ill:"hill fill will pill",all:"ball tall wall fall call",ake:"cake lake make bake take",ay:"day play say way stay",ing:"king ring sing wing",ook:"book look cook hook",ee:"bee see tree free three",oon:"moon soon spoon noon",ight:"night light kite right bright",ark:"park bark dark shark",ox:"box fox"};
+const NUM={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};
+const MOOD={sad:"Aww, {n}. I’m sorry you feel sad. Want a cuddle? 🐾 If it keeps feeling heavy, tell a grown-up you trust.",lonely:"You’re not alone, {n}. I’m right here by the fire with you! 🐾",scared:"It’s okay to feel scared. Take a big, slow breath with me… in… and out. Telling a grown-up helps too.",angry:"Grr, mad feelings are big! Let’s stomp our paws three times… one, two, three. Better?",tired:"Yawn… me too! A little rest is good. We can read more later.",hungry:"My tummy rumbles too! Maybe ask a grown-up for a snack. I’ll wait here.",bored:"Bored? Not on my watch! Let’s play a game!",happy:"Yay! Happy tails! 🐶 I’m happy too, {n}!"};
+function reply(t){RB="";t=t.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'+\-?! ]/g," ").replace(/\s+/g," ").trim();const has=r=>r.test(t),N=S.name,P=esc(S.pet);let m;
+/* safety first */
+if(has(/\b(kill|die|dead|suicide|hurt (my ?self|me)|hit me|hits me|abuse|touch(ed|es)? me)\b/))return `That sounds really important, ${N}. Please tell a grown-up you trust right now, like a parent or teacher. You matter! 🐾`;
+if(has(/\b(address|phone|password|where (do )?you live|my school|secret)\b/))return `Let’s keep private things safe, ${N}! Never share your address, phone number or passwords online. Even with me!`;
+if(has(/\b(stupid|dumb|idiot|shut up|hate you|ugly)\b/))return `Ouch, that’s not kind. Let’s use gentle words, ${N}. Want to hear a joke instead?`;
+/* reading help */
+if(m=t.match(/spell (?:the word )?([a-z]+)/)){const w=m[1].slice(0,12);return `${w} is spelled ${w.toUpperCase().split("").join(" – ")}. Now you try!`}
+if(m=t.match(/rhym\w* (?:with )?([a-z]+)/)||t.match(/([a-z]+) rhym/)){const w=m[1],k=Object.keys(RHY).sort((a,b)=>b.length-a.length).find(e=>w.endsWith(e)),l=k?RHY[k].split(" ").filter(x=>x!=w):[];return l.length?`${w} rhymes with ${l.slice(0,3).join(", ")}! They all end with “${k}”.`:`Hmm, ${w} is a tricky one! Try a word like cat, sun or dog.`}
+if(m=t.match(/(\d+|zero|one|two|three|four|five|six|seven|eight|nine|ten) ?(\+|plus|-|minus|take away) ?(\d+|zero|one|two|three|four|five|six|seven|eight|nine|ten)/)){const a=+(NUM[m[1]]??m[1]),b=+(NUM[m[3]]??m[3]),r=/\+|plus/.test(m[2])?a+b:a-b;return `${a} ${/\+|plus/.test(m[2])?"plus":"take away"} ${b} is ${r}! 🐾`}
+/* things to do */
+if(has(/\b(play|game|games|fun|bored)\b/)){RB=cb("🧩 Games","go('games')")+cb("▶ My level","startL(S.level)");return has(/bored/)?MOOD.bored.replace(/{n}/g,N):pu("pl",["Yay, let’s play! 🎾 Pick one!","Woof woof! Play time! What should we do?","Ooh, I love playing with you, {n}! Pick a game!"])}
+if(has(/\b(story|stories|book|books)\b/)){RB=cb("📚 Storybooks","go('books')");return `Story time! Tap Storybooks and I’ll read one to you, ${N}.`}
+if(has(/\b(shop|buy|hat|hats|treat|treats|acorn|acorns)\b/)){RB=cb("🛍️ Shop","go('shop')");return `You have ${S.coins} acorns! Let’s go shopping. Maybe a treat for me? 🦴`}
+if(has(/\b(level|lesson|learn|practice|start)\b/)){RB=cb("▶ Level "+S.level,"startL(S.level)");return `Let’s learn! Level ${S.level} is ready for you, ${N}.`}
+if(has(/\b(map|mountain)\b/)){RB=cb("🗺️ Level Map","go('map')");return `We’re climbing the mountain! You’re on level ${S.level} of 100.`}
+if(has(/\b(badge|badges|award|awards)\b/)){RB=cb("🏅 Awards","go('awards')");return `Let’s look at your scout badges!`}
+if(has(/\b(help|stuck|hard|tricky|how (do|to) (i )?read)\b/))return pu("h",TIPS);
+/* jokes & facts */
+if(has(/\b(joke|jokes|funny|laugh)\b/))return pu("j",JOKES);
+if(has(/\b(fact|facts|trivia|did you know)\b/))return pu("t",TRIV);
+/* feelings */
+for(const k of ["sad","lonely","scared","angry","tired","hungry","happy"])if(has(new RegExp("\\b("+({sad:"sad|upset|cry|crying",lonely:"lonely|alone",scared:"scared|afraid|frightened",angry:"angry|mad",tired:"tired|sleepy",hungry:"hungry|starving",happy:"happy|excited|great|good day"})[k]+")\\b")))return MOOD[k].replace(/{n}/g,N);
+/* about the dog */
+if(has(/how are you|how r u|how do you feel/))return pu("hw",["I’m pawsome, thanks for asking! How are you, {n}?","Super waggy today! How about you?","Cozy by the fire. How are you feeling, {n}?"]);
+if(has(/\b(love you|like you|best friend)\b/))return `Aww! I love you too, ${N}! You’re my best friend! 💕`;
+if(m=t.match(/\bi (?:like|love) (.+)/)){S.likes=esc(m[1].slice(0,30));save();return `Woof! ${S.likes}? I’ll remember that, ${N}!`}
+if(has(/\b(good (dog|boy|girl|pup|puppy)|pet you|pat|belly rub)\b/))return pu("gd",["*happy wiggle* Thank you! 🐶","Tail wag! Tail wag! Tail wag!","Ooh, right behind the ear! Yes!"]);
+if(has(/your name|who are you|what are you/))return `I’m ${P}, your reading buddy! And you’re ${N}.`;
+if(has(/my name|who am i/))return `Your name is ${N}! It’s a great name.`;
+if(has(/how old/))return `I’m a puppy in dog years! 🐶 How old are you?`;
+if(has(/favou?rite (food|snack)/))return `Bones and blueberries! What’s yours, ${N}?`;
+if(has(/favou?rite colou?r/))return `Pink, like my fluffy fur! What’s yours?`;
+if(has(/favou?rite (book|story)/))return `The Tortoise and the Hare! Slow and steady, just like reading.`;
+if(has(/what can you do|what do you do|help me/)){RB=say("Let’s play!")+say("Tell me a joke")+say("Spell cat");return `I can play, tell jokes, spell words, find rhymes and cheer you on!`}
+if(has(/\b(weather|rain|raining|sunny|snow)\b/))return `I can’t see outside from here, but it’s always cozy by our campfire! 🔥`;
+if(has(/\b(sing|song|dance)\b/))return `🎵 La la la, woof woof! 🎵 *spins in a circle*`;
+if(has(/\b(walk|fetch|ball|stick)\b/))return `*zooms around the campfire* Fetch! I got it! 🎾 Okay, now let’s read a little?`;
+if(has(/\b(thank|thanks|thank you)\b/))return `You’re welcome, ${N}! 🐾`;
+if(has(/\b(bye|goodbye|good night|see you)\b/))return `Bye bye, ${N}! Come back soon. I’ll keep the fire warm! 🔥`;
+if(has(/\b(yes|yeah|yep|ok|okay|sure)\b/)){RB=cb("🧩 Games","go('games')")+cb("📚 Stories","go('books')");return `Yay! What should we do?`}
+if(has(/\b(no|nope|nah)\b/))return `That’s okay! I’m here whenever you want me.`;
+if(has(/\b(hi|hello|hey|hiya|good morning)\b/))return pu("hi",HI);
+if(S.likes&&Math.random()<.3)return `Remember you like ${S.likes}? Me too! Well… I like treats.`;
+RB=say("Let’s play!")+say("Tell me a joke")+say("Read a story");return pu("f",["Hmm, I don’t know that one yet, {n}. Try one of these!","Ruff, my puppy brain didn’t get that. Want to try one of these?","I’m still learning words! Tap one of these:"])}
 function chat(){const sc=$("#sc");if(!sc)return;sc.classList.add("look");const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent="Woof! What is it?";talk("Woof! What is it?");setTimeout(()=>{const k=$("#bk");k.style.display="block";k.innerHTML=`<input id="ci" aria-label="Ask your dog" placeholder="Type to ${esc(S.pet)}…" maxlength="80"><button class="ghost" onclick="mic()" aria-label="Speak">🎤</button> <button class="ghost" onclick="sendC()">Send</button>`;$("#ci").focus();$("#ci").onkeydown=e=>{if(e.key=="Enter")sendC()}},700)}
-function sendC(){const v=$("#ci").value.trim();if(!v)return;const r=reply(v);$("#bd").innerHTML=r;talk(r);$("#ci").value=""}
+function sendC(){const v=$("#ci").value.trim();if(!v)return;const r=reply(v);$("#bd").innerHTML=r+(RB?`<div>${RB}</div>`:"");talk(r);$("#ci").value=""}
 function mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$("#bd").textContent="My ears can’t hear on this device. Type instead!";return}const r=new SR();r.onresult=e=>{$("#ci").value=e.results[0][0].transcript;sendC()};try{r.start()}catch(e){}}
 const $=s=>document.querySelector(s);
 /* ---------- literacy engine ---------- */
