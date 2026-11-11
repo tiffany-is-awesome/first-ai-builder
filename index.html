@@ -430,12 +430,13 @@ let RB="";const cb=(l,f)=>`<button class="ghost cb" onclick="${f}">${l}</button>
 const RHY={at:"cat hat bat mat sat rat",an:"can man fan pan ran van",ap:"cap map tap nap lap",ag:"bag tag rag wag",ig:"big pig dig wig fig",in:"pin tin win fin bin",ip:"hip lip sip tip zip ship",it:"sit hit bit fit kit",op:"hop top mop pop stop",ot:"hot pot dot not cot",og:"dog log fog frog jog",ug:"bug hug mug rug jug",un:"sun fun run bun",ub:"cub rub tub",et:"wet pet net jet get",en:"ten hen pen men",ed:"red bed fed led",ell:"bell tell well shell yell",ill:"hill fill will pill",all:"ball tall wall fall call",ake:"cake lake make bake take",ay:"day play say way stay",ing:"king ring sing wing",ook:"book look cook hook",ee:"bee see tree free three",oon:"moon soon spoon noon",ight:"night light kite right bright",ark:"park bark dark shark",ox:"box fox"};
 const NUM={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};
 const MOOD={sad:"Aww, {n}. I’m sorry you feel sad. Want a cuddle? 🐾 If it keeps feeling heavy, tell a grown-up you trust.",lonely:"You’re not alone, {n}. I’m right here by the fire with you! 🐾",scared:"It’s okay to feel scared. Take a big, slow breath with me… in… and out. Telling a grown-up helps too.",angry:"Grr, mad feelings are big! Let’s stomp our paws three times… one, two, three. Better?",tired:"Yawn… me too! A little rest is good. We can read more later.",hungry:"My tummy rumbles too! Maybe ask a grown-up for a snack. I’ll wait here.",bored:"Bored? Not on my watch! Let’s play a game!",happy:"Yay! Happy tails! 🐶 I’m happy too, {n}!"};
-function reply(t){RB="";t=t.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'+\-?! ]/g," ").replace(/\s+/g," ").trim();const has=r=>r.test(t),N=S.name,P=esc(S.pet);let m;
+let CQ=null,FB=0;function reply0(t){RB="";FB=0;t=t.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'+\-?! ]/g," ").replace(/\s+/g," ").trim();const has=r=>r.test(t),N=S.name,P=esc(S.pet);let m;
 /* safety first */
 if(has(/\b(kill|die|dead|suicide|hurt (my ?self|me)|hit me|hits me|abuse|touch(ed|es)? me)\b/))return `That sounds really important, ${N}. Please tell a grown-up you trust right now, like a parent or teacher. You matter! 🐾`;
 if(has(/\b(address|phone|password|where (do )?you live|my school|secret)\b/))return `Let’s keep private things safe, ${N}! Never share your address, phone number or passwords online. Even with me!`;
 if(has(/\b(stupid|dumb|idiot|shut up|hate you|ugly)\b/))return `Ouch, that’s not kind. Let’s use gentle words, ${N}. Want to hear a joke instead?`;
 if(has(/word of the day|today'?s word|new word/)){const w=wotdToday();setTimeout(wotdSay,50);return `Today’s word is ${w.w}!`}
+/* favorites first, so "favorite book/game" is a chat question, not a request */if(has(/favou?rite (book|story)/))return `The Tortoise and the Hare! Slow and steady, just like reading. What’s your favorite book?`;if(has(/favou?rite (game|sport|toy)/))return `Fetch! I could play it all day. What’s yours?`;if(has(/favou?rite (animal|pet)/))return `Poodles, of course! 🐩 What’s your favorite animal?`;
 /* reading help */
 if(m=t.match(/spell (?:the word )?([a-z]+)/)){const w=m[1].slice(0,12);return `${w} is spelled ${w.toUpperCase().split("").join(" – ")}. Now you try!`}
 if(m=t.match(/rhym\w* (?:with )?([a-z]+)/)||t.match(/([a-z]+) rhym/)){const w=m[1],k=Object.keys(RHY).sort((a,b)=>b.length-a.length).find(e=>w.endsWith(e)),l=k?RHY[k].split(" ").filter(x=>x!=w):[];return l.length?`${w} rhymes with ${l.slice(0,3).join(", ")}! They all end with “${k}”.`:`Hmm, ${w} is a tricky one! Try a word like cat, sun or dog.`}
@@ -465,7 +466,7 @@ if(has(/my name|who am i/))return `Your name is ${N}! It’s a great name.`;
 if(has(/how old/))return `I’m a puppy in dog years! 🐶 How old are you?`;
 if(has(/favou?rite (food|snack)/))return `Bones and blueberries! What’s yours, ${N}?`;
 if(has(/favou?rite colou?r/))return `Pink, like my fluffy fur! What’s yours?`;
-if(has(/favou?rite (book|story)/))return `The Tortoise and the Hare! Slow and steady, just like reading.`;
+if(has(/favou?rite (book|story)/))return `The Tortoise and the Hare! Slow and steady, just like reading. What’s your favorite book?`;if(has(/favou?rite (animal|pet)/))return `Poodles, of course! 🐩 What’s your favorite animal?`;if(has(/favou?rite (game|sport|toy)/))return `Fetch! I could play it all day. What’s yours?`;
 if(has(/what can you do|what do you do|help me/)){RB=say("Let’s play!")+say("Tell me a joke")+say("Spell cat");return `I can play, tell jokes, spell words, find rhymes and cheer you on!`}
 if(has(/\b(weather|rain|raining|sunny|snow)\b/))return `I can’t see outside from here, but it’s always cozy by our campfire! 🔥`;
 if(has(/\b(sing|song|dance)\b/))return `🎵 La la la, woof woof! 🎵 *spins in a circle*`;
@@ -475,9 +476,29 @@ if(has(/\b(bye|goodbye|good night|see you)\b/))return `Bye bye, ${N}! Come back 
 if(has(/\b(yes|yeah|yep|ok|okay|sure)\b/)){RB=cb("🧩 Games","go('games')")+cb("📚 Stories","go('books')");return `Yay! What should we do?`}
 if(has(/\b(no|nope|nah)\b/))return `That’s okay! I’m here whenever you want me.`;
 if(has(/\b(hi|hello|hey|hiya|good morning)\b/))return pu("hi",HI);
-if(S.likes&&Math.random()<.3)return `Remember you like ${S.likes}? Me too! Well… I like treats.`;
+FB=1;if(S.likes&&Math.random()<.3)return `Remember you like ${S.likes}? Me too! Well… I like treats.`;
 RB=say("Let’s play!")+say("Tell me a joke")+say("Read a story");return pu("f",["Hmm, I don’t know that one yet, {n}. Try one of these!","Ruff, my puppy brain didn’t get that. Want to try one of these?","I’m still learning words! Tap one of these:"])}
 function chat(){const sc=$("#sc");if(!sc)return;sc.classList.add("look");const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent="Woof! What is it?";talk("Woof! What is it?");setTimeout(()=>{const k=$("#bk");k.style.display="block";k.innerHTML=`<input id="ci" aria-label="Ask your dog" placeholder="Type to ${esc(S.pet)}…" maxlength="80"><button class="ghost" onclick="mic()" aria-label="Speak">🎤</button> <button class="ghost" onclick="sendC()">Send</button>`;$("#ci").focus();$("#ci").onkeydown=e=>{if(e.key=="Enter")sendC()}},700)}
+/* the dog remembers the question it just asked, so the child's answer makes sense */
+const CQT=[[/Bones and blueberries/,"food"],[/fluffy fur! What’s yours/,"color"],[/favorite animal\?/,"animal"],[/favorite book\?/,"book"],[/Fetch! I could play/,"game"],[/How old are you/,"age"],[/How are you|How about you|How are you feeling/,"feel"],[/Want a cuddle\?/,"cuddle"],[/Better\?/,"better"]];
+function ctxA(q,t,raw){const N=S.name,yes=/\b(yes|yeah|yep|ok|okay|sure|please)\b/.test(t),no=/\b(no|nope|nah|not)\b/.test(t);
+let x=t.replace(/[?!]/g,"").replace(/^(um+|uh+|hmm+|well|i think|probably|maybe)\s+/,"").replace(/^(my )?(favou?rite|fav)( \w+)? (is|are|would be) /,"").replace(/^(i (really )?(like|love|have)|it'?s|its|it is|i am|i'm|im) /,"").trim().split(" ").slice(0,4).join(" ");x=esc(x);const X=x.charAt(0).toUpperCase()+x.slice(1);
+if(q=="food"&&x){S.likes=x;save();return pu("cf",[`Yum, ${x}! That sounds delicious, ${N}! 😋`,`Ooh, ${x}! Good choice. Now I’m hungry! 🐾`,`${X}? Tasty! I’ll remember that, ${N}.`])}
+if(q=="color"&&x)return pu("cc",[`${X} is a beautiful color! 🎨`,`Ooh, ${x}! That’s a happy color.`]);
+if(q=="animal"&&x)return `${X}? I love ${x}! Woof! 🐾`;
+if(q=="game"&&x)return `${X} sounds fun! Want to play a reading game with me?`;
+if(q=="book"&&x){RB=`<button class="ghost cb" onclick="go('books')">📚 Storybooks</button>`;return `Ooh, ${x}! Books are the best. Want me to read you a story?`}
+if(q=="age"){const W={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15},m=t.match(/\d+/)||Object.keys(W).map(k=>t.match(new RegExp("\\b"+k+"\\b"))).find(Boolean),n=m?(W[m[0]]||+m[0]):0;
+ return n>0&&n<100?`You’re ${n}? That’s a great age for reading, ${N}! 🎉`:`You’re growing up so fast, ${N}! 🐾`}
+if(q=="feel"){if(/\b(bad|sad|not good|not great|not ok|sick|tired|angry|mad|scared|upset|lonely|bored)\b/.test(t))return null;
+ if(/\b(good|great|fine|ok|okay|happy|awesome|well|amazing|super|excited|cool)\b/.test(t))return pu("fg",[`Yay! I’m so glad, ${N}! 🐾`,`That makes my tail wag! 🐶`]);return `Thanks for telling me, ${N}! 🐾`}
+if(q=="cuddle"){if(yes)return `*big fluffy cuddle* 🤗 I’m right here with you, ${N}.`;if(no)return `Okay! I’ll sit right here with you by the fire.`}
+if(q=="better"){if(yes)return `Yay! Big feelings get smaller when we breathe. 🐾`;if(no)return `That’s okay. Tell a grown-up you trust. I’m here too.`}
+return null}
+function reply(raw){const q=CQ;CQ=null;const t=String(raw).toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'+\-?! ]/g," ").replace(/\s+/g," ").trim();
+let r=reply0(raw);const yn=q=="cuddle"||q=="better";
+if(q&&(FB||(yn&&/^(yes|yeah|yep|ok|okay|sure|please|no|nope|nah)\b/.test(t))||(q=="feel"&&/^(good|fine|ok|okay|great|well|not)\b/.test(t)))){const rb=RB;RB="";const a=ctxA(q,t,raw);if(a)r=a;else RB=rb}
+for(const[re,k]of CQT)if(re.test(r)){CQ=k;break}return r}
 function sendC(){const v=$("#ci").value.trim();if(!v)return;const r=reply(v);$("#bd").innerHTML=r+(RB?`<div>${RB}</div>`:"");talk(r);$("#ci").value=""}
 function mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$("#bd").textContent="My ears can’t hear on this device. Type instead!";return}const r=new SR();r.onresult=e=>{$("#ci").value=e.results[0][0].transcript;sendC()};try{r.start()}catch(e){}}
 const $=s=>document.querySelector(s);
