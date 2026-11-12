@@ -1316,45 +1316,67 @@ function cgPill(x,W,t){x.font="600 20px Fredoka, 'Baloo 2', sans-serif";const tw
 /* ---------- 1. Campfire Letter Hop (platformer) ---------- */
 const CGHW=["camp","tent","fire","log","sun","fox","owl","map","hike","lake","moon","star","tree","bear","frog","fish","bug"];
 function cgHop(){cgStop();const s=cgS(),w=cgWordFor("hop"),T=cgTier("hop"),L=w.length,W=800,H=450;
- app(cgShell("Campfire Letter Hop","🔥",cgLv("hop")+"<br>Hop across the logs and rocks. Grab the letters in order to spell the word!",`<div class="cgwd" id="cgwd"></div><div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div>${cgPad(1)}<p class="cgtip">Keys: ← → to walk, ↑ or Space to jump. You can also tap the picture to jump. Fall in the river and you pop back onto the nearest log.</p>`));
+ app(cgShell("Campfire Letter Hop","🔥",cgLv("hop")+"<br>Hop across the logs and rocks. Grab the letters in order to spell the word! Bounce on mushrooms 🍄 and catch fireflies ✨ for bonus stars.",`<div class="cgwd" id="cgwd"></div><div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div>${cgPad(1)}<p class="cgtip">Keys: ← → to walk, ↑ or Space to jump. Jump again in the air for a double jump! You can also tap the picture to jump. Fall in the river and you pop back onto the nearest log.</p>`));
  const[c,x]=cgCanvas(cq("#cgst"),W,H);cgPadWire();cgWordUI(w,0);
- const pl=[{x:-60,y:360,w:300,k:"bank"}];let px=240,py=360;
- for(let i=0;i<L+2+(T>>1);i++){const k=R(3)?"log":"rock",pw=k=="rock"?96-T*6:116-T*8+R(40);px+=70+T*8+R(30);py=Math.max(205,Math.min(355,py-80+R(150)));pl.push({x:px,y:py,w:pw,k});px+=pw}
- px+=80;const end={x:px,y:360,w:460,k:"bank"};pl.push(end);const WW=px+380,fx=end.x+170;
+ const pl=[{x:-60,y:360,w:300,k:"bank",dx:0}];let px=240,py=360;
+ for(let i=0;i<L+2+(T>>1);i++){const k=R(3)?"log":"rock",pw=k=="rock"?96-T*6:116-T*8+R(40);px+=70+T*8+R(30);py=Math.max(205,Math.min(355,py-80+R(150)));const p={x:px,bx:px,y:py,w:pw,k,dx:0};
+  if(k=="log"&&T>=1&&i>0&&R(3)==0){p.mv=16+T*4+R(10);p.sp=.8+Math.random()*.6;p.ph=Math.random()*6}else if(i>0&&R(4)==0)p.mush=Math.round(pw*.28);pl.push(p);px+=pw}
+ {const m=pl.slice(2).filter(p=>!p.mv);if(m.length&&!pl.some(p=>p.mush))cgPick(m).mush=Math.round(cgPick(m).w*.28)}
+ pl.forEach(p=>{if(p.mush)p.mush=Math.round(p.w*.28)});
+ px+=80;const end={x:px,y:360,w:460,k:"bank",dx:0};pl.push(end);const WW=px+380,fx=end.x+170;
  const mid=pl.slice(1,-1),ord=shuf(mid.map((_,i)=>i)),AL="abdeghiklmnoprstuw".split("").filter(ch=>!w.includes(ch)),lt=[];
- mid.forEach((_,j)=>{const p=mid[ord[j]];lt.push({c:j<L?w[j]:cgPick(AL),x:p.x+p.w/2,y:p.y-112,ph:Math.random()*6})});
- const G={run:1,keys:1,el:c,lt,pl,P:{x:110,y:360,vy:0,on:1,f:1,co:.1,inv:0,mv:0},idx:0,cam:0,parts:[],hint:0,win:0,lit:0,msg:"",mt:0};CG=G;
- const jump=()=>{const P=G.P;if(G.win)return;if(P.on||P.co>0){P.vy=-760;P.on=0;P.co=0;cgSnd.jump()}};
+ mid.forEach((_,j)=>{const p=mid[ord[j]];lt.push({c:j<L?w[j]:cgPick(AL),p,ox:p.w/2,x:p.x+p.w/2,y:p.y-112,ph:Math.random()*6})});
+ const ff=[];for(let i=0;i<pl.length-1;i++){const a=pl[i],b=pl[i+1];if(i&&R(3)==0)continue;ff.push({x:(a.x+a.w+b.x)/2,y:Math.min(a.y,b.y)-140-R(30),ph:Math.random()*6})}
+ mid.filter(p=>p.mush).forEach(p=>ff.push({x:p.x+p.mush,y:p.y-290-R(40),ph:Math.random()*6,hi:1}));
+ const G={run:1,keys:1,el:c,lt,pl,P:{x:110,y:360,vy:0,on:1,f:1,co:.1,inv:0,mv:0,jumps:0,pl:pl[0]},idx:0,cam:0,parts:[],hint:0,win:0,lit:0,msg:"",mt:0,ff,fc:0,fish:[],ft:1.5,ss:null,sq:0};CG=G;
+ const jump=()=>{const P=G.P;if(G.win)return;if(P.on||P.co>0){P.vy=-760;P.on=0;P.co=0;P.jumps=1;P.pl=null;cgSnd.jump()}
+  else if(P.jumps<2){P.vy=-650;P.jumps=2;cSw(520,1200,.16,"sine",.045);for(let i=0;i<12;i++){const a=i/12*6.28;G.parts.push({x:P.x,y:P.y-20,vx:Math.cos(a)*110,vy:Math.sin(a)*60,l:.45,c:"#bfefff",r:2.5})}}};
  G.press=k=>{if(k=="ArrowUp"||k==" ")jump()};c.addEventListener("pointerdown",e=>{e.preventDefault();jump()});
  const say=(m,sp)=>{G.msg=m;G.mt=2.6;if(sp)talk(sp)};
- const win=()=>{G.win=1;cgWin("hop",3);talk(`You spelled ${w}! The campfire is lit!`);setTimeout(()=>{if(CG===G)cgOver(`<div class="cgbig">🔥 ${w.toUpperCase()} 🔥</div><div>You spelled it! <b>+3 ⭐</b></div>`+cgEnd("cgHop()","Next word ▶"))},2400)};
+ const win=()=>{G.win=1;const b=Math.min(3,Math.floor(G.fc/3)),n=3+b;cgWin("hop",n);talk(`You spelled ${w}! The campfire is lit!`);setTimeout(()=>{if(CG===G)cgOver(`<div class="cgbig">🔥 ${w.toUpperCase()} 🔥</div><div>You spelled it! <b>+${n} ⭐</b>${G.fc?` · ✨ ${G.fc} firefl${G.fc>1?"ies":"y"}${b?` (+${b} bonus)`:""}`:""}</div>`+cgEnd("cgHop()","Next word ▶"))},2400)};
+ const mush=(mx,my,sq)=>{x.save();x.translate(mx,my);x.scale(1+sq*.6,1-sq*.7);x.fillStyle="#f6e7c8";cgRR(x,-7,-20,14,20,5);x.fill();x.fillStyle="#e0453a";x.beginPath();x.ellipse(0,-20,24,16,0,Math.PI,0);x.fill();x.fillStyle="#fff";for(const[a,b2,r]of[[-11,-27,4],[3,-31,3.5],[13,-24,3]]){x.beginPath();x.arc(a,b2,r,0,7);x.fill()}x.restore()};
  talk(`Let's spell ${w}. Find the letter ${cLN(w[0])}.`);
  cgLoop(G,(dt,t)=>{const P=G.P;
-  if(!G.win){const mv=(CGK.ArrowRight?1:0)-(CGK.ArrowLeft?1:0);if(mv)P.f=mv;P.mv=mv;P.x=Math.max(14,Math.min(WW-20,P.x+mv*250*dt));
-   if(CGK.ArrowUp||CGK[" "])jump();
-   P.vy+=1900*dt;let ny=P.y+P.vy*dt;P.on=0;
-   if(P.vy>=0)for(const p of pl){if(P.x+10>p.x&&P.x-10<p.x+p.w&&P.y<=p.y+1&&ny>=p.y){ny=p.y;P.vy=0;P.on=1;break}}
-   P.y=ny;P.co=P.on?.1:Math.max(0,P.co-dt);P.inv=Math.max(0,P.inv-dt);
+  for(const p of pl){if(p.mv){const nx=p.bx+Math.sin(t*p.sp+p.ph)*p.mv;p.dx=nx-p.x;p.x=nx}if(p.sq)p.sq=Math.max(0,p.sq-dt*2)}
+  for(const l of lt)l.x=l.p.x+l.ox;
+  if(!G.win){const mv=(CGK.ArrowRight?1:0)-(CGK.ArrowLeft?1:0);if(mv)P.f=mv;P.mv=mv;if(P.on&&P.pl)P.x+=P.pl.dx;P.x=Math.max(14,Math.min(WW-20,P.x+mv*250*dt));
+   if((CGK.ArrowUp||CGK[" "])&&P.on)jump();
+   const was=P.on,vy0=P.vy;P.vy+=1900*dt;let ny=P.y+P.vy*dt;P.on=0;
+   if(P.vy>=0)for(const p of pl){if(P.x+10>p.x&&P.x-10<p.x+p.w&&P.y<=p.y+1&&ny>=p.y){ny=p.y;P.vy=0;P.on=1;P.pl=p;P.jumps=0;break}}
+   P.y=ny;
+   if(P.on&&!was){const p=P.pl;if(p.mush&&Math.abs(P.x-(p.x+p.mush))<26){P.vy=-1180;P.on=0;P.jumps=1;P.pl=null;p.sq=.5;cSw(160,760,.35,"triangle",.08);cgBurst(G.parts,P.x,P.y-10,"#ff7b6b",14);say("Boing! Super bounce!")}
+    else{G.sq=Math.min(.28,vy0/2800);for(let i=0;i<7;i++)G.parts.push({x:P.x+(Math.random()-.5)*22,y:P.y-2,vx:(Math.random()-.5)*140,vy:-20-Math.random()*50,l:.4,c:"#d9c7a0",r:2+Math.random()*2})}}
+   P.co=P.on?.1:Math.max(0,P.co-dt);P.inv=Math.max(0,P.inv-dt);
    if(P.y>420){cgSnd.splash();for(let i=0;i<14;i++)G.parts.push({x:P.x,y:398,vx:(Math.random()-.5)*220,vy:-120-Math.random()*200,l:.8,c:"#9fd4ff",r:3+Math.random()*3,g:1});
     let b=pl[0],bd=1e9;for(const p of pl){const d=Math.abs(p.x+p.w/2-P.x);if(d<bd){bd=d;b=p}}
-    P.x=Math.max(30,b.x+b.w/2);P.y=b.y;P.vy=0;P.on=1;P.inv=1.2;say("Splash! Back on dry land.")}
+    P.x=Math.max(30,b.x+b.w/2);P.y=b.y;P.vy=0;P.on=1;P.pl=b;P.jumps=0;P.inv=1.2;say("Splash! Back on dry land.")}
+   for(const f of ff){if(f.got)continue;const fy=f.y+Math.sin(t*2.5+f.ph)*8;if(Math.abs(f.x-P.x)<30&&fy>P.y-78&&fy<P.y+12){f.got=1;G.fc++;tone(1568,.1,"sine",.05);tone(2093,.14,"sine",.05,.06);cgBurst(G.parts,f.x,fy,"#f4ff9a",14);if(G.fc%3==0)say(`✨ ${G.fc} fireflies! Bonus star!`)}}
    for(const l of lt){if(l.got)continue;l.sh=Math.max(0,(l.sh||0)-dt);l.cd=Math.max(0,(l.cd||0)-dt);const ly=l.y+Math.sin(t*2+l.ph)*5;
     const hit=Math.abs(l.x-P.x)<32&&ly+24>P.y-62&&ly-24<P.y,fresh=hit&&!l.in&&!(l.cd>0);l.in=hit;if(fresh){
      if(l.c==w[G.idx]){l.got=1;G.idx++;G.hint=0;cgSnd.star();cgBurst(G.parts,l.x,ly,"#ffd34d",18);cgWordUI(w,G.idx);if(G.idx>=L){win();break}say(`Yes, ${l.c.toUpperCase()}! Now find ${w[G.idx].toUpperCase()}.`,`${cLN(l.c)}! Now find ${cLN(w[G.idx])}.`)}
      else{l.sh=.5;l.cd=1.4;G.hint=3.5;cgSnd.boing();say(`Not ${l.c.toUpperCase()} yet. Look for the glowing ${w[G.idx].toUpperCase()}!`,`Look for ${cLN(w[G.idx])}.`)}}}}
   else{G.lit=Math.min(1,G.lit+dt*.7);if(Math.random()<.5)G.parts.push({x:fx+(Math.random()-.5)*30,y:end.y-40,vx:(Math.random()-.5)*40,vy:-90-Math.random()*90,l:1.1,c:cgPick(["#ffb020","#ff6a00","#fff2a8"]),r:1.5+Math.random()*2})}
-  G.hint=Math.max(0,G.hint-dt);G.mt=Math.max(0,G.mt-dt);
+  G.hint=Math.max(0,G.hint-dt);G.mt=Math.max(0,G.mt-dt);G.sq=Math.max(0,G.sq-dt*1.6);
+  G.ft-=dt;if(G.ft<=0){G.ft=1.6+Math.random()*2.6;G.fish.push({x:G.cam+80+Math.random()*(W-160),y:428,vx:(R(2)?-1:1)*(50+Math.random()*70),vy:-430-Math.random()*200})}
   const tg=Math.max(0,Math.min(WW-W,G.win?fx-W/2:P.x-320));G.cam+=(tg-G.cam)*Math.min(1,dt*(G.win?2.5:7));
-  cgSky(x,W,H,t,G.cam);cgPines(x,W,330,G.cam,.25,"#1a2f55",34,1.7);cgPines(x,W,385,G.cam,.5,"#143a3a",46,2.3);
+  cgSky(x,W,H,t,G.cam);
+  if(!G.ss&&Math.random()<dt*.12)G.ss={x:150+Math.random()*500,y:25+Math.random()*70,l:1};
+  if(G.ss){const q=G.ss;q.l-=dt*1.4;q.x+=320*dt;q.y+=110*dt;if(q.l<=0)G.ss=null;else{const g=x.createLinearGradient(q.x-90,q.y-31,q.x,q.y);g.addColorStop(0,"rgba(255,255,255,0)");g.addColorStop(1,`rgba(255,250,210,${q.l})`);x.strokeStyle=g;x.lineWidth=3;x.lineCap="round";x.beginPath();x.moveTo(q.x-90,q.y-31);x.lineTo(q.x,q.y);x.stroke()}}
+  cgPines(x,W,330,G.cam,.25,"#1a2f55",34,1.7);cgPines(x,W,385,G.cam,.5,"#143a3a",46,2.3);
   x.save();x.translate(-G.cam,0);
   const rg=x.createLinearGradient(0,390,0,H);rg.addColorStop(0,"#2b7bb5");rg.addColorStop(1,"#164a75");x.fillStyle=rg;x.fillRect(G.cam,392,W,H);
   x.strokeStyle="rgba(255,255,255,.35)";x.lineWidth=2;const w0=G.cam-G.cam%60;for(let i=-1;i<15;i++){const wx=w0+i*60+(t*30%60),wy=410+(i%3)*12;x.beginPath();x.moveTo(wx,wy);x.quadraticCurveTo(wx+10,wy-5,wx+20,wy);x.stroke()}
-  cgTent(x,10,360);for(const p of pl)cgPlat(x,p);cgFire(x,fx,end.y,t,G.lit);
+  for(let i=G.fish.length-1;i>=0;i--){const f=G.fish[i];f.vy+=900*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;if(f.y>432&&f.vy>0){G.fish.splice(i,1);for(let k=0;k<8;k++)G.parts.push({x:f.x,y:400,vx:(Math.random()-.5)*120,vy:-80-Math.random()*120,l:.6,c:"#9fd4ff",r:2+Math.random()*2,g:1});continue}
+   x.save();x.translate(f.x,f.y);x.scale(f.vx>0?-1:1,1);x.rotate(-f.vy/1400);x.font="30px serif";x.textAlign="center";x.textBaseline="middle";x.fillText("🐟",0,0);x.restore()}
+  cgTent(x,10,360);for(const p of pl){cgPlat(x,p);if(p.mush)mush(p.x+p.mush,p.y,p.sq||0)}cgFire(x,fx,end.y,t,G.lit);
+  for(const f of ff){if(f.got)continue;const fy=f.y+Math.sin(t*2.5+f.ph)*8,r=f.hi?20:14,gl=x.createRadialGradient(f.x,fy,1,f.x,fy,r*1.6);gl.addColorStop(0,"rgba(250,255,170,.95)");gl.addColorStop(1,"rgba(250,255,170,0)");x.globalAlpha=.6+.4*Math.abs(Math.sin(t*3+f.ph));x.fillStyle=gl;x.fillRect(f.x-r*1.6,fy-r*1.6,r*3.2,r*3.2);x.globalAlpha=1;x.fillStyle="#fffbd0";x.beginPath();x.arc(f.x,fy,f.hi?5:3.5,0,7);x.fill()}
   const need=w[G.idx];for(const l of lt)if(!l.got){const sh=l.sh?Math.sin(t*40)*8*l.sh:0;cgBub(x,l.x+sh,l.y+Math.sin(t*2+l.ph)*5,l.c,(G.hint>0||G.idx==0&&T<2&&t%3<1.5)&&l.c==need)}
   if(G.hint>0&&!G.win){let tl=null,bd=1e9;for(const l of lt)if(!l.got&&l.c==need){const d=Math.abs(l.x-P.x);if(d<bd){bd=d;tl=l}}
    if(tl){const a=Math.atan2(tl.y-(P.y-40),tl.x-P.x);x.save();x.translate(P.x+(tl.x>=P.x?30:-30),P.y-40);x.rotate(a);x.fillStyle="#ffd34d";x.strokeStyle="#7d4f1a";x.lineWidth=2;x.beginPath();x.moveTo(18,0);x.lineTo(-4,-11);x.lineTo(-4,-4);x.lineTo(-16,-4);x.lineTo(-16,4);x.lineTo(-4,4);x.lineTo(-4,11);x.closePath();x.fill();x.stroke();x.restore()}}
-  if(!(P.inv>0&&Math.floor(t*12)%2))cgCamper(x,P.x,P.y,P.f,t,P.mv,!P.on);
-  cgParts(x,G.parts,dt);x.restore();if(G.mt>0)cgPill(x,W,G.msg)})}
+  if(!(P.inv>0&&Math.floor(t*12)%2)){const st=P.on?0:Math.min(.12,Math.abs(P.vy)/6000);x.save();x.translate(P.x,P.y);x.scale(1+G.sq*.8-st*.6,1-G.sq+st);x.translate(-P.x,-P.y);cgCamper(x,P.x,P.y,P.f,t,P.mv,!P.on);x.restore()}
+  cgParts(x,G.parts,dt);x.restore();
+  x.font="700 20px Fredoka, 'Baloo 2', sans-serif";x.textAlign="left";x.textBaseline="top";x.lineWidth=4;x.strokeStyle="rgba(8,18,40,.75)";const hs=`✨ ${G.fc}/${ff.length}`;x.strokeText(hs,14,12);x.fillStyle="#f4ff9a";x.fillText(hs,14,12);
+  if(G.mt>0)cgPill(x,W,G.msg)})}
 
 /* ---------- 2. Falling Stars Word Catcher ---------- */
 const CGCW=["sun","owl","fox","log","map","bug","camp","tent","fire","moon","star","tree","lake","fish"];
@@ -1554,23 +1576,23 @@ const sgNew=o=>Object.assign({run:1,keys:1,pts:0,streak:0,best:0,parts:[],msg:""
 /* ---------- 1. Night-Vision Flashlight Search (sight words) ---------- */
 const SGA=[["🦉","SLEEPY OWL","Owls can turn their heads almost all the way around!"],["🦊","SNEAKY FOX","Foxes wrap their bushy tails around them like a warm blanket."],["🦝","MASKED RACCOON","Raccoons have clever paws that can open jars!"],["🐸","LEAPING FROG","Some frogs can jump twenty times their own body length!"],["🦌","GENTLE DEER","A baby deer is called a fawn. It has white spots."],["🐰","FLUFFY RABBIT","Rabbits can see behind them without turning their heads."],["🦨","STRIPED SKUNK","Skunks stamp their feet as a warning before they spray."],["🦇","FLAPPY BAT","Bats find bugs in the dark by listening for echoes."],["🐿️","BUSY SQUIRREL","Squirrels bury nuts and find many of them again by smell."],["🍄","SPOTTED MUSHROOM","Never eat a wild mushroom. Some can make you very sick!"],["🐢","SLOW TURTLE","A turtle carries its home on its back."],["🌲","TALL PINE","Pine trees stay green all winter long."]];
 const sgWords=()=>[...new Set((S.level||1)<46?SL[0].concat(SL[1]):SL.flat())];
-function sgFlash(){cgStop();const W=800,H=450,its0=shuf(SGA).slice(0,6),ws=shuf(sgWords()).slice(0,6);
- app(cgShell("Flashlight Search","🔦","Shine your flashlight through the dark woods. Find the sign with the word, then tap it!",`<div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div><p class="cgtip">Mouse: move to shine, click to choose. Touch: drag your finger, tap to choose. Keys: arrows to shine, Space to choose.</p>`));
- const[c,x]=cgCanvas(cq("#cgst"),W,H),sp=shuf([[140,165],[400,150],[660,165],[150,320],[400,315],[650,320]]);
- const its=its0.map((a,i)=>({e:a[0],n:a[1],f:a[2],w:ws[i],x:sp[i][0]+R(50)-25,y:sp[i][1]+R(24)-12,got:0})),order=shuf(its.map((_,i)=>i)).slice(0,5);
- const G=sgNew({lx:W/2,ly:H/2,qi:0,flash:0,busy:0,ff:Array.from({length:16},()=>({x:Math.random()*W,y:Math.random()*H,p:Math.random()*6}))});CG=G;
- const T=()=>its[order[G.qi]];G.its=its;G.T=T;const ask=()=>{G.msg=`Find the word: ${T().w.toUpperCase()}`;G.mt=99;talk(`Find the word ${T().w}.`)};
+function sgFlash(){cgStop();const W=800,H=450,NS=6+R(3),its0=shuf(SGA).slice(0,NS),seen=S.sgfw||[],all=shuf(sgWords()),fresh=all.filter(v=>!seen.includes(v)),tg=(fresh.length>=5?fresh:all).slice(0,5),rest=all.filter(v=>!tg.includes(v)),lk=shuf(rest.filter(v=>tg.some(q=>q[0]==v[0]))),ws=shuf(tg.concat(lk.slice(0,Math.ceil((NS-5)/2)).concat(shuf(rest.filter(v=>!lk.includes(v)))).slice(0,NS-tg.length)));S.sgfw=tg.concat(seen).slice(0,10);
+ app(cgShell("Flashlight Search","🔦","Shine your flashlight through the dark woods. Find the sign with the word, then tap it!",`<div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div><div class="cgrow"><button class="cgk cgsm" id="sgfh">🔊 Hear the word</button></div><p class="cgtip">Mouse: move to shine, click to choose. Touch: drag your finger, tap to choose. Keys: arrows to shine, Space to choose.</p>`));
+ const[c,x]=cgCanvas(cq("#cgst"),W,H),sp=[];for(let k=0;k<4000&&sp.length<NS;k++){const q=[90+R(620),135+R(195)];if(sp.every(o=>Math.abs(o[0]-q[0])>=125||Math.abs(o[1]-q[1])>=118))sp.push(q)}if(sp.length<NS){sp.length=0;shuf([[100,165],[245,150],[390,165],[535,150],[680,170],[100,320],[245,310],[390,325],[535,310],[680,325]]).slice(0,NS).forEach(q=>sp.push(q))}
+ const its=its0.map((a,i)=>({e:a[0],n:a[1],f:a[2],w:ws[i],x:sp[i][0],y:sp[i][1],got:0})),order=shuf(its.map((_,i)=>i).filter(i=>tg.includes(its[i].w))).slice(0,5);
+ const G=sgNew({lx:W/2,ly:H/2,qi:0,flash:0,busy:0,s1:1+Math.random()*2,s2:1.5+Math.random()*2,ff:Array.from({length:10+R(12)},()=>({x:Math.random()*W,y:Math.random()*H,p:Math.random()*6}))});CG=G;
+ const T=()=>its[order[G.qi]];G.its=its;G.T=T;const ask=()=>{G.lis=G.qi>0&&R(5)<2;G.msg=G.lis?"🔊 Listen! Find the word you hear.":`Find the word: ${T().w.toUpperCase()}`;G.mt=99;talk(`Find the word ${T().w}.`)};cq("#sgfh").onclick=()=>{if(!G.done)talk(T().w)};
  const pick=(px,py)=>{if(G.busy||G.done)return;let b=null,bd=1e9;for(const it of its){if(it.got)continue;const d=Math.hypot(it.x-px,it.y+10-py);if(d<bd){bd=d;b=it}}if(!b||bd>75||Math.hypot(b.x-G.lx,b.y-G.ly)>170)return;
   if(b===T()){b.got=1;G.busy=1;const m=sgGood(G);G.flash=1;sgSnd.beam();setTimeout(cgSnd.chime,200);cgBurst(G.parts,b.x,b.y,"#ffd34d",26);G.msg=`${b.n}: ${b.f}  +${m} ⭐`;G.mt=99;talk(`Yes! ${b.w}. ${b.f}`);
    setTimeout(()=>{if(CG!==G)return;G.busy=0;G.qi++;if(G.qi>=order.length)sgEnd(G,"flash","🔦 All found!","sgFlash()");else ask()},4200)}
-  else{sgBad(G);cgSnd.boing();G.msg=`That sign says ${b.w.toUpperCase()}. Find ${T().w.toUpperCase()}!`;G.mt=99;talk(`That sign says ${b.w}. Find ${T().w}.`)}};
+  else{sgBad(G);cgSnd.boing();G.msg=G.lis?`That sign says ${b.w.toUpperCase()}. Listen again!`:`That sign says ${b.w.toUpperCase()}. Find ${T().w.toUpperCase()}!`;G.mt=99;talk(`That sign says ${b.w}. Find ${T().w}.`)}};
  const mv=e=>{const[px,py]=cgPt(c,e,W,H);G.lx=px;G.ly=py-(e.pointerType=="touch"?45:0)};
  c.addEventListener("pointermove",mv);c.addEventListener("pointerdown",e=>{e.preventDefault();mv(e);const[px,py]=cgPt(c,e,W,H);pick(px,py)});
  G.press=k=>{if(k==" "){let b=null,bd=1e9;for(const it of its){if(it.got)continue;const d=Math.hypot(it.x-G.lx,it.y-G.ly);if(d<bd){bd=d;b=it}}if(b&&bd<100)pick(b.x,b.y+10)}};
  ask();
  cgLoop(G,(dt,t)=>{const k=(CGK.ArrowRight?1:0)-(CGK.ArrowLeft?1:0),k2=(CGK.ArrowDown?1:0)-(CGK.ArrowUp?1:0);G.lx=Math.max(0,Math.min(W,G.lx+k*330*dt));G.ly=Math.max(0,Math.min(H,G.ly+k2*330*dt));
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#0b1638");g.addColorStop(1,"#1d3b2b");x.fillStyle=g;x.fillRect(0,0,W,H);
-  cgPines(x,W,250,0,0,"#122a4f",38,1.3);cgPines(x,W,430,0,0,"#103a2c",58,2.1);x.fillStyle="#163a29";x.fillRect(0,415,W,35);
+  cgPines(x,W,250,0,0,"#122a4f",38,G.s1);cgPines(x,W,430,0,0,"#103a2c",58,G.s2);x.fillStyle="#163a29";x.fillRect(0,415,W,35);
   const art=it=>{x.font="54px serif";x.textAlign="center";x.textBaseline="middle";x.fillText(it.e,it.x,it.y-18);x.fillStyle="#6b4423";x.fillRect(it.x-3,it.y+46,6,16);x.fillStyle="#8a5a32";cgRR(x,it.x-50,it.y+12,100,36,9);x.fill();x.strokeStyle="#5a3a1a";x.lineWidth=2;x.stroke();x.fillStyle="#fff3c4";x.font="700 25px Fredoka, 'Baloo 2', sans-serif";x.fillText(it.w,it.x,it.y+31)};
   its.forEach(art);
   const lr=G.flash>0?520:125,dg=x.createRadialGradient(G.lx,G.ly,lr*.42,G.lx,G.ly,lr);dg.addColorStop(0,"rgba(2,4,16,0)");dg.addColorStop(1,"rgba(2,4,16,.97)");x.fillStyle=dg;x.fillRect(0,0,W,H);
@@ -1579,7 +1601,7 @@ function sgFlash(){cgStop();const W=800,H=450,its0=shuf(SGA).slice(0,6),ws=shuf(
   for(const f of G.ff){f.x=(f.x+Math.sin(t+f.p)*22*dt+W)%W;f.y=(f.y+Math.cos(t*.8+f.p)*15*dt+H)%H;x.globalAlpha=.35+.65*Math.abs(Math.sin(t*2+f.p));x.fillStyle="#fff59a";x.beginPath();x.arc(f.x,f.y,2.4,0,7);x.fill()}x.globalAlpha=1;
   for(const it of its)if(!it.got&&Math.hypot(it.x-G.lx,it.y-G.ly)<85){x.font="700 15px Fredoka, sans-serif";x.fillStyle="#ffd34d";x.textAlign="center";x.textBaseline="middle";x.fillText(it.n,it.x,it.y-58)}
   if(G.flash>0){x.fillStyle=`rgba(255,240,190,${G.flash*.45})`;x.fillRect(0,0,W,H);G.flash=Math.max(0,G.flash-dt*1.1)}
-  cgParts(x,G.parts,dt);sgHud(x,G,W,`Word ${Math.min(G.qi+1,5)} of 5`);if(G.mt>0)sgPill(x,W,H,G.msg)})}
+  cgParts(x,G.parts,dt);sgHud(x,G,W,`Word ${Math.min(G.qi+1,order.length)} of ${order.length}`);if(G.mt>0)sgPill(x,W,H,G.msg)})}
 
 /* ---------- 2. Slingshot Marshmallow Target Practice (rhyming) ---------- */
 function sgSling(){cgStop();const W=800,H=450,R0=[140,300],GR=900,K=6.2,GY=418;
