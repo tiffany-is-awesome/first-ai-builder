@@ -416,23 +416,23 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 .pc-bath .head{animation:pcShakeH .85s ease-out 2.5s 1}@keyframes pcShakeH{0%{transform:rotate(0)}9%{transform:rotate(12deg)}20%{transform:rotate(-13deg)}31%{transform:rotate(10deg)}43%{transform:rotate(-8deg)}55%{transform:rotate(6deg)}68%{transform:rotate(-3deg)}100%{transform:rotate(0)}}
 .pc-calm .head{animation:pcNod 1s ease-in-out 3}@keyframes pcNod{50%{transform:rotate(-6deg) translateY(2px)}}
 
-.pcf-carry{opacity:0}.pc-play .pcf-carry{animation:pcfShow .1s 1.95s both,pcfHide .1s 3.3s forwards}@keyframes pcfShow{to{opacity:1}}@keyframes pcfHide{to{opacity:0}}
+.pcf-carry{opacity:0}.pc-play .pcf-carry{animation:pcfShow .05s 1.94s both,pcfHide .05s 3.3s forwards}@keyframes pcfShow{to{opacity:1}}@keyframes pcfHide{to{opacity:0}}
 .pcf-in{animation:pcfIn .5s ease-out both}@keyframes pcfIn{from{opacity:0;transform:translateX(-90px)}}
 .pcf-gone{animation:pcfGone .3s both}@keyframes pcfGone{to{opacity:0;transform:translateY(-8px) scale(.4)}}
 .pcf-up{opacity:0;animation:pcfUp 1.3s ease-out both}@keyframes pcfUp{0%{opacity:0;transform:translateY(8px)}20%{opacity:1}100%{opacity:0;transform:translateY(-28px)}}
 .pcf-pop{opacity:0;animation:pcfPop .7s ease-out both}@keyframes pcfPop{0%{opacity:0;transform:scale(.2)}50%{opacity:1;transform:scale(1.3)}100%{opacity:0;transform:scale(.8)}}
-.pcf-fly{opacity:0;animation:pcfFly .7s ease-out both}@keyframes pcfFly{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+.pcf-fly{opacity:0;animation:pcfFly .7s ease-out forwards}@keyframes pcfFly{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
 .pcf-jug{animation:pcfJug 1.6s ease-in-out both}@keyframes pcfJug{0%{opacity:0;transform:translate(30px,-20px)}15%{opacity:1;transform:translate(0,0) rotate(0)}30%,80%{opacity:1;transform:rotate(-38deg)}100%{opacity:0;transform:translate(30px,-20px)}}
-.pcf-drop{opacity:0;animation:pcfDrop .45s ease-in both}@keyframes pcfDrop{0%{opacity:1;transform:translate(0,0)}100%{opacity:1;transform:translate(-26px,48px)}}
+.pcf-drop{opacity:0;animation:pcfDrop .45s ease-in forwards}@keyframes pcfDrop{0%{opacity:1;transform:translate(0,0)}80%{opacity:1}100%{opacity:0;transform:translate(-26px,48px)}}
 .pcf-fill{transform-origin:50% 100%!important;animation:pcfFill 1.3s .4s ease-out both}@keyframes pcfFill{from{transform:scale(.1,.1);opacity:.2}}
-.pcf-rip{opacity:0;animation:pcfRip .7s ease-out both}@keyframes pcfRip{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(3)}}
+.pcf-rip{opacity:0;animation:pcfRip .7s ease-out forwards}@keyframes pcfRip{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(3)}}
 .pcf-tub{animation:pcfIn .45s ease-out both,pcfOut .35s 2.3s forwards}@keyframes pcfOut{to{opacity:0;transform:translateY(16px)}}
 .pcf-foam{opacity:0;animation:pcfShow .4s .9s both,pcfOut .3s 2.3s forwards}
 .pcf-bub{opacity:0;animation:pcfBub 1.3s ease-out both}@keyframes pcfBub{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:.95}100%{opacity:0;transform:translate(var(--dx),-80px) scale(1.15)}}
 .pcf-brush{animation:pcfBrush 2.4s ease-in-out both}@keyframes pcfBrush{0%{opacity:0;transform:translate(-40px,-60px) rotate(-18deg)}10%{opacity:1;transform:translate(-20px,-48px) rotate(-18deg)}30%{transform:translate(16px,-30px) rotate(-18deg)}50%{transform:translate(-20px,-48px) rotate(-18deg)}70%{transform:translate(16px,-30px) rotate(-18deg)}90%{opacity:1;transform:translate(-14px,-44px) rotate(-18deg)}100%{opacity:0;transform:translate(-30px,-60px) rotate(-18deg)}}
-.pcf-tuft{opacity:0;animation:pcfFly 1s ease-out both}
-.pcf-ball{animation:pcfBall 1.9s both}@keyframes pcfBall{0%{opacity:0;transform:translate(-110px,-40px)}5%{opacity:1;transform:translate(-110px,-40px)}25%{transform:translate(-20px,-104px)}45%{transform:translate(62px,-4px)}52%{transform:translate(68px,-10px)}56%{opacity:1;transform:translate(70px,-4px)}57%{opacity:0;transform:translate(70px,-4px)}100%{opacity:0;transform:translate(70px,-4px)}}
-.pcf-scroll{animation:pcfScroll 3.6s linear both}@keyframes pcfScroll{from{transform:translateX(60px)}to{transform:translateX(-200px)}}
+.pcf-tuft{opacity:0;animation:pcfFly 1s ease-out forwards}
+.pcf-ball{animation:pcfBall 3.6s both}@keyframes pcfBall{0%{opacity:0;transform:translate(-110px,-40px)}5%{opacity:1;transform:translate(-110px,-40px)}25%{transform:translate(-2px,-116px)}45%{transform:translate(98px,-6px)}50%{transform:translate(104px,-14px)}53.5%{opacity:1;transform:translate(107px,-6px)}54%{opacity:0;transform:translate(107px,-6px)}100%{opacity:0;transform:translate(107px,-6px)}}
+.pcf-scroll{animation:pcfScroll 3.6s linear both}@keyframes pcfScroll{from{transform:translateX(60px)}to{transform:translateX(-189px)}}.pcf-scrollF{animation:pcfScrollF 3.6s linear both}@keyframes pcfScrollF{from{transform:translateX(60px)}to{transform:translateX(-40px)}}
 .pcf-lead{animation:pcfIn .4s both}
 @keyframes pch{50%{transform:translateY(-14px) rotate(-4deg)}}
 /* Little Games, cards, journey, parent area */
@@ -516,30 +516,73 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 @keyframes chew{50%{transform:translateY(2.2px) scaleY(1.3)}}
 .mini.dog-nom .dog .jaw{animation:chew .15s 6}.pc-eat .jaw{animation:chew .225s .6s 10}.pc-drink .jaw{animation:chew .17s 1.7s 8}
 .pcdg.pc-calm .dog:not(.zz) .eyes{animation:none;transform:scaleY(.12)}.pc-bath .dog .ear{animation:none}.pc-bath .dog .el{transform:rotate(-11deg)}.pc-bath .dog .er{transform:rotate(11deg)}
-.dsl,.dsh,.dst,.dsb{transform-box:fill-box}.dsl{transform-origin:50% 0}.dst{transform-origin:100% 100%}.dsh{transform-origin:15% 87%}
-.dogs .dst{animation:dsWag .6s infinite alternate ease-in-out}@keyframes dsWag{from{transform:rotate(-9deg)}to{transform:rotate(13deg)}}
-.dogs .tng{opacity:0}.dogs.run .tng,.pc-run .dogs .tng{opacity:1}
-.dogs.trot .nf,.dogs.trot .fb,.pc-walk .dogs .nf,.pc-walk .dogs .fb{animation:dsTrot .7s infinite linear}
-.dogs.trot .ff,.dogs.trot .nb,.pc-walk .dogs .ff,.pc-walk .dogs .nb{animation:dsTrot .7s -.35s infinite linear}
-@keyframes dsTrot{0%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}75%{transform:rotate(0) scaleY(.84)}100%{transform:rotate(-24deg)}}
-.dogs.run .nf,.dogs.run .ff,.pc-run .dogs .nf,.pc-run .dogs .ff{animation:dsRunF .34s infinite ease-in-out}
-.dogs.run .nb,.dogs.run .fb,.pc-run .dogs .nb,.pc-run .dogs .fb{animation:dsRunB .34s infinite ease-in-out}
-@keyframes dsRunF{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(30deg) scaleY(.9)}}@keyframes dsRunB{0%,100%{transform:rotate(32deg) scaleY(.9)}50%{transform:rotate(-36deg)}}
-.dogs.trot .dst,.pc-walk .dogs .dst,.pc-eat .dogs .dst,.pc-play .dogs .dst{animation-duration:.3s}
-.pc-run .dogs .dst,.dogs.run .dst{animation:dsTail .34s infinite ease-in-out}@keyframes dsTail{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
-.pc-run .dogs{animation:dsBound .34s infinite ease-in-out}@keyframes dsBound{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.pc-run .dogs .er,.dogs.run .er{animation:none!important;transform:rotate(-34deg)}.pc-run .dogs .el,.dogs.run .el{animation:none!important;transform:rotate(-30deg)}
+.dogs .tng{transform-box:fill-box;transform-origin:50% 0}
+.dogs .dst{animation:dsWag .6s infinite alternate ease-in-out}
+@keyframes dsWag{from{transform:rotate(-10deg)}to{transform:rotate(14deg)}}
+.dogs.trot .dst,.pc-walk .dogs .dst,.pc-eat .dogs .dst,.pc-play .dogs .dst{animation-duration:.32s}
+.dogs.trot .lnf,.dogs.trot .lfb,.pc-walk .dogs .lnf,.pc-walk .dogs .lfb{animation:dsStep .72s infinite linear}
+.dogs.trot .lff,.dogs.trot .lnb,.pc-walk .dogs .lff,.pc-walk .dogs .lnb{animation:dsStep .72s -.36s infinite linear}
+@keyframes dsStep{0.0%{transform:rotate(-35.3deg) scaleY(1.225)}5.5%{transform:rotate(-29.3deg) scaleY(1.155)}11.0%{transform:rotate(-22.5deg) scaleY(1.110)}16.5%{transform:rotate(-15.0deg) scaleY(1.090)}22.0%{transform:rotate(-7.5deg) scaleY(1.081)}27.5%{transform:rotate(0.0deg) scaleY(1.078)}33.0%{transform:rotate(7.5deg) scaleY(1.078)}38.5%{transform:rotate(15.2deg) scaleY(1.078)}44.0%{transform:rotate(22.8deg) scaleY(1.097)}49.5%{transform:rotate(29.5deg) scaleY(1.149)}55.0%{transform:rotate(35.1deg) scaleY(1.229)}62.0%{transform:rotate(28.1deg) scaleY(0.880)}72.0%{transform:rotate(12.3deg) scaleY(0.780)}84.0%{transform:rotate(-12.3deg) scaleY(0.800)}94.0%{transform:rotate(-28.1deg) scaleY(0.950)}100.0%{transform:rotate(-35.3deg) scaleY(1.225)}}
+@keyframes dsStepP{0.0%{transform:scaleY(0.816) rotate(35.3deg)}5.5%{transform:scaleY(0.866) rotate(29.3deg)}11.0%{transform:scaleY(0.901) rotate(22.5deg)}16.5%{transform:scaleY(0.918) rotate(15.0deg)}22.0%{transform:scaleY(0.925) rotate(7.5deg)}27.5%{transform:scaleY(0.927) rotate(-0.0deg)}33.0%{transform:scaleY(0.928) rotate(-7.5deg)}38.5%{transform:scaleY(0.927) rotate(-15.2deg)}44.0%{transform:scaleY(0.912) rotate(-22.8deg)}49.5%{transform:scaleY(0.870) rotate(-29.5deg)}55.0%{transform:scaleY(0.814) rotate(-35.1deg)}62.0%{transform:scaleY(1.136) rotate(-28.1deg)}72.0%{transform:scaleY(1.282) rotate(-12.3deg)}84.0%{transform:scaleY(1.250) rotate(12.3deg)}94.0%{transform:scaleY(1.053) rotate(28.1deg)}100.0%{transform:scaleY(0.816) rotate(35.3deg)}}
+.dsp{transform-box:fill-box;transform-origin:50% 50%}
+.dogs.trot .lnf .dsp,.dogs.trot .lfb .dsp,.pc-walk .dogs .lnf .dsp,.pc-walk .dogs .lfb .dsp{animation:dsStepP .72s infinite linear}
+.dogs.trot .lff .dsp,.dogs.trot .lnb .dsp,.pc-walk .dogs .lff .dsp,.pc-walk .dogs .lnb .dsp{animation:dsStepP .72s -.36s infinite linear}
+.dog.dogs.trot,.pc-walk .dog.dogs{animation:dsBob .36s infinite ease-in-out}
+@keyframes dsBob{0%,100%{transform:translateY(0)}55%{transform:translateY(-1.6px)}}
+.dogs.trot .ear,.pc-walk .dogs .ear{animation:dsEarStep .36s infinite ease-in-out}
+@keyframes dsEarStep{0%,100%{transform:rotate(1deg)}50%{transform:rotate(-5deg)}}
+.dogs.run .lnf,.dogs.run .lff,.pc-run .dogs .lnf,.pc-run .dogs .lff{animation:dsRunF .44s infinite ease-in-out}
+.dogs.run .lnb,.dogs.run .lfb,.pc-run .dogs .lnb,.pc-run .dogs .lfb{animation:dsRunB .44s infinite ease-in-out}
+@keyframes dsRunF{0%,100%{transform:rotate(24deg) scaleY(.84)}50%{transform:rotate(-44deg) scaleY(1)}}
+@keyframes dsRunB{0%,100%{transform:rotate(-28deg) scaleY(.84)}50%{transform:rotate(40deg) scaleY(1)}}
+.pc-run .dog.dogs,.dog.dogs.run{animation:dsBound .44s infinite ease-in-out}
+@keyframes dsBound{0%,100%{transform:translateY(0)}50%{transform:translateY(-4.5px)}}
+.pc-run .dogs .dsf,.dogs.run .dsf{animation:dsPitch .44s infinite ease-in-out}
+@keyframes dsPitch{0%,100%{transform:rotate(2deg)}50%{transform:rotate(-3deg)}}
+.pc-run .dogs .dst,.dogs.run .dst{animation:dsTail .44s infinite ease-in-out}
+@keyframes dsTail{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
+.dogs.run .er{animation:none!important;transform:rotate(-30deg)}
+.dogs.run .el{animation:none!important;transform:rotate(-26deg)}
+.pc-play .dogs .er{animation:dsPlayEarR 3.6s both ease-in-out}
+.pc-play .dogs .el{animation:dsPlayEarL 3.6s both ease-in-out}
+@keyframes dsPlayEarR{0%,20%{transform:none}25%,50%{transform:rotate(-30deg)}55%,62%{transform:rotate(-14deg)}67%,92%{transform:rotate(-30deg)}97%,100%{transform:none}}
+@keyframes dsPlayEarL{0%,20%{transform:none}25%,50%{transform:rotate(-26deg)}55%,62%{transform:rotate(-26deg)}67%,92%{transform:rotate(-26deg)}97%,100%{transform:none}}
 .pc-run .dogs .dsh,.dogs.run .dsh{transform:rotate(-5deg)}
-.pc-eat .dogs .dsh{animation:dsEat 3.2s both}.pc-drink .dogs .dsh{animation:dsDrink 3.3s both}
-@keyframes dsEat{0%,14%{transform:rotate(0)}22%,28%{transform:rotate(54deg)}34%{transform:rotate(47deg)}40%{transform:rotate(54deg)}46%{transform:rotate(47deg)}52%{transform:rotate(54deg)}58%{transform:rotate(47deg)}64%{transform:rotate(54deg)}70%{transform:rotate(47deg)}78%{transform:rotate(54deg)}92%,100%{transform:rotate(0)}}
-@keyframes dsDrink{0%,48%{transform:rotate(0)}56%{transform:rotate(56deg)}93%{transform:rotate(56deg)}100%{transform:rotate(0)}}
-.pc-drink .dogs .tng{animation:dsLap .17s 1.9s 9 ease-in-out}.pc-drink .dogs .jaw{animation:none}@keyframes dsLap{0%,100%{opacity:0}50%{opacity:1}}
-.pcfront,.pcside{transition:opacity .2s}.pcside{opacity:0;pointer-events:none}
+.pc-run .dogs .tng,.dogs.run .tng{transform:scaleY(1.5)}
+.pc-eat .dogs .dsh{animation:dsEat 3.2s both ease-in-out}
+.pc-eat .dogs .dsf{animation:dsEatB 3.2s both ease-in-out}
+.pc-eat .dogs .er{animation:dsEarR 3.2s both ease-in-out}
+.pc-eat .dogs .el{animation:dsEarL 3.2s both ease-in-out}
+.pc-drink .dogs .dsh{animation:dsDrink 3.3s both ease-in-out}
+.pc-drink .dogs .dsf{animation:dsDrinkB 3.3s both ease-in-out}
+.pc-drink .dogs .er{animation:dsEarR 3.3s both ease-in-out}
+.pc-drink .dogs .el{animation:dsEarL 3.3s both ease-in-out}
+@keyframes dsEat{0%,12%{transform:none}14%{transform:rotate(-4deg)}21.9%,22%{transform:translate(6px,5px) rotate(64deg)}29%{transform:translate(5px,4px) rotate(54deg)}35.9%{transform:translate(6px,5px) rotate(64deg)}43%{transform:translate(5px,4px) rotate(54deg)}50%{transform:translate(6px,5px) rotate(64deg)}57%{transform:translate(5px,4px) rotate(54deg)}64%{transform:translate(6px,5px) rotate(64deg)}71%{transform:translate(5px,4px) rotate(54deg)}78%{transform:translate(6px,5px) rotate(64deg)}88%{transform:rotate(-4deg)}94%{transform:rotate(1deg)}100%{transform:none}}
+@keyframes dsEatB{0%,12%{transform:none}22%,78%{transform:rotate(5deg)}90%,100%{transform:none}}
+@keyframes dsEarR{0%,12%{transform:none}22%,80%{transform:rotate(-14deg)}94%,100%{transform:none}}
+@keyframes dsEarL{0%,12%{transform:none}22%,80%{transform:rotate(-26deg)}94%,100%{transform:none}}
+@keyframes dsDrink{0%,50%{transform:none}53%{transform:rotate(-3deg)}58%,93%{transform:translate(6px,5px) rotate(66deg)}98%{transform:rotate(-2deg)}100%{transform:none}}
+@keyframes dsDrinkB{0%,50%{transform:none}58%,93%{transform:rotate(5deg)}98%,100%{transform:none}}
+.pc-drink .dogs .tng{animation:dsLap .35s 1.9s 4 ease-in-out}
+@keyframes dsLap{0%,100%{transform:scale(1,.8)}50%{transform:scale(1.15,2.1)}}
+.pc-drink .dogs .jaw{animation:none}
+.pcfront,.pcside{transition:opacity .04s linear .09s}
+.pcside{opacity:0;pointer-events:none}
 .pc-walk .pcside,.pc-run .pcside,.pc-eat .pcside,.pc-drink .pcside,.pc-play .pcside{opacity:1}
 .pc-walk .pcfront,.pc-run .pcfront,.pc-eat .pcfront,.pc-drink .pcfront,.pc-play .pcfront{opacity:0}
+.pcdg .pct{transform-box:view-box;transform-origin:0 0}
+.pcfront .pct{transition:transform .14s ease-out .1s}
+.pcside .pct{transform:scaleX(.12);transition:transform .1s ease-in}
+.pc-walk .pcfront .pct,.pc-run .pcfront .pct,.pc-eat .pcfront .pct,.pc-drink .pcfront .pct,.pc-play .pcfront .pct{transform:scaleX(.12);transition:transform .1s ease-in}
+.pc-walk .pcside .pct,.pc-run .pcside .pct,.pc-eat .pcside .pct,.pc-drink .pcside .pct,.pc-play .pcside .pct{transform:none;transition:transform .14s ease-out .1s}
 .pcside{transform-origin:50% 100%}
-.pc-play .pcside{animation:pcFetchS 3.4s both ease-in-out}
-@keyframes pcFetchS{0%,22%{transform:translateX(-34px)}50%,56%{transform:translateX(16px) scaleX(1)}59%{transform:translateX(12px) scaleX(-1)}92%,100%{transform:translateX(-34px) scaleX(-1)}}.pc-play .dogs .dsh{animation:dsGrab 3.4s both}@keyframes dsGrab{0%,46%{transform:rotate(0)}52%,56%{transform:rotate(54deg)}62%{transform:rotate(-6deg)}70%,100%{transform:rotate(0)}}
+.pc-play .pcside{animation:pcFetchS 3.6s both ease-in-out}
+@keyframes pcFetchS{0%,21.9%{transform:none}50%,61%{transform:translateX(40px)}63%{transform:translateX(40px) scaleX(.15)}65%{transform:translateX(40px) scaleX(-1)}92%,93%{transform:translateX(0) scaleX(-1)}95.5%{transform:translateX(0) scaleX(.12)}98%,100%{transform:translateX(0) scaleX(1)}}
+.pc-play .dogs .dsh{animation:dsGrab 3.6s both ease-in-out}
+.pc-play .dogs .dsf{animation:dsGrabB 3.6s both ease-in-out}
+@keyframes dsGrab{0%,45%{transform:rotate(-5deg)}51%{transform:rotate(-8deg)}54%,56%{transform:translate(6px,5px) rotate(62deg)}63%{transform:rotate(-8deg)}72%{transform:rotate(1deg)}80%,100%{transform:none}}
+@keyframes dsGrabB{0%,50%{transform:none}54%,56%{transform:rotate(5deg)}64%,100%{transform:none}}
+
 </style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <filter id="paint" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="2.6" result="g"/><feMorphology in="g" operator="dilate" radius="2" result="d"/><feFlood flood-color="#fffaf0" result="fl"/><feComposite in="fl" in2="d" operator="in" result="o"/><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .22 0 0 0 0 .12 0 0 0 0 .06 1.4 0 0 0 -1.0" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="8" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .85 1.2 0 0 0 -.9" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="o"/><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
 <filter id="grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="3" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="3" result="g"/><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .1 1.6 0 0 0 -.98" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="1" seed="6" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .86 1.5 0 0 0 -.98" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
@@ -846,23 +889,26 @@ return `<g class="dog${DOGZ?" zz":""}${tr?" trot":""}" onclick="chat()" filter="
 <ellipse cy="-54" rx="4.8" ry="3.4" fill="#2b1a14"/><ellipse cx="-1.4" cy="-55.2" rx="1.5" ry=".9" fill="#fff" opacity=".8"/><g class="jaw"><path d="M0-51V-48.5M-5-47Q0-43 5-47" stroke="#2b1a14" fill="none" stroke-width="1.8" stroke-linecap="round"/><path d="M-2-45.5Q0-40 2-45.5Z" fill="#e8808a"/></g>${S.eq.dog.map(k=>(ITEMS[k]||[])[4]||"").join("")}</g></g>`};
 /* ---- the puppy from the side (facing right): standing, trotting, running, eating. Each leg, the tail, the head and the ears are their own parts so they can move like a real dog ---- */
 const DSI={
- d_collar:["h",'<path d="M13-69Q22-60 27-48" stroke="#3f7a4a" stroke-width="5.5" fill="none" stroke-linecap="round"/><path d="M27-48L33-38H21Z" fill="#e8b23a" stroke="#a8761a" stroke-width="1"/>'],
- d_scarf:["h",'<path d="M13-70L31-52L21-30Z" fill="#3f7a4a"/><path d="M17-62L26-52M18-54L25-47M20-44L24-40" stroke="#b3202a" stroke-width="1.8" opacity=".85" stroke-linecap="round"/>'],
- d_lamp:["h",'<path d="M30-80Q42-93 58-82" stroke="#2f3a4a" stroke-width="4" fill="none"/><rect x="47" y="-96" width="13" height="9.5" rx="3" fill="#e8b23a" stroke="#a8761a" stroke-width="1"/><circle cx="58.5" cy="-91" r="3.2" fill="#fff6c0"/>'],
- d_ranger:["h",'<ellipse cx="42" cy="-86" rx="25" ry="5" fill="#8a6a3a"/><path d="M30-87Q29-103 37-106L42-100L48-106Q56-103 54-87Z" fill="#a8834a"/><rect x="30" y="-92" width="24" height="4.5" fill="#5a3e1f"/>'],
- d_pack:["b",'<rect x="-22" y="-66" width="34" height="9" rx="4" fill="#c8641c"/><rect x="-24" y="-60" width="38" height="25" rx="6" fill="#e07a2a"/><path d="M-24-52H14" stroke="#8a4a14" stroke-width="1.6"/><circle cx="-5" cy="-44" r="2.4" fill="#f4d38a"/><path d="M-2-62V-34" stroke="#5a3e1f" stroke-width="3"/>'],
- d_vest:["b",'<path d="M-16-61Q-19-42-10-24H24Q31-42 25-61Q5-54-16-61Z" fill="#f07b2a"/><path d="M-17-47Q4-43 26-47" stroke="#fbf0cf" stroke-width="3.2" fill="none"/><path d="M-13-34Q7-30 28-34" stroke="#fbf0cf" stroke-width="3.2" fill="none"/><rect x="2" y="-60" width="7" height="6" rx="1" fill="#2f3a4a"/>']};
-const dogS=(pose,carry)=>{const f=S.fur||"#d9a066",d=shade(f,-.22),l=shade(f,.42),w="#f7eedd",dw=shade(w,-.14),ink="#2b1a14",eq=(S.eq&&S.eq.dog)||[],it=p=>eq.map(k=>DSI[k]&&DSI[k][0]==p?DSI[k][1]:"").join(""),
- leg=(c,x,col,pw)=>`<g class="dsl ${c}"><rect x="${x}" y="-36" width="9" height="36" rx="4.5" fill="${col}"/><ellipse cx="${x+6}" cy="-2.6" rx="8" ry="4.6" fill="${pw}"/><path d="M${x+8}-3.6v3.2M${x+12}-3.6v3.2" stroke="${d}" stroke-width="1" stroke-linecap="round"/></g>`;
-return `<g class="dog dogs${pose?" "+pose:""}" onclick="chat()" filter="url(#vec)">${leg("fb",-28,d,dw)}${leg("ff",4,d,dw)}
-<g class="dst"><rect x="-70" y="-84" width="28" height="44" fill="none"/><path d="M-46-46Q-66-50-68-70Q-68-80-60-77" stroke="${f}" stroke-width="8.5" fill="none" stroke-linecap="round"/><path d="M-66-70Q-67-80-60-77" stroke="${w}" stroke-width="5" fill="none" stroke-linecap="round"/></g>
-<g class="dsb"><path d="M-48-32Q-53-58-26-61L10-62Q32-62 33-42Q34-24 14-24L-28-23Q-46-21-48-32Z" fill="${f}"/><path d="M-26-25Q-4-19 14-25Q4-31-26-30Z" fill="${w}" opacity=".85"/><ellipse cx="-8" cy="-57" rx="20" ry="4.2" fill="${l}" opacity=".4"/>${it("b")}</g>
-${leg("nb",-42,f,w)}<ellipse cx="-33" cy="-41" rx="14" ry="17" fill="${f}"/><ellipse cx="-37" cy="-47" rx="6" ry="9" fill="${l}" opacity=".3"/>${leg("nf",13,f,w)}<ellipse cx="20" cy="-42" rx="12" ry="15" fill="${f}"/><ellipse cx="26" cy="-37" rx="8" ry="13" fill="${w}"/>
-<g class="dsh"><rect x="0" y="-124" width="82" height="78" fill="none"/><path d="M6-61Q18-74 30-78L46-58Q30-44 14-46Z" fill="${f}"/>
-<g class="ear el"><path d="M45-85L51-107L62-90Z" fill="${d}"/></g><ellipse cx="42" cy="-72" rx="19" ry="16" fill="${f}"/><ellipse cx="38" cy="-82" rx="9" ry="3.6" fill="${l}" opacity=".45"/><ellipse cx="58" cy="-70" rx="14" ry="8.6" fill="${f}"/><ellipse cx="61" cy="-63" rx="12.5" ry="7.4" fill="${w}"/><path d="M46-90Q52-78 56-70L61-72Q55-82 51-90Z" fill="${w}" opacity=".9"/>
-<g class="ear er"><path d="M29-80L26-105L47-90Z" fill="${f}"/><path d="M31-84L29.5-98L41-90Z" fill="#d99a8a"/></g>
-<circle cx="50" cy="-64" r="3.8" fill="#ff8fa8" opacity=".3"/><g class="eyes"><ellipse cx="47" cy="-75" rx="3.2" ry="4.1" fill="${ink}"/><circle cx="48.2" cy="-76.6" r="1.4" fill="#fff"/><circle cx="46" cy="-73.6" r=".7" fill="#fff"/></g><path d="M42-82Q47-85 52-82" stroke="${d}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-<ellipse cx="72" cy="-68" rx="4.6" ry="3.6" fill="${ink}"/><ellipse cx="70.8" cy="-69.4" rx="1.5" ry=".9" fill="#fff" opacity=".8"/><g class="jaw"><path d="M72-64Q68-58 58-61" stroke="${ink}" fill="none" stroke-width="1.8" stroke-linecap="round"/><path class="tng" d="M64-60Q64-52 69-56Q70-59 68-61Z" fill="#e8808a"/></g>${it("h")}${carry?'<circle class="pcf-carry" cx="76" cy="-57" r="6" fill="#ffd34d" stroke="#e09a00" stroke-width="1.5"/>':""}</g></g>`};
+ d_collar:["h",'<path d="M11-60Q21-52 27-40" stroke="#3f7a4a" stroke-width="5.5" fill="none" stroke-linecap="round"/><path d="M27-40L33-30H21Z" fill="#e8b23a" stroke="#a8761a" stroke-width="1"/>'],
+ d_scarf:["h",'<path d="M10-62L32-46L21-26Z" fill="#3f7a4a"/><path d="M15-54L27-45M16-46L26-38M18-37L24-32" stroke="#b3202a" stroke-width="1.8" opacity=".85" stroke-linecap="round"/>'],
+ d_lamp:["h",'<path d="M28-86Q42-101 60-89" stroke="#2f3a4a" stroke-width="4" fill="none"/><rect x="49" y="-103" width="13" height="9.5" rx="3" fill="#e8b23a" stroke="#a8761a" stroke-width="1"/><circle cx="60.5" cy="-98" r="3.2" fill="#fff6c0"/>'],
+ d_ranger:["h",'<ellipse cx="42" cy="-92" rx="26" ry="5.5" fill="#8a6a3a"/><path d="M30-93Q29-109 37-112L42-106L48-112Q56-109 54-93Z" fill="#a8834a"/><rect x="30" y="-98" width="24" height="4.5" fill="#5a3e1f"/>'],
+ d_pack:["b",'<rect x="-22" y="-62" width="30" height="8" rx="4" fill="#c8641c"/><rect x="-25" y="-57" width="34" height="22" rx="6" fill="#e07a2a"/><path d="M-25-48H9" stroke="#8a4a14" stroke-width="1.6"/><circle cx="-8" cy="-41" r="2.2" fill="#f4d38a"/><path d="M-5-54V-34" stroke="#5a3e1f" stroke-width="3"/>'],
+ d_vest:["b",'<path d="M-14-55Q-17-38-9-21H22Q29-38 23-55Q4-48-14-55Z" fill="#f07b2a"/><path d="M-15-44Q4-40 24-44" stroke="#fbf0cf" stroke-width="3" fill="none"/><path d="M-12-32Q6-28 26-32" stroke="#fbf0cf" stroke-width="3" fill="none"/><rect x="2" y="-54" width="7" height="6" rx="1" fill="#2f3a4a"/>']};
+const dogS=(pose,carry)=>{const f=S.fur||"#d9a066",d=shade(f,-.22),l=shade(f,.42),w="#f7eedd",dw=shade(w,-.1),ink="#2b1a14",eq=(S.eq&&S.eq.dog)||[],it=p=>eq.map(k=>DSI[k]&&DSI[k][0]==p?DSI[k][1]:"").join(""),
+ leg=(c,x,col,pw)=>`<g class="dsl ${c}" style="transform-box:view-box;transform-origin:${x+4.5}px -23px"><rect x="${x}" y="-26" width="9" height="26" rx="4.5" fill="${col}"/><g class="dsp"><ellipse cx="${x+5.5}" cy="-2.6" rx="8" ry="4.6" fill="${pw}"/><path d="M${x+7}-3.6v3.2M${x+11}-3.6v3.2" stroke="${d}" stroke-width="1" stroke-linecap="round"/></g></g>`;
+return `<g class="dog dogs${pose?" "+pose:""}" onclick="chat()" filter="url(#vec)">${leg("lfb",-26,d,dw)}${leg("lff",9,d,dw)}
+<g class="dst" style="transform-box:view-box;transform-origin:-34px -38px"><rect x="-64" y="-76" width="30" height="40" fill="none"/><path d="M-34-38Q-57-38-58-58Q-58-70-48-66Q-42-62-48-56" stroke="${f}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M-50-67Q-42-65-47-57" stroke="${w}" stroke-width="4.6" fill="none" stroke-linecap="round"/></g>
+<g class="dsf" style="transform-box:view-box;transform-origin:-30px -26px"><path d="M-40-34Q-42-54-18-55L12-55Q34-54 35-38Q36-20 16-19L-20-19Q-39-19-40-34Z" fill="${f}"/><path d="M-18-20Q0-14 16-21Q6-27-18-26Z" fill="${w}" opacity=".85"/><ellipse cx="-8" cy="-50" rx="19" ry="4" fill="${l}" opacity=".4"/>
+<ellipse cx="-26" cy="-32" rx="13" ry="15" fill="${f}"/><ellipse cx="-29" cy="-38" rx="6" ry="9" fill="${l}" opacity=".3"/><ellipse cx="20" cy="-34" rx="12" ry="14" fill="${f}"/><ellipse cx="31" cy="-37" rx="6.6" ry="12" fill="${w}"/>${it("b")}
+<g class="dsh" style="transform-box:view-box;transform-origin:24px -54px"><rect x="8" y="-128" width="80" height="84" fill="none"/>
+<g class="ear el"><path d="M47-86L57-110L63-80Z" fill="${shade(f,-.1)}"/><path d="M50-88L56-102L60-84Z" fill="#c9877a"/></g>
+<path d="M8-48Q16-66 34-72L54-54Q36-38 14-40Z" fill="${f}"/><ellipse cx="42" cy="-70" rx="24" ry="21" fill="${f}"/><path d="M20-66Q15-52 26-45L33-58Z" fill="${f}"/><ellipse cx="37" cy="-84" rx="9" ry="3.6" fill="${l}" opacity=".45"/>
+<ellipse cx="60" cy="-64" rx="13" ry="10" fill="${f}"/><ellipse cx="62" cy="-60" rx="12" ry="8" fill="${w}"/><ellipse cx="61" cy="-62" rx="8" ry="4.6" fill="${shade(f,.2)}" opacity=".3"/><path d="M40-91Q54-86 61-72L58-69Q50-80 38-86Z" fill="${w}" opacity=".9"/>
+<g class="ear er"><path d="M25-80L22-110L45-89Z" fill="${f}"/><path d="M28-84L26-101L40-90Z" fill="#d99a8a"/></g>
+<circle cx="48" cy="-61" r="4.2" fill="#ff8fa8" opacity=".3"/><g class="eyes"><ellipse cx="47" cy="-72" rx="3.4" ry="4.4" fill="${ink}"/><circle cx="48.3" cy="-73.8" r="1.5" fill="#fff"/><circle cx="46" cy="-70.4" r=".75" fill="#fff"/></g><path d="M41-80Q47-83 53-80" stroke="${d}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+<ellipse cx="72" cy="-66" rx="5" ry="3.9" fill="${ink}"/><ellipse cx="70.6" cy="-67.4" rx="1.6" ry="1" fill="#fff" opacity=".8"/><g class="jaw"><path d="M72-62Q69-55 58-57" stroke="${ink}" fill="none" stroke-width="1.8" stroke-linecap="round"/><path class="tng" d="M64-57Q63-49 69-53Q70-56 68-58Z" fill="#e8808a"/></g>${it("h")}${carry?'<circle class="pcf-carry" cx="77" cy="-57" r="6" fill="#ffd34d" stroke="#e09a00" stroke-width="1.5"/>':""}</g></g>
+${leg("lnb",-34,f,w)}${leg("lnf",17,f,w)}</g>`};
 const stars=n=>{const r=rng(7);let s="";for(let i=0;i<n;i++){const x=r()*400,y=r()*125,z=r();s+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(.6+z*1.4).toFixed(1)}" fill="${z>.8?"#ffe9a8":"#fff6dc"}" opacity="${(.45+z*.55).toFixed(2)}"/>`}return s};
 const pine=(x,y,s,c)=>`<g transform="translate(${x},${y}) scale(${s})"><path d="M-1 22L0-16L-14-38M0-16L12-42M0-2L-9-20" stroke="#4a2c1f" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="0" cy="-44" rx="42" ry="11" fill="${c}"/><ellipse cx="-14" cy="-49" rx="22" ry="7" fill="${shade(c,.14)}"/><ellipse cx="17" cy="-40" rx="21" ry="7" fill="${shade(c,-.18)}"/></g>`;
 const giraffeS=(x,y,s,c)=>`<g transform="translate(${x},${y}) scale(${s})" fill="${c}"><rect x="-14" y="-28" width="3.6" height="28" rx="1.5"/><rect x="-7" y="-28" width="3.6" height="28" rx="1.5"/><rect x="6" y="-28" width="3.6" height="28" rx="1.5"/><rect x="12" y="-28" width="3.6" height="28" rx="1.5"/><ellipse cx="0" cy="-31" rx="18" ry="8"/><path d="M7-35L19-74L26-72L15-30Z"/><ellipse cx="26" cy="-73" rx="8" ry="4" transform="rotate(15 26 -73)"/><path d="M21-76l-1-6M25-77v-6M-17-33q-6 6-5 14" stroke="${c}" stroke-width="2" fill="none" stroke-linecap="round"/></g>`;
@@ -1404,7 +1450,7 @@ farmr:u=>sky(u,"#7d8aa0","#c4ccd6")+`<g opacity=".95">${at(90,50,1.3,cloud("#9aa
 savanna:u=>sky(u,"#ffbf7a","#fff0c8")+at(320,90,.7,C.sunc(""))+`<path d="M0 200Q120 186 220 198Q320 210 400 196V300H0Z" fill="#e2b46a"/>`+`<g transform="translate(70 210)"><path d="M0 0L4 -50" stroke="#6b4a2a" stroke-width="6"/><ellipse cx="4" cy="-56" rx="44" ry="12" fill="#6b8f3a"/><ellipse cx="-8" cy="-64" rx="26" ry="8" fill="#7fa34a"/></g><g transform="translate(360 206) scale(.7)"><path d="M0 0L4 -50" stroke="#6b4a2a" stroke-width="6"/><ellipse cx="4" cy="-56" rx="44" ry="12" fill="#6b8f3a"/></g>`+`<path d="M0 240Q200 228 400 240V300H0Z" fill="#d6a050"/>`+tufts("#a8782a",17)
 };
 function scene(spec,cls=""){const u="bk"+(++N),[bg,...items]=spec.split("|");let h=(BG[bg]||BG.meadow)(u);
-for(const it of items){const[n,x,y,s,a="none",...rr]=it.split(" "),o=rr.join("");const f=o.includes("f");if(!C[n])continue;h+=`<g transform="translate(${x} ${y}) scale(${f?-s:s} ${s})"><g class="bk-a bk-${a}">${C[n](o,a)}</g></g>`}
+for(const it of items){const[n,x,y,s,a="none",...rr]=it.split(" "),o=rr.join("");const f=o.includes("f");if(!C[n])continue;h+=`<g transform="translate(${x} ${y}) scale(${f?-s:s} ${s})"><g class="bk-a bk-${a=="spin"?"none":a}">${C[n](o,a)}</g></g>`}
 return `<svg class="bk-art ${cls}" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${h}</svg>`}
 return {scene}})();
 const band=()=>S.level<34?0:S.level<67?1:2,fill=t=>t.replace(/{n}/g,S.name).replace(/{p}/g,esc(S.pet));
@@ -1435,7 +1481,7 @@ const pcLow=()=>{try{const p=pcGet();return PCN.filter(([k])=>p[k]<35).map(x=>x[
 const pcMood=()=>{const l=pcLow(),P=esc(S.pet);if(!l.length)return `${P} feels happy and loved. Thank you, ${S.name}! 🐾`;return {food:`${P} is hungry. Can you fill the food bowl?`,water:`${P} is thirsty. Please give fresh water!`,clean:`${P} is muddy. Time for a bath!`,fun:`${P} is bored. Let’s play!`}[l[0]]};
 function pcSay(t,sp){const e=$("#pcs");if(e)e.textContent=t;talk(sp||t)}
 function care(){const p=pcGet(),bar2=([k,ic,lb])=>`<div class="pcb"><span>${ic} ${lb}</span><div class="bar"><i style="width:${Math.round(p[k])}%;background:${p[k]<35?"linear-gradient(90deg,#e0453a,#ff7a1a)":"linear-gradient(90deg,#22b573,#7ed957)"}"></i></div></div>`;
-app(bar(1)+`<h2>Take care of ${esc(S.pet)}</h2><div class="card pcw"><div class="pcd"><svg viewBox="-125 -122 250 142" style="width:min(100%,380px);overflow:hidden;border-radius:18px;background:linear-gradient(#fdf6e3 0 82%,#d9ecc4 82%)" id="pcdog"><ellipse cx="0" cy="4" rx="70" ry="8" fill="#000" opacity=".08"/><g id="pcdg" class="pcdg"><g class="pcfront">${dogG().replace(' onclick="chat()"','')}</g><g class="pcside"><rect x="-76" y="-120" width="156" height="120" fill="none"/><g transform="translate(-6 0) scale(.95)">${dogS("",1).replace(' onclick="chat()"','')}</g></g></g><g id="pcfx"></g></svg><div class="say" id="pcs">${pcMood()}</div></div><div class="pcbs">${PCN.map(bar2).join("")}<small>You have ${ACN} <b id="pcm">${S.coins}</b> mangoes. Lessons and games earn more!</small></div></div><div class="pca">${PCA.map((a,i)=>`<button class="nb pcbtn" onclick="pcDo(${i})"><span>${a[1]}</span>${a[2]}<small>${a[3]?a[3]+" 🥭":"Free"}</small></button>`).join("")}</div><div class="card" id="pck" style="text-align:center"></div>`);pcKind()}
+app(bar(1)+`<h2>Take care of ${esc(S.pet)}</h2><div class="card pcw"><div class="pcd"><svg viewBox="-125 -122 250 142" style="width:min(100%,380px);overflow:hidden;border-radius:18px;background:linear-gradient(#fdf6e3 0 82%,#d9ecc4 82%)" id="pcdog"><ellipse cx="0" cy="4" rx="70" ry="8" fill="#000" opacity=".08"/><g id="pcbk"></g><g id="pcdg" class="pcdg"><g class="pcfront"><g class="pct">${dogG().replace(' onclick="chat()"','')}</g></g><g class="pcside"><rect x="-76" y="-120" width="156" height="120" fill="none"/><g class="pct"><g transform="translate(-6 0) scale(.95)">${dogS("",1).replace(' onclick="chat()"','')}</g></g></g></g><g id="pcfx"></g></svg><div class="say" id="pcs">${pcMood()}</div></div><div class="pcbs">${PCN.map(bar2).join("")}<small>You have ${ACN} <b id="pcm">${S.coins}</b> mangoes. Lessons and games earn more!</small></div></div><div class="pca">${PCA.map((a,i)=>`<button class="nb pcbtn" onclick="pcDo(${i})"><span>${a[1]}</span>${a[2]}<small>${a[3]?a[3]+" 🥭":"Free"}</small></button>`).join("")}</div><div class="card" id="pck" style="text-align:center"></div>`);pcKind()}
 
 /* ---------- pet care animations: one little scene per action ---------- */
 let PCB=0,PCT=0,PCS=[];
@@ -1445,7 +1491,7 @@ const pcDrops=(d,c,n,x0,y0)=>[...Array(n)].map((_,i)=>{const a=-2.8+i/(n-1)*2.6,
 const pcAcacia=x=>`<path d="M${x} 6V-14L${x-8}-24M${x}-14L${x+7}-26" stroke="#6b4423" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse cx="${x}" cy="-27" rx="20" ry="5" fill="#5da35a"/>`;
 const PCFX={
  food:{dur:3200,dog:"pc-eat",snd:[[700,"c"],[1150,"c"],[1600,"c"],[2050,"c"],[2500,"c"]],
-  fx:()=>`<g transform="translate(52 0)"><g class="pcf-in"><path d="M-26 2Q-24 15 0 15Q24 15 26 2Z" fill="#b3202a"/><ellipse cx="0" cy="2" rx="26" ry="6" fill="#8f1520"/><ellipse cx="0" cy="2" rx="21" ry="4" fill="#5a2a10"/>${[-14,-7,0,7,14,-10,-3,4,11].map((x,i)=>`<circle cx="${x}" cy="${i<5?2:0}" r="3.2" fill="${i%2?"#a8761a":"#c8942a"}" class="pcf-gone" style="animation-delay:${(.7+i*.24).toFixed(2)}s"/>`).join("")}</g></g>${pcT("Crunch!",42,-72,.8)}${pcT("Nom nom!",-50,-62,1.6)}${pcT("Yum! 😋",44,-84,2.5,"#22a05a")}`},
+  fx:()=>`<g transform="translate(52 0)"><g class="pcf-in"><path d="M-26 2Q-24 15 0 15Q24 15 26 2Z" fill="#b3202a"/><ellipse cx="0" cy="2" rx="26" ry="6" fill="#8f1520"/><ellipse cx="0" cy="2" rx="21" ry="4" fill="#5a2a10"/>${[-14,-7,0,7,14,-10,-3,4,11].map((x,i)=>`<circle cx="${x}" cy="${i<5?2:0}" r="3.2" fill="${i%2?"#a8761a":"#c8942a"}" class="pcf-gone" style="animation-delay:${(.72+Math.floor(i/2)*.45).toFixed(2)}s"/>`).join("")}</g></g>${pcT("Crunch!",42,-72,.8)}${pcT("Nom nom!",-50,-62,1.6)}${pcT("Yum! 😋",44,-84,2.5,"#22a05a")}`},
  water:{dur:3300,dog:"pc-drink",snd:[[300,"d"],[500,"d"],[700,"d"],[900,"d"],[1900,"l"],[2250,"l"],[2600,"l"]],
   fx:()=>`<g transform="translate(50 0)"><g class="pcf-in"><path d="M-24 2Q-22 14 0 14Q22 14 24 2Z" fill="#2f6fc4"/><ellipse cx="0" cy="2" rx="24" ry="5.5" fill="#1d4f94"/><ellipse cx="0" cy="2" rx="20" ry="3.8" fill="#7cc8ff" class="pcf-fill"/></g><g class="pcf-jug"><path d="M40-60h22l-2 26H42Z" fill="#e8eef2" stroke="#9fb0bd" stroke-width="2"/><path d="M40-60l-8 6 6 2" fill="#e8eef2" stroke="#9fb0bd" stroke-width="2"/><path d="M62-54q8 2 6 12q-2 6-8 4" fill="none" stroke="#9fb0bd" stroke-width="3"/><rect x="43" y="-50" width="16" height="12" fill="#7cc8ff" opacity=".7"/></g>${[0,1,2,3,4,5].map(i=>`<circle cx="30" cy="-48" r="2.6" fill="#4aa8f0" class="pcf-drop" style="animation-delay:${(.35+i*.18).toFixed(2)}s"/>`).join("")}${[0,1,2].map(i=>`<ellipse cx="0" cy="2" rx="6" ry="1.6" fill="none" stroke="#fff" stroke-width="1.4" class="pcf-rip" style="animation-delay:${(1.8+i*.4).toFixed(2)}s"/>`).join("")}</g>${pcT("Lap lap lap",-46,-66,1.9,"#2f6fc4")}${pcT("Ahh! 💧",46,-80,2.7,"#2f6fc4")}`},
  bath:{dur:3900,dog:"pc-bath",snd:[[200,"s"],[700,"b"],[1000,"b"],[1300,"b"],[1600,"b"],[2550,"s"],[3200,"t"]],
@@ -1455,17 +1501,18 @@ const PCFX={
  play:{dur:3600,dog:"pc-play",snd:[[100,"j"],[900,"k"],[1500,"j"],[2600,"k"]],
   fx:()=>`<g class="pcf-ball"><circle r="7" fill="#ffd34d" stroke="#e09a00" stroke-width="1.5"/><path d="M-6-3q6 4 12 0M-6 3q6-4 12 0" stroke="#fff" stroke-width="1.4" fill="none"/></g>${pcT("Fetch!",-60,-90,.1,"#22a05a")}${pcT("Got it! 🎾",44,-96,1.6,"#22a05a")}${pcT("Again! Again!",0,-104,2.8,"#ff7a1a")}`},
  walk:{dur:3600,dog:"pc-walk",snd:[[200,"w"],[600,"w"],[1000,"w"],[1400,"w"],[1800,"w"],[2200,"w"],[2600,"w"],[3000,"w"]],
-  fx:()=>`<g class="pcf-scroll">${[-90,-10,80,170,250,330].map(pcAcacia).join("")}${[...Array(10)].map((_,i)=>`<g transform="translate(${-110+i*32},12)" fill="#b8976a" opacity=".7"><ellipse rx="3" ry="2.2"/><circle cx="-3" cy="-3.4" r="1.2"/><circle cx="0" cy="-4.2" r="1.2"/><circle cx="3" cy="-3.4" r="1.2"/></g>`).join("")}</g><path d="M20-56Q-30-80-130-70" stroke="#b3202a" stroke-width="2.5" fill="none" class="pcf-lead"/>${pcT("Walkies! 🐾",44,-88,.4,"#22a05a")}${pcT("Fresh air!",-44,-76,2.1,"#22a05a")}`},
+  bk:()=>`<g class="pcf-scrollF">${[-170,-90,-10,70,150,230,310].map(pcAcacia).join("")}</g><g class="pcf-scroll">${[...Array(12)].map((_,i)=>`<g transform="translate(${-130+i*32},12)" fill="#b8976a" opacity=".7"><ellipse rx="3" ry="2.2"/><circle cx="-3" cy="-3.4" r="1.2"/><circle cx="0" cy="-4.2" r="1.2"/><circle cx="3" cy="-3.4" r="1.2"/></g>`).join("")}</g>`,
+  fx:()=>`<path d="M15-47Q-30-80-130-70" stroke="#b3202a" stroke-width="2.5" fill="none" class="pcf-lead"/>${pcT("Walkies! 🐾",44,-88,.4,"#22a05a")}${pcT("Fresh air!",-44,-76,2.1,"#22a05a")}`},
  love:{dur:2200,dog:"pc-calm",snd:[[0,"t"]],fx:()=>[...Array(7)].map((_,i)=>`<text x="${-48+i*16}" y="-60" class="pcf-up" style="animation-delay:${(i*.15).toFixed(2)}s" font-size="${14+(i%3)*4}" text-anchor="middle">${i%2?"💛":"❤️"}</text>`).join("")}};
 const PCSND={c:()=>{tone(180,.06,"square",.03);tone(260,.05,"square",.025,.06)},d:()=>tone(900+Math.random()*300,.08,"sine",.04),l:()=>{tone(520,.06,"sine",.04);tone(640,.05,"sine",.035,.08)},s:()=>{try{cgSnd.splash()}catch(e){}},b:()=>tone(700+Math.random()*500,.07,"sine",.035),r:()=>{try{cSw(2000,1200,.25,"sawtooth",.012)}catch(e){}},j:()=>{try{cgSnd.jump()}catch(e){}},k:()=>{tone(880,.06,"square",.03);tone(1100,.08,"square",.03,.07)},w:()=>tone(220,.04,"triangle",.03),t:()=>{tone(1047,.12,"sine",.05);tone(1319,.12,"sine",.05,.1);tone(1568,.2,"sine",.05,.2)}};
 function pcAnim(k,after){const fx=$("#pcfx"),dg=$("#pcdg"),A=PCFX[k];clearTimeout(PCT);PCS.forEach(clearTimeout);PCS=[];if(!fx||!dg||!A){after&&after();return}
  const red=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,dur=red?400:A.dur;
- fx.innerHTML="";dg.setAttribute("class","pcdg");void dg.getBoundingClientRect();
- fx.innerHTML=A.fx();dg.setAttribute("class","pcdg "+(A.dog||""));
+ fx.innerHTML="";{const bk=$("#pcbk");if(bk)bk.innerHTML=""}dg.setAttribute("class","pcdg");void dg.getBoundingClientRect();
+ fx.innerHTML=A.fx();{const bk=$("#pcbk");if(bk)bk.innerHTML=A.bk?A.bk():""}dg.setAttribute("class","pcdg "+(A.dog||""));
  if(!red)(A.snd||[]).forEach(([t,n])=>PCS.push(setTimeout(()=>{if($("#pcfx"))PCSND[n]()},t)));
- if(!red&&k=="play")[[790,1],[1800,0],[2230,1],[3170,0]].forEach(([t,on])=>PCS.push(setTimeout(()=>{const d=$("#pcdg");if(d)d.classList.toggle("pc-run",!!on)},t)));
+ if(!red&&k=="play")[[790,1],[1800,0],[2350,1],[3300,0]].forEach(([t,on])=>PCS.push(setTimeout(()=>{const d=$("#pcdg");if(d)d.classList.toggle("pc-run",!!on)},t)));
  PCB=Date.now()+dur;document.querySelectorAll(".pcbtn").forEach(b=>b.disabled=true);
- PCT=setTimeout(()=>{const f=$("#pcfx"),d=$("#pcdg");if(f)f.innerHTML="";if(d){d.setAttribute("class","pcdg")}PCB=0;document.querySelectorAll(".pcbtn").forEach(b=>b.disabled=false);after&&after()},dur)}
+ PCT=setTimeout(()=>{const f=$("#pcfx"),d=$("#pcdg"),bk=$("#pcbk");if(f)f.innerHTML="";if(bk)bk.innerHTML="";if(d){d.setAttribute("class","pcdg")}PCB=0;document.querySelectorAll(".pcbtn").forEach(b=>b.disabled=false);after&&after()},dur)}
 function pcBars(){const p=pcGet();document.querySelectorAll(".pcb").forEach((e,i)=>{const k=PCN[i]&&PCN[i][0],b=e.querySelector("i");if(!k||!b)return;b.style.width=Math.round(p[k])+"%";b.style.background=p[k]<35?"linear-gradient(90deg,#e0453a,#ff7a1a)":"linear-gradient(90deg,#22b573,#7ed957)"})}
 function pcCoins(){const m=$("#pcm");if(m)m.textContent=S.coins;const co=$(".top .coin");if(co)co.innerHTML=ACN+" "+S.coins}
 function pcDo(i){const a=PCA[i],p=pcGet(),P=esc(S.pet);if(p[a[4]]>=95){sfx.click();return pcSay(a[4]=="food"?`${P} is full! Too much food is not healthy for dogs. Let’s wait a while.`:a[4]=="water"?`The water bowl is already full and fresh. Good job!`:a[4]=="clean"?`${P} is already clean and shiny!`:`${P} is very happy already. Dogs need rest too!`)}
