@@ -29,9 +29,13 @@ A skill that is missed in a later review drops back to Practising (the history i
 ## 3. How the app chooses what comes next
 
 1. **Remediation first.** If the child missed 3 of the last 5 in a skill, find the weakest prerequisite below state 3 and practise it for a few questions (smaller choices, familiar pictures, a demonstration), then go back.
-2. **Spaced review.** Skills at state 3 or 4 come back after 1, 2, 4, 7 and 14 days, inside other lessons (about 1 question in 4) and in the Daily Adventure. If a review fails, the skill goes back to Practising.
-3. **The next new skill.** The first skill, in path order, that is not yet at state 3 and whose prerequisites are all at state 3. Letters and sounds are introduced a few at a time (a new letter is added only when the earlier ones are known), so words can be built early (s a t p i n …).
-4. **A language track runs alongside.** Every third lesson the child gets a listening or vocabulary skill that they can do (they can understand stories before they can read them).
+2. **A suspected pattern is checked.** If mistakes form a pattern (see section 8), a 4-question check runs before anything is taught.
+3. **Skills that are slipping are refreshed.** A skill that was reached and has fallen back gets a short refresh, not a full lesson.
+4. **Spaced review.** Skills at state 3 or 4 come back after 1, 2, 4, 7 and 14 days: inside other lessons (about 1 question in 4 in the "alone" part), as a short review lesson about every fifth lesson, and in the Daily Adventure. The wait is halved when recent answers needed hints or were wrong, and lengthened by half for skills that are solid.
+5. **A Mini Story every fourth lesson** when one is open (section 8).
+6. **A language track every third lesson.** A listening or vocabulary skill the child can do (they can understand stories before they can read them).
+7. **Letters keep growing in turns**, a few at a time, in one session per group (section 8).
+8. **The next new skill.** The first skill, in path order, that is not yet at state 3 and whose prerequisites are all at state 3. Skills that lead straight to reading words (rhymes, first sounds, letter sounds, blending, reading short words) go first, so real words appear after about six letters (s a t p i n) instead of after the whole alphabet.
 
 Lessons are short: about 8 to 12 questions, ended gently (never "you failed"). Pictures support but cannot be used to guess: choices that look alike differ by one sound or letter, so the child has to sound the word out.
 
@@ -99,7 +103,7 @@ The starting games are 18 short groups of games ("areas"), always in the same or
 
 | Skill | Strand | Needs first | Reads instructions? |
 |---|---|---|---|
-| Sounds in a written word `s4_ls` | Decoding | What sound does each letter make?; Pulling a word into its sounds | No, everything is spoken |
+| Sounds in a written word `s4_ls` | Decoding | What sound does each letter make?; Putting two sounds together | No, everything is spoken |
 | Blend two letter sounds `s4_b2` | Decoding | What sound does each letter make?; Putting two sounds together | No, everything is spoken |
 | Blend three letter sounds `s4_b3` | Decoding | Blend two letter sounds; Putting three sounds together | No, everything is spoken |
 | Read short words `s4_rd` | Decoding | Blend three letter sounds | Yes |
@@ -231,8 +235,43 @@ The starting games are 18 short groups of games ("areas"), always in the same or
 
 Listening to environmental sounds; spoken word to picture; how books work and reading direction (left to right, top to bottom); counting words in a sentence; word parts; listening to stories; final sound; middle sound; segmenting; letter names vs letter sounds; letters in different fonts; decoding with look-alike answer choices; reading unseen words; word families; phrases; connected sentences; vocabulary with picture, spoken definition, example sentence, use and revisit; categories; parts of speech; context clues; multiple meanings; retelling.
 
-## 8. Known limits
+## 8. Learning faster, honestly (the accelerated-learning phase)
 
+**Flow:** assess, find what is missing, teach only that, practise, check that the child can do it alone, move on, review before it is forgotten.
+
+* **Check first.** Before a new skill starts there is a short check on single-try questions (no hints). A skill is skipped only when the child gets 4 of 4 (or 5 of 6 after a doubt) right; 2 of 3 gets 3 more questions; 1 of 3 or fewer means "teach it". For letters, only the letters or sounds that were missed are taught. One answer never counts as mastery, and a skipped skill is still reviewed later, because choosing among answers is not the same as reading alone. Questions in a check use items the child has not met in a lesson.
+* **Letters are taught in groups.** One session covers a few letters: the name, big and small, the sound and a picture, then use in words, while each of those is still tracked separately. A child who already reads gets one wide check (8 letters) instead of one session per group.
+* **Real reading starts early.** After about six letters the child blends and reads real words. Word practice only uses letters the child has learned; the wrong-answer words are filtered the same way (audited at 6, 10, 14 and 20 letters, 0 out-of-letter words in stage 4 and 5 practice).
+* **Pace follows the child.** Fast and right alone: the lesson ends early (3 fast independent answers; 4 for letter groups). Right but slow: a few more varied examples, once. One miss: a hint, a demonstration, a retry. Repeated misses: remediation. Help is recorded separately ("practising") from right-first-time answers, and a mastered skill that weakens is scheduled for review.
+* **Discovery.** For rhymes, word families, changing one sound, "sh" and the silent e, the child first looks at a few words (cat, hat, bat), notices what stays the same, and is then told the rule.
+* **Patterns in mistakes.** Nine patterns are looked for (two letters mixed up, blending, breaking words into sounds, vowels, letter pairs like sh, guessing from pictures, choosing but not building, familiar but not new words, long words). A pattern is never named from one wrong answer: it needs at least 3 related mistakes on 2 days (or 4 mistakes), then a 4-question check, then short targeted help. If the child passes the check, nothing is changed.
+* **Mini Stories.** 13 short stories in five tiers (first words, more letters, letter pairs, silent e, vowel pairs and endings). Each word is either built from taught sounds or is a listed tricky word, shown to the child first (at most 3 new words). A built-in checker confirms this for every story. Each story has pictures that support the story, 2 to 4 questions, and a "find the word" question. A page counts as read alone only if no word or page was played aloud. Children who already decode patterns start at a longer tier.
+* **More than multiple choice.** Letter tiles (build and spell), tracing, finding a word in text, and reading aloud where the device has speech recognition. Where it does not, the "read it smoothly" skill uses a passage with questions and does not accept self-reporting.
+* **Parent page.** Skills "on their own", "with some hints", "still learning", "needs extra practice", "due for review" and "slipping"; the patterns being worked on; accuracy in plain language (sounding out, new words, blending, breaking up words, letter tiles, tricky words, sentences, smoothness, word meanings, stories, remembering after a week); how many answers and days each skill took; how many skills a quick check skipped. No reading age and no grade level. Badges and streaks stay, but they are not data.
+* **Measuring speed of learning.** For each skill the app records the answers, days and time it took to reach "independent"; right-first-time accuracy by area; accuracy on words never seen before; retention after 7 or more days; and Mini Story reading. These show how learning is going. They do not prove years saved, and nothing here claims that.
+
+## 9. How this was tested
+
+Five simulated children were run through the placement games and 24 lessons each on the final build. The simulated child answers by a model (it can slip and guess), so the exact numbers change a little from run to run. These are models of children, not real children.
+
+| Simulated child | Where it started | What the 24 lessons looked like |
+|---|---|---|
+| 1. Knows no letters (age 6) | The very beginning: hearing words, rhymes, first sounds | No skills skipped by luck. Blending of spoken sounds, then 7 letter-group sessions, a first short word reading, a first Mini Story read with help (so it comes back). 0 lessons spent on something the child already knew |
+| 2. Knows letters and sounds, cannot blend (age 6) | Blending | Blending taught and rebuilt after a check, then short words. 4 letter-group sessions for the letters not yet shown, 4 refreshes, 3 reviews, 1 story. 1 of 9 new lessons went over something already known (6 extra questions) |
+| 3. Reads simple words, weak on complex phonics (age 7) | Letter pairs (stage 7) | No letter, blending or simple-word lessons. Letter pairs, blends, silent e and vowel pairs taught; 3 reviews; 6 Mini Stories at the child's level. 0 lessons on something already known |
+| 4. Reads sentences, weak fluency and comprehension (age 8) | Longer words (stage 8) | No letter lessons. 3 skills skipped by quick check, the rest taught; comprehension skills practised; 2 pattern checks and 1 targeted lesson; 4 stories |
+| 5. Already reads well (age 8) | Comprehension (stage 10) | No beginner lessons. 1 skill skipped by quick check, 5 longer Mini Stories, then (after stage 10) three letter checks of 8, 8 and 5 questions, each skipped, and reviews |
+
+The same rules held in every run: no skill practised before its prerequisites; no skill reached "Mastered" in one sitting; 0 words out of letters in stage 4 and 5 practice; 0 undecodable words or answers in the 13 Mini Stories; 0 violations found by the audit; no JavaScript errors on any screen; no sideways scrolling at phone and computer sizes; a skill forced into "forgotten" got a refresh and recovered; a repeated mix-up was only picked up after repetition, checked, and cleared when the child passed. The lessons need nothing from the internet (the one network call in the app is the optional word-meaning lookup, which was there before).
+
+## 10. Known limits
+
+* The simulated children test the logic. They do not show how real children respond. Real use will tell whether the thresholds are right, and changes after this should be based on that evidence.
+* A quick check can skip a skill by luck (about 1 in 100 on three-choice questions). That is why every skipped skill still comes back for review.
+* A Mini Story cannot hear the child. Independence is judged from whether the child played a page aloud, the questions, and the "find the word" question.
+* Stage 6 sentences and passages come from fixed banks that are picture-supported and not limited to letters the child has learned. Only stage 4 and 5 word practice and the Mini Stories are guaranteed to use learned sounds only.
+* For a child who already decodes, letters are checked in one wide check and then by reading, not one by one. The page says this, so unchecked letters are not shown as mastered.
+* There are no baseline comparisons, so the app does not say how many years or grades a child has gained.
 * Browser voices cannot say a pure consonant sound (they say "tuh" for t). The app spells the sound the way a voice can say it ("sss", "mmm", "fff" for sounds that can be stretched; short and clipped for the rest). Recorded letter sounds would be better.
 * Animal and environment sounds are synthesised, not recordings.
 * Reading aloud (Stage 10) uses the device's speech recognition when it exists and always accepts "read it to a grown-up".

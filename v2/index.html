@@ -15,6 +15,17 @@
 .lcard{position:relative}.lcard i{position:absolute;top:2px;right:5px;font-style:normal;font-size:18px}.lcard.part{opacity:.55;filter:saturate(.45)}
 .rps{margin:6px 0;border:2px solid #e8d6a4;border-radius:14px;padding:2px 10px;background:#fffdf6}.rps summary{cursor:pointer;display:flex;gap:8px;align-items:center;min-height:44px;flex-wrap:wrap}.rpb{display:inline-block;flex:1;min-width:70px;max-width:170px;height:10px;background:#eee;border-radius:6px;overflow:hidden}.rpb u{display:block;height:100%}.rpl{list-style:none;padding:0;margin:4px 0 8px}.rpr{display:flex;gap:8px;align-items:center;padding:4px 0;font-size:16px;flex-wrap:wrap}.rpd{width:12px;height:12px;border-radius:50%;flex:none}.rpn{flex:1;min-width:150px}
 .opts.pics .opt{font-size:62px;min-height:108px;display:flex;align-items:center;justify-content:center}.card .big svg.pv{width:1.4em;height:1.4em}
+
+.dws{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:6px 0}.dw{display:inline-flex;flex-direction:column;align-items:center;font-size:30px;min-width:70px}.dw svg.pv,.dw .pe{width:64px;height:64px}.dw b{font-weight:800}.dw mark{background:#ffd966;border-radius:6px;padding:0 2px}
+.opts.pics .opt svg.pv{width:58px;height:58px}
+
+.stc{text-align:center}.stpic{font-size:64px;line-height:1.2;margin:6px 0;min-height:76px}.stp{font-size:34px;line-height:1.55;font-weight:700;margin:6px 4px 12px}.stw{cursor:pointer;border-radius:8px;padding:0 2px}.stw:active{background:#fff2b3}.stw.tapped{border-bottom:3px dotted #e8a02a}.stw.big{font-size:40px;border:3px solid #e8a02a;background:#fff;padding:6px 16px;margin:6px;font-family:inherit}
+.stbt{display:flex;gap:12px;justify-content:center;align-items:center}.stnw{display:flex;flex-wrap:wrap;justify-content:center}.stem{font-size:44px}.opts.pics .opt{font-size:44px}
+.stl.lock{opacity:.6}.stl .pmt small{white-space:normal}
+
+.card .big .dws{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}.card .big .dw svg.pv,.card .big .dw .pe{width:72px;height:72px}.card .big .dw{font-size:34px;min-width:80px}
+
+.opts.pics .opt .pe{font-size:56px;line-height:1}.card .big .dw .pe{font-size:64px;line-height:1}
 </style></head><body>
 <!DOCTYPE html><html lang="en" data-theme="night"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>ReadTrail 2</title>
 <style>/* fonts are built into the page so ReadTrail 2 works with no internet */
@@ -591,7 +602,7 @@ SKD("s3_bgn",3,"A","Which word begins with this letter sound?",["s3_snd"],"bgn",
 SKD("s3_nvs",3,"A","The name and the sound are different",["s3_snd","s3_nm"],"nvs",[["S: ess ≠ sss","A letter has a name and a sound. The letter S is called ess. Its sound is sss."],["tap 🔊","We use the name to talk about a letter. We use the sound to read words."]],{nr:1,it:["S:","SND"]});
 SKD("s3_fnt",3,"A","Letters in different styles and places",["s3_ml"],"fnt",[["a a a a","Letters can look a little different in books. They are still the same letter."],["b d p q","Look closely at the shape. Which way does it face?"]],{nr:1,it:["L:","LTO"]});
 /* ---- Stage 4: sounding words out ---- */
-SKD("s4_ls",4,"D","Sounds in a written word",["s3_snd","s2_seg"],"ls",[["c a t","Each letter in a word stands for a sound. Look at the first letter. What sound does it make?"],["c<b>a</b>t","Look at the middle letter. Which sound is it? Aah!"]],{nr:1});
+SKD("s4_ls",4,"D","Sounds in a written word",["s3_snd","s2_bl2"],"ls",[["c a t","Each letter in a word stands for a sound. Look at the first letter. What sound does it make?"],["c<b>a</b>t","Look at the middle letter. Which sound is it? Aah!"]],{nr:1});
 SKD("s4_b2",4,"D","Blend two letter sounds",["s3_snd","s2_bl2"],"b2",[["a t","Read the letters left to right: aah, tuh. Push them together: at."],["u p","Uh, puh. Up!"]],{nr:1});
 SKD("s4_b3",4,"D","Blend three letter sounds",["s4_b2","s2_bl3"],"b3",[["c a t","Say each sound: kuh, aah, tuh. Now slide them together: cat!"],["s u n","Sss, uh, nnn. Sun!"]],{nr:1});
 SKD("s4_rd",4,"D","Read short words",["s4_b3"],"rd",[["m a p","Now read the whole word yourself. Say each sound, then blend it."],["p i n","Look at each letter. Say the sounds. Blend them. Pin!"]]);
@@ -2316,7 +2327,7 @@ function skAdd(k,o,g){S.sk=S.sk||{};const r=S.sk[k]=S.sk[k]||{h:"",n:0,c:0,d:[],
 /* 0 new, 1 practising, 2 can do it with help, 3 can do it on their own, 4 got it (4 of the last 5 on their own, on 2 or more days or games) */
 function skSt(k){const r=(S.sk||{})[k];if(!r)return 0;const l=r.h.slice(-5),n1=(l.match(/1/g)||[]).length;
  if(l.length>=4&&n1>=4&&l.slice(-1)=="1"&&(r.d.length>=2||r.g.length>=2))return 4;if(l.slice(-2)=="11")return 3;if(r.c>0&&/h/.test(l.slice(-3)))return 2;return 1}
-const skDue=k=>{const r=(S.sk||{})[k];return !r||Date.now()>=r.t+INTV[r.b]*DAYMS},
+const skDue=k=>{const r=(S.sk||{})[k];if(!r)return true;const f=/[0h]/.test(r.h.slice(-4))?.5:skSt(k)==4?1.5:1;return Date.now()>=r.t+INTV[r.b]*DAYMS*f},
  skKeys=p=>Object.keys(S.sk||{}).filter(k=>k.startsWith(p)),
  skHas=k=>!!(S.sk&&S.sk[k]&&S.sk[k].c>0);
 function skAny(p){return skKeys(p).filter(skHas).length}
@@ -2754,7 +2765,7 @@ G.fnt=f=>{const l=letP("L:"),U=R(2),d=x=>U?x.toUpperCase():x,fa=pp(lFont),fb=lFo
 const KLET=()=>{const k=LTO.filter(c=>skSt("S:"+c)>=2);return k.length>=6?k:LTO.slice(0,6)},
  dec=(w,K)=>[...w].every(c=>K.includes(c)),
  VCW=W("at an as am is in it if on up us ox"),
- decW=(src,K,min)=>{const a=src.filter(w=>dec(w,K));return a.length>=(min||4)?a:src.filter(w=>dec(w,LTO.slice(0,Math.max(K.length+4,12)))).length>=(min||4)?src.filter(w=>dec(w,LTO.slice(0,Math.max(K.length+4,12)))):src},
+ decW=(src,K,min)=>{const a0=src.filter(w=>dec(w,K)),fr=RPX.fresh?a0.filter(w=>!skHas("D:"+w)):[],a=fr.length>=Math.max(4,min||4)?fr:a0;return a.length>=(min||4)?a:src.filter(w=>dec(w,LTO.slice(0,Math.max(K.length+4,12)))).length>=(min||4)?src.filter(w=>dec(w,LTO.slice(0,Math.max(K.length+4,12)))):src},
  near=(w,pool)=>pool.filter(x=>x!=w&&x.length==w.length&&[...x].filter((c,i)=>c==w[i]).length>=w.length-1),
  nAo=(c,pool)=>{const n=RPX.n||3,d=[...new Set(pool)].filter(x=>x!==c).slice(0,n-1),a=shuf([c,...d]);return{a,c:a.indexOf(c)}},
  Qo=(k,q,say,big,c,pool,o)=>{const m=nAo(c,pool);return{k:k+srt(m.a.map(String)),q,say:say||q,big:big||"",...m,...o}},
@@ -2769,11 +2780,11 @@ G.b3=f=>{const K=KLET(),words=decW(CV,K),pw=picW(words),w=(pw.length>=3&&R(2))?p
  return Qo("b3w"+w,"Blend the sounds. Which word is it?",`${sOut(w)}. Push the sounds together. Which word is it?`,[...w].join(" · "),w,ordP(w,words),{it:"D:"+w,h:`${sOut(w)}. Say it fast.`,why:`${sOut(w)} makes ${w}.`})};
 const rdA=words=>{const w=pp(words);return Qo("rA"+w,"Which word do you hear?",`Tap the word ${w}.`,"👂",w,ordP(w,words),{it:"D:"+w,h:`Sound it out: ${sOut(w)}.`,why:`${w}: ${sOut(w)}.`})};
 const rdP=words=>{const pw=picW(words),w=pp(pw);return Qo("rP"+w,"Read the word. Which picture is it?",`Read the word. Which picture is it?`,w,pe(w),ordP(w,pw).map(pe),{it:"D:"+w,h:`Sound it out: ${sOut(w)}.`,why:`${w}: ${sOut(w)}.`})};
-const rdWord=words=>{const pw=picW(words);return pw.length>=3&&R(2)?rdP(words):rdA(words)};
+const rdWord=words=>{const pw=picW(words);return pw.length>=3&&R(2)&&!RPX.nopic?rdP(words):rdA(words)};
 const tileQ=(w,mode)=>{const K=KLET(),ex=(RPX.n||3)<3?[]:shuf(K.filter(c=>!w.includes(c))).slice(0,w.length>3?2:1);return{t:"tile",mode,k:"T"+mode+w,w,big:pe(w)||"🔊",q:mode=="sb"?"Tap the sounds in order to build the word.":"Spell the word.",say:mode=="sb"?`Build the word ${w}. Tap each sound in order.`:`Spell the word ${w}. Tap the letters in order.`,a:[w],c:0,tiles:shuf([...w,...ex]),it:"D:"+w,h:`${sOut(w)}.`,why:`${w} is spelled ${[...w].join("-")}.`}};
 G.rd=f=>rdWord(decW(CV,KLET(),6));
 G.sg=f=>tileQ(pp(decW(CV,KLET(),6)),"sb");
-G.pic=f=>{const w=decW(CV,KLET(),6);return picW(w).length>=3?rdP(w):rdA(w)};
+G.pic=f=>{const w=decW(CV,KLET(),6);return picW(w).length>=3&&!RPX.nopic?rdP(w):rdA(w)};
 G.unf=f=>{const K=KLET(),all=decW(CV.concat(W("pat sap nap tip sip nip pit tan tin pan sad mad dim din dip kid kit cod cog dot mop pod rod rot hog gum hum jam jig jog nod rug rub sub tub tug cub dug nub")),K,6),fresh=all.filter(w=>!skHas("D:"+w)),pool=fresh.length>=4?fresh:all;return R(2)?rdA(pool):rdWord(pool)};
 const vwl=v=>f=>{const K=KLET(),src=CV.filter(w=>w[1]==v),words=decW(src,K,4),r=R(4);if(r==0)return tileQ(pp(words),"sp");if(r==1){const w=pp(words);return Qo("vw"+w,"Which vowel is missing?",`Which vowel makes the word ${w}?`,`${w[0]} _ ${w[2]}`,v,W("a e i o u").filter(x=>x!=v),{it:"D:"+w,h:`${w}: ${sOut(w)}.`,why:`${w} has ${v} in the middle.`})}return rdWord(words)};
 G.sa=vwl("a");G.si=vwl("i");G.so=vwl("o");G.su=vwl("u");G.se=vwl("e");
@@ -2881,13 +2892,18 @@ G.sto2=pasQ(1);G.dec=pasQ(0);G.who=f=>tA(R(4))(f);G.seq=seqQ;G.ce=tB;G.chr=tC;G.
 const RET=[["A hen found a seed. She planted it. It grew into a tall plant.","A hen planted a seed and it grew into a plant.","A hen ate a seed and went to sleep.","A tall plant found a hen."],["Baraka was late. He ran to the bus. He got on just in time.","Baraka ran to catch the bus and got on in time.","Baraka stayed home all day.","The bus ran away from Baraka."],["It rained all day. The children made paper boats. They sailed them in puddles.","On a rainy day the children sailed paper boats in puddles.","The children went swimming in the sea.","The rain made the boats sad."],
 ["A crow was thirsty. She dropped stones into a jug and the water came up. Then she drank.","The crow used stones to bring the water up and drank.","The crow broke the jug and flew away.","The stones were thirsty."],["Auma sold mangoes at the market. She bought a notebook with the coins. She was pleased.","Auma sold mangoes and bought a notebook.","Auma lost her mangoes at the market.","The notebook sold Auma."],["Njoki was afraid of the dark. Her brother gave her a lamp. Now she is not afraid.","A lamp helped Njoki stop being afraid.","Njoki broke the lamp.","Her brother was afraid of the dark."],["The river was low. A little fish swam to a deep pool. It was safe there.","A fish moved to a deep pool when the river was low.","A fish climbed a tree.","The pool was low."],["Chebet planted a bean in a cup. She gave it water. A green shoot came up.","Chebet watered a bean and it started to grow.","Chebet ate the bean.","The cup grew into a tree."],["Wafula looked for his pencil everywhere. He found it behind his ear.","Wafula found his lost pencil behind his ear.","Wafula gave away his pencil.","The pencil found Wafula."]];
 G.ret=f=>{const[t,c]=pp(RET),oth=shuf(RET.filter(r=>r[0]!=t).flatMap(r=>[r[1],r[2],r[3]])).slice(0,4);return Qm("rt"+t.slice(0,14),"Which sentence tells the story best?",`Listen. ${t} Which one tells the story best?`,`<span style="font-size:22px;line-height:1.5">${t}</span>`,c,oth,{it:"T:ret",h:"A retelling says what happened, in order.",why:c})};
-G.flu=f=>flQ(pp([5,0]));G.lng=f=>pp([cs(C,4,8),tA(R(4)),mi,tB])(f);
+G.flu=f=>(window.SpeechRecognition||window.webkitSpeechRecognition)?flQ(pp([5,0])):pasQ(0)(f);G.lng=f=>pp([cs(C,4,8),tA(R(4)),mi,tB])(f);
 Object.keys(G).forEach(k=>{});
 
 /* ===== Reading Path: states, planner and the lesson (teach, do it together, do it alone) ===== */
 const RPN=["Not introduced","Learning","Practising","Developing independence","Mastered"],RPC=["#9aa3ad","#5aa7e0","#e8a02a","#4f9a3a","#b8860b"];
 const LANGT=["v2_act","v3_dsc","v4_sto","l5_story"];
-function rpInit(){if(!S.rp)S.rp={taught:{},cnt:0,lf:[],rem:null,prof:null,qz:{},sn:[]};const r=S.rp;if(!r.taught)r.taught={};if(!r.lf)r.lf=[];if(!r.sn)r.sn=[];if(!r.qz)r.qz={};return r}
+const LETG=["s3_nm","s3_uc","s3_lc","s3_ml","s3_snd","s3_s2l","s3_bgn","s3_nvs","s3_fnt"],DECG=["s4_b3","s4_rd","s4_b2"];
+/* the fastest road to real reading: every skill that real word reading needs (the first six letters, blending, then words) is taught first */
+const FAST=(()=>{const s=new Set();(function a(id){if(s.has(id))return;s.add(id);SKI[id].pre.forEach(a)})("s4_rd");return s})();
+const rpCat=id=>/^(s2_bl|s4_b|s4_ls)/.test(id)?"bl":/^(s2_seg|s4_sg|s5_spl|s2_cx|s2_man)/.test(id)?"seg":/^s6_hf/.test(id)?"hfw":/^s6_(phr|sen|cap|qa|con)/.test(id)?"sen":/^s10_flu/.test(id)?"flu":/^(s4_|s5_|s7_|s8_)/.test(id)?"dec":/^(v|s9_)/.test(id)?"voc":/^(s10_|l5_|s1_story)/.test(id)?"cmp":/^s3_/.test(id)?"let":"pa";
+function rpInit(){if(!S.rp)S.rp={taught:{},cnt:0,lf:[],rem:null,prof:null,qz:{},sn:[]};const r=S.rp;if(!r.taught)r.taught={};if(!r.lf)r.lf=[];if(!r.sn)r.sn=[];if(!r.qz)r.qz={};
+ if(!r.m)r.m={};if(!r.att)r.att=[];if(!r.err)r.err=[];if(!r.dg)r.dg={q:[],f:{},d:{}};if(!r.pc)r.pc={};if(!r.met)r.met={};if(!r.sty)r.sty={};return r}
 const rk=id=>"K:"+id,rpRec=id=>(S.sk||{})[rk(id)];
 function rpSt(id){const r=rpRec(id);if(!r)return(S.rp&&S.rp.taught&&S.rp.taught[id])?1:0;let s=skSt(rk(id));if(s==4&&r.d.length<2)s=3;return s>=3?s:(s==1&&r.n<3?1:2)}
 const rpIt=id=>{const s=SKI[id];if(!s||!s.it)return null;return{p:s.it[0],pool:s.it[1]=="LTO"?LTO:SND,min:s.it[2]||6}};
@@ -2901,47 +2917,72 @@ function rpLevel(){const i=SKILLS.findIndex(s=>!rpDone(s.id));return i<0?SKILLS.
 /* what to learn next: remediation first, then the first skill whose prerequisites are ready; letters keep growing in turns */
 function rpNext(){const R_=rpInit();
  if(R_.rem&&SKI[R_.rem.to]&&rpSt(R_.rem.to)<4)return{id:R_.rem.to,mode:"remedial"};R_.rem=null;
- const hd=R_.hold&&R_.hold.at>R_.cnt?R_.hold.id:null,op0=SKILLS.filter(s=>rpOpen(s.id)&&!rpDone(s.id)),open=hd&&op0.some(s=>s.id!=hd)?op0.filter(s=>s.id!=hd):op0,lang=open.filter(s=>LANGT.includes(s.id)),main=open.filter(s=>!LANGT.includes(s.id)),last=R_.lf[R_.lf.length-1];
+ const dq=R_.dg.q.find(x=>SKI[x.s]);if(dq)return{id:dq.s,mode:"diag",dg:dq.t};
+ const last=R_.lf[R_.lf.length-1],fg=rpForget().filter(x=>(R_.rf&&R_.rf[x]!=null)?R_.cnt-R_.rf[x]>=5:1);
+ if(fg.length&&R_.cnt%2==0&&fg[0]!=last)return{id:fg[0],mode:"refresh"};
+ const sg=typeof stNext=="function"?stNext():null;if(sg&&R_.cnt%4==3)return{id:"s4_rd",mode:"story",sid:sg.id};
+ const adv=rpAdv(),hd=R_.hold&&R_.hold.at>R_.cnt?R_.hold.id:null,op0=SKILLS.filter(s=>rpOpen(s.id)&&!rpDone(s.id)),open=hd&&op0.some(s=>s.id!=hd)?op0.filter(s=>s.id!=hd):op0,lang=open.filter(s=>LANGT.includes(s.id)),main=open.filter(s=>!LANGT.includes(s.id)&&!(adv&&LETG.includes(s.id)&&rpReady(s.id)));
+ const bn=id=>({id,mode:"new",bundle:LETG.includes(id)});
  if(!open.length){const d=rpDueList();return d.length?{id:d[0],mode:"review"}:{id:"s10_long",mode:"free"}}
+ {const dd=rpDueList().filter(x=>x!=last&&SKI[x]&&!(hd&&x==hd));if(dd.length>=2&&R_.cnt%5==4&&main.length)return{id:dd[0],mode:"review"}}
  if(lang.length&&(R_.cnt%3==2||!main.length)&&lang[0].id!=last)return{id:lang[0].id,mode:"new"};
- const ext=main.filter(s=>SKI[s.id].it&&rpReady(s.id)&&!rpDone(s.id));if(ext.length&&R_.cnt%3==1){const x=ext[Math.floor(R_.cnt/3)%ext.length];if(x.id!=last)return{id:x.id,mode:"new"}}
- const nw=main.filter(s=>!rpReady(s.id)),ex=main.filter(s=>rpReady(s.id)&&!rpDone(s.id));let pool=nw.length?nw:ex;
- if(nw.length&&ex.length&&last&&rpReady(last)==false&&R_.cnt%2==1)pool=ex;
+ const ext=main.filter(s=>SKI[s.id].it&&rpReady(s.id)&&!rpDone(s.id));if(ext.length&&R_.cnt%3==1){const x=ext[Math.floor(R_.cnt/3)%ext.length];if(x.id!=last)return bn(x.id)}
+ const nw=main.filter(s=>!rpReady(s.id)),ex=main.filter(s=>rpReady(s.id)&&!rpDone(s.id)),fast=nw.filter(s=>FAST.has(s.id));let pool=fast.length?fast:nw.length?nw:ex;
+ if(!fast.length&&nw.length&&ex.length&&last&&rpReady(last)==false&&R_.cnt%2==1)pool=ex;
  let c=pool[0];const recent=R_.lf.slice(-4);if(c&&recent.filter(x=>x==c.id).length>=3&&rpSt(c.id)<3){const alt=pool.concat(ex,lang).find(s=>s.id!=c.id&&!recent.includes(s.id));if(alt)c=alt}
- return{id:(c||lang[0]||open[0]).id,mode:"new"}}
+ return bn((c||lang[0]||open[0]).id)}
+const rpForget=()=>{const M=rpInit().met;return SKILLS.filter(s=>M[s.id]&&M[s.id].t3&&rpSt(s.id)<3&&rpRec(s.id)).map(s=>s.id)};
 const rpPics=q=>!!(q&&q.a&&q.a.length&&q.a.every(o=>/class="p[ev]"/.test(String(o))));
 /* ---- making a question: only things the child has already been shown are asked about ---- */
 const rpPick=(pool,pre,n,min,st)=>{if(RPX.pl){const base=(RPX.plq&&(pre=="L:"||pre=="S:"))?RPX.plq.filter(c=>pool.includes(c)):pool;return shuf(base).slice(0,Math.max(n,1))}
+ if(RPX.force&&RPX.force.pre==pre){const f=RPX.force.items.filter(c=>pool.includes(c));if(f.length)return shuf(f).slice(0,Math.max(n,1))}
+ if(RPX.cand&&(pre=="L:"||pre=="S:")){const f=RPX.cand.filter(c=>pool.includes(c));if(f.length)return f.slice(0,Math.max(n,1))}
+ if(RPX.focus&&(pre=="L:"||pre=="S:")&&R(5)<3){const f=RPX.focus.filter(c=>pool.includes(c));if(f.length)return shuf(f).slice(0,Math.max(n,1))}
  const w=skWin(pool,pre,min,st),seen=w.filter(c=>(S.sk||{})[pre+c]),src=seen.length>=Math.min(n,2)?seen:w;return skPick(src,pre,n,Math.min(min||6,src.length),st)};
 const RPFAIL=[];
 function rpTrim(q,sup){if(!sup||q.t||!Array.isArray(q.a)||q.a.length<=2||typeof q.c!="number")return q;const ok=q.a[q.c],wrong=q.a.filter((x,i)=>i!=q.c),w=wrong[R(wrong.length)];q.a=q.a.filter((x,i)=>i==q.c||(i==q.a.indexOf(w)&&x===w));q.c=q.a.indexOf(ok);return q}
-function rpGen(id,sup){const s=SKI[id],ks=s.g.split("+"),R_=rpInit();RPX.n=sup?2:3;RPX.f=Math.min(1,.2+.15*rpSt(id));let q=null;
- for(let i=0;i<60;i++){try{const fn=G[ks[R(ks.length)]];q=fn(RPX.f)}catch(e){RPFAIL.push(id+": "+e.message);q=null;continue}
-  if(!q||!q.a&&q.t!="trace"&&!q.fl)continue;rpTrim(q,sup);artify(q);const key=q.k;if(L&&L.used&&L.used.has(key))continue;if(R_.sn.includes(key)&&i<40)continue;if(L&&L.used)L.used.add(key);R_.sn.push(key);if(R_.sn.length>80)R_.sn.shift();return q}
+const TILESK=new Set(["s4_b3","s4_rd","s4_pic","s4_unf","s5_a","s5_i","s5_o","s5_u","s5_e","s5_fam","s5_chg","s5_unf"]);
+function rpGen(id,sup){const s=SKI[id],ks=s.g.split("+"),R_=rpInit();RPX.n=sup?2:3;RPX.f=Math.min(1,.2+.15*rpSt(id)+.08*Math.min(3,(L&&L.streak)||0));RPX.fresh=!!(L&&(L.rv||L.ph=="pre"||(L.streak||0)>=2));let q=null;
+ for(let i=0;i<60;i++){let gk=ks[R(ks.length)];try{if(TILESK.has(id)&&L&&L.ph=="solo"&&!L.quiz&&!RPX.nopic&&R(3)==0){const wd=decW(CV,KLET(),6);q=tileQ(pp(RPX.fresh?(wd.filter(w=>!skHas("D:"+w)).length>=3?wd.filter(w=>!skHas("D:"+w)):wd):wd),R(2)?"sb":"sp");gk="tile"}else q=G[gk](RPX.f)}catch(e){RPFAIL.push(id+": "+e.message);q=null;continue}
+  if(!q||!q.a&&q.t!="trace"&&!q.fl)continue;q.gk=gk;q.nov=!!(q.it&&/^D:/.test(q.it)&&!skHas(q.it));rpDecFix(q,id);rpTrim(q,sup);artify(q);const key=q.k;if(L&&L.used&&L.used.has(key))continue;if(R_.sn.includes(key)&&i<40)continue;if(L&&L.used)L.used.add(key);R_.sn.push(key);if(R_.sn.length>80)R_.sn.shift();return q}
  if(q){if(L&&L.used&&L.used.has(q.k)&&!L.quiz&&!L.pl)return null;rpTrim(q,sup);return artify(q)}return{k:"x"+id,q:"Tap the star.",say:"Tap the star.",a:["⭐","❓"],c:0,why:"Well done."}}
 function rpTraceQ(){const ls=skWin(LTO,"L:",6,4).filter(c=>skHas("L:"+c));if(!ls.length)return null;const l=pp(ls),up=R(2),t=up?l.toUpperCase():l,what=up?"the big letter":"the small letter";return{t:"trace",k:"TR"+t,m:up?"up":"lo",w:t,big:`${t.toUpperCase()}${t.toLowerCase()}`,q:`Trace ${what} ${NM[l]}.`,say:`Let’s trace ${what}, ${NM[l]}. ${PH[l][0]}, like ${PH[l][1]}. Use your finger and follow the letter all the way around.`,a:[],c:0,why:"",it:"L:"+l}}
 /* ---- new letters and words are introduced before they are asked about ---- */
-function rpIntro(id){const t=rpIt(id);if(!t)return null;const win=skWin(t.pool,t.p,t.min,4),nw=win.filter(c=>!(S.sk||{})[t.p+c]).slice(0,3);if(!nw.length)return null;
+function rpIntro(id,tl){const t=rpIt(id);if(!t)return null;const win=skWin(t.pool,t.p,t.min,4),nw=tl?tl.map(x=>x.c).filter(c=>t.pool.includes(c)):win.filter(c=>!(S.sk||{})[t.p+c]).slice(0,3);if(!nw.length)return null;
  if(t.p=="S:")return{big:nw.map(c=>`${disp(c)} ${ART[LPIC[c][0]]||""}`).join(" &nbsp; "),say:nw.map(c=>`${c.toUpperCase()} says ${PH[c][0]}, like ${LPIC[c][0]}.`).join(" "),items:nw};
  return{big:nw.map(disp).join(" &nbsp; "),say:nw.map(c=>`This is the letter ${NM[c]}. Big ${c.toUpperCase()}, small ${c}.`).join(" "),items:nw}}
 /* ---- starting and running a lesson ---- */
-function rpStart(id,o){o=o||{};const s=SKI[id],R_=rpInit(),st=rpSt(id);try{speechSynthesis.cancel()}catch(e){}SQ++;
- L={rp:1,id,u:s.st-1,lv:s.ix+1,used:new Set(),ph:"teach",n:0,sf:[],strug:0,miss:0,mini:!!o.mini,daily:!!o.daily,rem:!!o.rem,ti:0,sup:0,gl:o.mini?2:3,need:o.mini?3:5,max:o.mini?6:10,msg:"You can do it!",ok:0,tot:0,mode:o.mode||"new"};
- L.slides=[];const intro=rpIntro(id);if(intro)L.slides.push([intro.big,intro.say,intro.items]);
- if(st<=1||o.reteach||o.rem)(s.t||[]).forEach(x=>L.slides.push([x[0],x[1]]));else if(!intro&&st==2&&!o.mini)L.slides.push([s.t[0][0],"Let us remember. "+s.t[0][1]]);
- if(L.slides.length){scr="lesson";rpTeach()}else{L.ph=st>=3?"solo":"guided";scr="lesson";rpAsk()}}
-function rpTeach(){const sl=L.slides[L.ti];if(!sl){L.ph=(rpSt(L.id)>=3&&!L.rem)?"solo":"guided";L.n=0;return rpAsk()}const s=SKI[L.id];L.vt=sl[1];S.sk=S.sk||{};
- app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p><button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
- if(sl[2])sl[2].forEach(c=>{const r=S.sk[SKI[L.id].it[0]+c]=(S.sk[SKI[L.id].it[0]+c]||{h:"",n:0,c:0,d:[],g:[],t:Date.now(),b:0})});
+function rpStart(id,o){o=o||{};const s=SKI[id],R_=rpInit();try{speechSynthesis.cancel()}catch(e){}SQ++;
+ const bun=!!o.bundle&&LETG.includes(id)&&!o.mini&&!o.rem;
+ L={rp:1,id,u:s.st-1,lv:s.ix+1,used:new Set(),ph:"teach",n:0,sf:[],strug:0,miss:0,mini:!!o.mini,daily:!!o.daily,rem:!!o.rem,ti:0,sup:0,gl:o.mini?2:3,need:o.mini?3:5,max:o.mini?6:10,msg:"You can do it!",ok:0,tot:0,mode:o.mode||"new",streak:0,fastN:0,slowN:0,t00:Date.now(),force:o.force||null,diag:null,bun:null};
+ if(o.mode=="refresh"){L.refresh=1;R_.rf=R_.rf||{};R_.rf[id]=R_.cnt}
+ if(bun){L.bun=rpBundle(id);L.need=6;L.max=12;L.gl=3;L.focus=rpFocusLetters()}
+ if(o.dg)return rpDiagStart(o.dg);
+ if(!o.rem&&!L.refresh&&o.mode!="remedial"&&o.mode!="review"&&rpPreWanted(id,bun))return rpPreStart(bun);
+ rpPlan(o)}
+/* what to show before the questions: only what the child does not already know */
+function rpPlan(o){o=o||{};const id=L.id,s=SKI[id],st=rpSt(id),pm=L.pm;L.slides=[];
+ if(L.bun){const tl=L.teach||(L.pm?[]:rpNewLetters(3).map(c=>({c,n:1,s:rpOpen("s3_snd")?1:0})));tl.forEach(x=>L.slides.push(rpLetterSlide(x)))}
+ else{const intro=rpIntro(id,L.teach);if(intro)L.slides.push([intro.big,intro.say,intro.items])}
+ const noTeach=pm=="known"||pm=="part"&&!(s.t||[]).length;
+ if(!L.bun&&!noTeach&&(st<=1||o.reteach||o.rem)&&pm!="part"){const dsc=DISC[id];if(dsc)L.slides.push(dsc);(s.t||[]).forEach(x=>L.slides.push([x[0],x[1]]))}
+ else if(!L.bun&&!L.slides.length&&st==2&&(!o.mini||L.refresh)&&pm!="known"&&pm!="part")L.slides.push([s.t[0][0],"Let us remember. "+s.t[0][1]]);
+ if(pm=="known"){L.need=Math.min(L.need,4);L.gl=0}
+ if(L.slides.length){scr="lesson";rpTeach()}else{L.ph=(st>=3||pm=="known")?"solo":"guided";scr="lesson";rpAsk()}}
+function rpTeach(){const sl=L.slides[L.ti];if(!sl){L.ph=((rpSt(L.id)>=3||L.pm=="known")&&!L.rem)?"solo":"guided";L.n=0;return rpAsk()}if(sl.disc)return rpDisc(sl);const s=SKI[L.id];L.vt=sl[1];S.sk=S.sk||{};
+ app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p><button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
+ if(sl[2])sl[2].forEach(c=>{const p=sl.cm||[SKI[L.id].it[0]];p.forEach(pp_=>{if(!S.sk[pp_+c])S.sk[pp_+c]={h:"",n:0,c:0,d:[],g:[],t:Date.now(),b:0}})});
  rpInit().taught[L.id]=1;save();talk(sl[1])}
-function rpAsk(){const R_=rpInit();L.done=0;L.flAcc=null;L.miss=0;L.hint=0;L.help=0;const s=SKI[L.id];L.sup=(L.ph=="guided"||L.simp)?1:0;
+function rpAsk(){const R_=rpInit();if(L.ph=="pre")return rpPreAsk();if(L.diag)return rpDiagAsk();L.done=0;L.flAcc=null;L.miss=0;L.hint=0;L.help=0;L.rt1=null;const s=SKI[L.id];L.sup=(L.ph=="guided"||L.simp)?1:0;
  let id=L.id,rv=null;if(L.ph=="solo"&&!L.quiz&&L.tot%4==3&&!L.rem){const d=rpDueList().filter(x=>x!=L.id&&SKI[x]&&!SKI[x].nr||(S.pre));const dd=d.filter(x=>x!=L.id);if(dd.length)rv=pp(dd.slice(0,4))}
- if(L.quiz){id=L.qs[L.n%L.qs.length]}else if(rv)id=rv;L.cid=id;L.rv=rv;let tq=(!rv&&!L.quiz&&["uc","lc"].includes(SKI[id].g)&&R(5)==0)?rpTraceQ():null;if(tq&&L.used.has(tq.k))tq=null;if(tq)L.used.add(tq.k);L.q=tq||rpGen(id,L.sup);if(!L.q&&rv){L.cid=L.id;L.rv=null;rv=null;L.q=rpGen(L.id,L.sup)}
+ if(L.quiz){id=L.qs[L.n%L.qs.length]}else if(rv)id=rv;else if(L.bun)id=rpBunPick();L.cid=id;L.rv=rv;
+ RPX.force=L.force||null;RPX.focus=(L.bun&&L.focus)||null;RPX.cand=null;
+ let tq=(!rv&&!L.quiz&&["uc","lc"].includes(SKI[id].g)&&R(5)==0)?rpTraceQ():null;if(tq&&L.used.has(tq.k))tq=null;if(tq)L.used.add(tq.k);L.q=tq||rpGen(id,L.sup);if(!L.q&&rv){L.cid=L.id;L.rv=null;rv=null;L.q=rpGen(L.id,L.sup)}
  if(!L.q){if(L.ph=="guided"){L.ph="solo";L.n=0;L.simp=0;return rpAsk()}const r=L.sf.slice(-5).filter(x=>x).length;return rpEnd(L.sf.length>=3&&r>=Math.min(3,L.sf.length))}
  L.msg="You can do it!";
- if(L.ph=="guided"&&L.n==0)L.msg="Watch me first! Tap the bouncing one.";else if(rv)L.msg="Do you remember this one?";else if(L.ph=="solo"&&L.n==0)L.msg="Now you try on your own!";
+ if(L.ph=="guided"&&L.n==0)L.msg="Watch me first! Tap the bouncing one.";else if(rv)L.msg="Do you remember this one?";else if(L.ph=="solo"&&L.n==0)L.msg=L.pm=="known"?"Let’s see if you remember!":"Now you try on your own!";
  rpShow()}
-function rpShow(){const q=L.q,s=SKI[L.cid]||SKI[L.id],nr=NR(),ph=L.quiz?`Quiz · Question ${L.n+1}/10`:L.daily?`Daily adventure · Part ${DYL?DYL.seg+1:1}`:`Stage ${s.st}: ${s.n} · ${L.ph=="guided"?"Together":L.ph=="solo"?"On my own":""}`;
+function rpShow(){const q=L.q,s=SKI[L.cid]||SKI[L.id],nr=NR(),ph=L.ph=="pre"||L.diag?"Let’s see what you know":L.quiz?`Quiz · Question ${L.n+1}/10`:L.daily?`Daily adventure · Part ${DYL?DYL.seg+1:1}`:`Stage ${s.st}: ${s.n} · ${L.ph=="guided"?"Together":L.ph=="solo"?"On my own":""}`;
  let body="";if(q.t=="trace")body=trArea();else if(q.t=="tile")body='<div id="tz"></div>';else if(q.t=="tapw")body=`<div class="pgw">${q.lines.map((l,li)=>`<div>${l.map((w,wi)=>{const ix=q.lines.slice(0,li).reduce((a,x)=>a+x.length,0)+wi;return`<button class="tw${ix==q.hl?" on":""}" onclick="ans(${ix})">${w}</button>`}).join(" ")}</div>`).join("")}</div>`;
  else body=(q.sb?padH(q):"")+`<div class="opts${q.ltr?" lt":""}${rpPics(q)?" pics":""}${q.a.every(o=>String(o).replace(/<[^>]+>/g,"").length<=5)?" s":""}">${q.a.map((o,i)=>`<button class="opt" onclick="ans(${i})" aria-label="${esc(nameOf(o))}">${o}</button>`).join("")}</div>`;
  app(`<div class="card${nr?" nr":""}">${XB()}${L.quiz?"":`<button class="ghost exitb" onclick="pupHelp()" aria-label="Help">🐶 Help</button>`}${nr?"":`<small>${ph}</small>`}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.msg}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);
@@ -2951,30 +2992,38 @@ function rpShow(){const q=L.q,s=SKI[L.cid]||SKI[L.id],nr=NR(),ph=L.quiz?`Quiz ·
 function rpReplay(){if(!L||!L.rp||!L.q)return false;const q=L.q;if(!(q.snd||q.rep||q.preSay))return false;
  const t=(q.preSay?q.preSay+" ":"")+(q.say||q.q);talk(t);if(q.snd){const ms=1700+t.length*45;setTimeout(()=>{if(L&&L.q==q)(ESND[q.snd]||ASND[q.snd])&&snd1(q.snd);else if(L&&L.q==q&&PH[q.snd])talk(PH[q.snd][0])},Math.min(ms,3200))}return true}
 /* ---- answering: right first time and on their own is the only thing that counts as independent ---- */
-function ans(i){if(!L||L.done)return;if(L.pl)return plAns(i);const q=L.q,ok=i==q.c;
- if(!ok){L.miss++;SQ++;clearHl();const bs=document.querySelectorAll(".opt");if(bs[i]){bs[i].classList.add("no");bs[i].disabled=1}else document.querySelectorAll(".tw").forEach((b,j)=>{if(j==i){b.classList.add("no");b.disabled=1}});sfx.no();pupReact("tilt");
-  const m=(CORR[L.u>9?9:L.u<0?0:L.u]||"Look again.")+" Try again!";$("#fb").innerHTML=`<p><b>${L.miss>1?"Look at the bouncing one.":m}</b></p>`;talk(L.miss>1?"Look at the bouncing one.":m);if(L.miss>=2&&q.a&&q.a.length){const b=document.querySelectorAll(".opt")[q.c];if(b)b.classList.add("hl")}return}
- L.done=1;clearHl();SQ++;const first=!L.miss&&!L.hint&&!(q.fl&&L.flAcc!=null&&L.flAcc<80),solo=L.ph=="solo"||L.quiz,o=first&&solo?"1":"h",g=L.quiz?"quiz":L.rv?"review":L.daily?"daily":L.ph;
- const sid=L.cid||L.id;skAdd(rk(sid),o,g);if(q.it)skAdd(q.it,o,g);
+const rpTw=q=>{const t=String((q.say||q.q||"")+" "+(q.big||"")).replace(/<[^>]+>/g," ");return t.split(/\s+/).filter(x=>x).length},
+ rpSlow=(q,rt)=>rt!=null&&rt>(q.t=="tile"?22000:9000+Math.max(0,rpTw(q)-6)*700),
+ rpFast=(q,rt)=>rt!=null&&rt<(q.t=="tile"?10000:Math.min(12000,4000+Math.max(0,rpTw(q)-6)*400));
+function ans(i){if(!L||L.done)return;if(L.pl)return plAns(i);const q=L.q;if(L.rt1==null)L.rt1=Math.max(0,Date.now()-(L.t0||Date.now()));const ok=i==q.c;
+ if(L.ph=="pre"||L.diag)return rpOne(i,ok);
+ if(!ok){if(!L.miss)rpErr(q,i);L.miss++;SQ++;clearHl();const bs=document.querySelectorAll(".opt");if(bs[i]){bs[i].classList.add("no");bs[i].disabled=1}else document.querySelectorAll(".tw").forEach((b,j)=>{if(j==i){b.classList.add("no");b.disabled=1}});sfx.no();pupReact("tilt");
+  const hm=q.h&&L.miss==1?q.h+" Try again!":null,m=hm||(CORR[L.u>9?9:L.u<0?0:L.u]||"Look again.")+" Try again!";$("#fb").innerHTML=`<p><b>${L.miss>1?"Look at the bouncing one.":m}</b></p>`;talk(L.miss>1?"Look at the bouncing one.":m);if(L.miss>=2&&q.a&&q.a.length){const b=document.querySelectorAll(".opt")[q.c];if(b)b.classList.add("hl")}return}
+ L.done=1;clearHl();SQ++;const selfOnly=!!(q.fl&&L.flAcc==null),first=!L.miss&&!L.hint&&!selfOnly&&!(q.fl&&L.flAcc!=null&&L.flAcc<80),solo=L.ph=="solo"||L.quiz,o=first&&solo?"1":"h",g=L.quiz?"quiz":L.rv?"review":L.daily?"daily":L.ph;
+ const sid=L.cid||L.id;rpRetention(sid,first&&solo);skAdd(rk(sid),o,g);if(q.it)skAdd(q.it,o,g);rpAtt(q,first&&solo,L.rt1);rpMetAns(sid);if(selfOnly)rpSelf();
  document.querySelectorAll(".opt,.tw").forEach((b,j)=>{b.disabled=1;if(j==q.c)b.classList.add("ok")});sfx.ok();
  const gain=first?2:1;S.coins+=gain;S.earned+=gain;S.correct++;L.ok++;L.tot++;if(L.ph=="solo"&&!L.rv)L.sf.push(first?1:0);if(L.rv&&!first)L.rvmiss=1;
+ if(L.ph=="solo"&&!L.rv&&!L.quiz){if(first){L.streak=(L.streak||0)+1;if(rpSlow(q,L.rt1))L.slowN++;if(rpFast(q,L.rt1))L.fastN++;else L.fastN=0}else{L.streak=0;L.fastN=0}}
  L.msg=(first?pu("c",CHEER):"You found it! Great trying.")+` +${gain} 🥭`;pupReact("yay");save();
  $("#fb").innerHTML=`<p><b>${L.msg}</b></p>${q.why&&!first?`<p>${q.why}</p>`:""}<button class="btn" onclick="adv()">${NR()?"▶":"Next ➜"}</button>`;talk(L.msg)}
-function adv(){sfx.click();if(L.pl)return plAdv();if(L.quiz){L.n++;return L.n>=10?quizEnd():rpAsk()}
+function adv(){sfx.click();if(L.pl)return plAdv();if(L.ph=="pre")return rpPreAdv();if(L.diag)return rpDiagAdv();if(L.quiz){L.n++;return L.n>=10?quizEnd():rpAsk()}
  if(L.ph=="guided"){L.n++;if(L.n>=L.gl){L.ph="solo";L.n=0;L.simp=0;L.msg="Now you try on your own!"}return rpAsk()}
  L.n++;const last=L.sf.slice(-5),miss=last.filter(x=>!x).length;
- if(last.length>=3&&miss>=3&&last.length<=5){L.strug++;L.sf=[];if(L.strug>=2)return rpGiveUp();L.ph="guided";L.n=0;L.gl=3;L.simp=1;L.msg="Let’s do some together first.";return rpAsk()}
+ if(last.length>=3&&miss>=3&&last.length<=5){L.strug++;L.sf=[];L.fastN=0;L.streak=0;if(L.strug>=2)return rpGiveUp();L.ph="guided";L.n=0;L.gl=3;L.simp=1;L.msg="Let’s do some together first.";return rpAsk()}
+ /* confident and right first time: stop practising and move forward; right but slow: a few more different examples */
+ const nb=L.bun?4:3;if(!L.rem&&L.fastN>=nb&&L.sf.length>=nb&&L.sf.slice(-nb).every(x=>x))return rpEnd(true,{early:1});
+ if(L.slowN>=2&&!L.xtra){L.xtra=1;L.need=Math.min(L.max,L.need+2)}
  if(L.sf.length>=L.need&&L.sf.slice(-5).filter(x=>x).length>=Math.min(4,L.need-0)&&last.length>=Math.min(5,L.need))return rpEnd(true);
  if(L.sf.length>=L.max)return rpEnd(false);rpAsk()}
 function rpGiveUp(){const R_=rpInit(),w=L.rem?null:rpWeakPre(L.id);const id=L.id;let m;if(w){R_.rem={to:w,back:id,left:1};m=`Let’s go back and practise ${SKI[w].n.toLowerCase()} first. Then we will come back to this.`}else m="That one is tricky. Let’s try it again another day. You are doing great!";
- L.msg=m;R_.hold={id,at:R_.cnt+3};R_.cnt++;R_.lf.push(id);if(!L.daily)S.lessons++;markDay();save();if(L.daily&&DYL)return dnext();scr="done";app(`<div class="card" style="text-align:center"><div class="banner"><h1>Good try!</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶</button> <button class="ghost" onclick="go('home')">🏠</button></div>`);talk(m)}
-function rpEnd(pass){const R_=rpInit(),id=L.id,was=L.rem,s=SKI[id];if(was&&R_.rem)R_.rem=null;R_.cnt++;R_.lf.push(id);if(R_.lf.length>12)R_.lf.shift();if(!L.daily){S.lessons++;if(S.lessons%3==0)S.chest=(S.chest||0)+1}markDay();const bonus=L.daily?2:pass?10:4;S.coins+=bonus;S.earned+=bonus;S.level=rpLevel();S.fin=SKILLS.every(s=>rpDone(s.id));save();
- const st=rpSt(id),solo=L.sf.length,right=L.sf.filter(x=>x).length,m=pass?`You got ${right} of ${solo} on your own!`:"Good practising. We will come back to this.";
+ L.msg=m;R_.hold={id,at:R_.cnt+3};R_.cnt++;R_.lf.push(id);if(!L.daily)S.lessons++;markDay();rpMetTouch();rpDetect();save();if(L.daily&&DYL)return dnext();scr="done";app(`<div class="card" style="text-align:center"><div class="banner"><h1>Good try!</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶</button> <button class="ghost" onclick="go('home')">🏠</button></div>`);talk(m)}
+function rpEnd(pass,o){o=o||{};const R_=rpInit(),id=L.id,was=L.rem,s=SKI[id];if(was&&R_.rem){rpDgClear(R_.rem);R_.rem=null}R_.cnt++;R_.lf.push(id);if(R_.lf.length>12)R_.lf.shift();if(!L.daily){S.lessons++;if(S.lessons%3==0)S.chest=(S.chest||0)+1}markDay();const bonus=L.daily?2:pass?10:4;S.coins+=bonus;S.earned+=bonus;S.level=rpLevel();S.fin=SKILLS.every(s=>rpDone(s.id));rpMetTouch();rpDetect();save();
+ const st=rpSt(id),solo=L.sf.length,right=L.sf.filter(x=>x).length,m=pass?(o.early?`You did it fast! ${right} of ${solo} on your own!`:`You got ${right} of ${solo} on your own!`):"Good practising. We will come back to this.";
  if(L.daily&&DYL)return dnext();
  MZ.sting(st>=3&&pass?"level":"yay");confetti();scr="done";L.sum={id,st,pass,right,solo,bonus};
- app(`<div class="card" style="text-align:center"><div class="banner"><h1>${pass?"Well done!":"Nice work!"}</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><p class="qt">${s.n}<br><b style="color:${RPC[st]}">${RPN[st]}</b></p><p>+${bonus} 🥭</p><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶ Next</button> <button class="ghost" onclick="go('home')">🏠 Home</button></div>`);talk(`${pass?"Well done":"Nice work"}, ${S.name}! ${m}`)}
-function rpGo(){const n=rpNext();rpStart(n.id,{mode:n.mode,rem:n.mode=="remedial",mini:n.mode=="remedial"})}
-const rpGoTo=id=>{if(!SKI[id])return;if(!rpOpen(id)){const w=SKI[id].pre.filter(p=>!rpReady(p))[0];const m=`First learn: ${SKI[w].n}.`;talk(m);const e=$("#mpmsg");if(e)e.textContent=m;return}rpStart(id,{reteach:rpSt(id)<=1})};
+ app(`<div class="card" style="text-align:center"><div class="banner"><h1>${pass?"Well done!":"Nice work!"}</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><p class="qt">${s.n}${L.bun&&L.focus&&L.focus.length?"<br>"+L.focus.map(c=>c.toUpperCase()+c).join(" &nbsp; "):""}<br><b style="color:${RPC[st]}">${RPN[st]}</b></p><p>+${bonus} 🥭</p><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶ Next</button> <button class="ghost" onclick="go('home')">🏠 Home</button></div>`);talk(`${pass?"Well done":"Nice work"}, ${S.name}! ${m}`)}
+function rpGo(){const n=rpNext(),R_=rpInit();if(n.mode=="story"&&typeof stOpen=="function")return stOpen(n.sid);rpStart(n.id,{mode:n.mode,rem:n.mode=="remedial",mini:n.mode=="remedial"||n.mode=="refresh",bundle:n.bundle,dg:n.dg,force:n.mode=="remedial"&&R_.rem?R_.rem.force:null})}
+const rpGoTo=id=>{if(!SKI[id])return;if(!rpOpen(id)){const w=SKI[id].pre.filter(p=>!rpReady(p))[0];const m=`First learn: ${SKI[w].n}.`;talk(m);const e=$("#mpmsg");if(e)e.textContent=m;return}rpStart(id,{reteach:rpSt(id)<=1,bundle:LETG.includes(id)})};
 /* ---- the daily adventure: a few short parts, each from a different place on the path ---- */
 let DYL=null;
 function startDaily(){const n=S.pre?3:4;DYL={seg:0,segs:n,picked:[]};dseg()}
@@ -2982,6 +3031,262 @@ function dpickSkill(){const R_=rpInit(),n=rpNext(),due=rpDueList().filter(x=>!DY
 function dseg(){const id=dpickSkill();rpStart(id,{mini:true,daily:true})}
 function dbreak(){const m=`Great work, ${S.name}! Stand up and stretch. Then we will do part ${DYL.seg+1}.`;SQ++;L=null;app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">🙆 ⭐</div><p class="qt">Part ${DYL.seg} of ${DYL.segs} done!</p><button class="btn" style="font-size:34px;padding:6px 30px" onclick="dseg()">▶</button></div>`);talk(m)}
 function dnext(){DYL.seg++;if(DYL.seg>=DYL.segs)return dmore();dbreak()}
+
+/* ===== Reading Path, faster learning: check first, combine letters, discover, notice error patterns, measure honestly ===== */
+const NMSK=/^s3_(nm|uc|lc|ml|fnt)$/,hasRec=k=>!!(S.sk&&S.sk[k]);
+
+/* a child placed in at sentence level, whose letter skills were all credited: do not send them back to letter lessons */
+const rpAdv=()=>{const P=S.rp&&S.rp.prof;return !!(P&&rpSt("s5_fam")>=3&&rpSt("s4_rd")>=3)};
+/* ---- letters are taught together: name, big and small, sound, picture ---- */
+function rpNewLetters(n){const sO=rpOpen("s3_snd");return LTO.filter(c=>!hasRec("L:"+c)||(sO&&SND.includes(c)&&!hasRec("S:"+c))).slice(0,n)}
+function rpFocusLetters(base){const inprog=LTO.filter(c=>(hasRec("L:"+c)&&skSt("L:"+c)<3)||(hasRec("S:"+c)&&skSt("S:"+c)<3));return[...new Set([...(base||rpNewLetters(3)),...inprog])].slice(0,6)}
+function rpLetterSlide(x){const c=x.c,pic=LPIC[c]?ART[LPIC[c][0]]||"":"",nameT=`This is the letter ${NM[c]}. Big ${c.toUpperCase()}, small ${c}.`,sndT=PH[c]?`${c.toUpperCase()} says ${PH[c][0]}, like ${LPIC[c][0]}.`:"";
+ const sl=[x.s?`${disp(c)} ${pic}`:disp(c),((x.n?nameT+" ":"")+(x.s?sndT:"")).trim()||nameT,[c]];sl.cm=[...(x.n?["L:"]:[]),...(x.s?["S:"]:[])];if(!sl.cm.length)sl.cm=["L:"];return sl}
+function rpBundle(id){const m=LETG.filter(x=>rpOpen(x)&&!rpDone(x));if(!m.includes(id))m.unshift(id);const d=DECG.find(x=>rpOpen(x)&&!rpDone(x));return{m,d:d||null,c:0}}
+function rpBunPick(){const B=L.bun;B.c++;if(B.d&&L.ph=="solo"&&B.c%4==0&&rpOpen(B.d)&&KLET().length>=7)return B.d;return B.m[B.c%B.m.length]}
+
+/* ---- the quick check before a skill: only teach what is missing ---- */
+const rpBunN=()=>rpAdv()?8:3+Math.min(2,rpInit().m.bk||0);
+function rpPreWanted(id,bun){const R_=rpInit();if(bun){const nl=rpNewLetters(rpBunN());return nl.length>0&&!R_.pc["B:"+nl.join("")]}
+ if(R_.pc[id])return false;const rec=rpRec(id),fromPlay=!!(rec&&rec.g&&rec.g.includes("place")&&!rec.g.includes("solo"));if(rpSt(id)>=2&&!fromPlay)return false;if(rec&&rec.n>=3&&!fromPlay)return false;return true}
+function rpPreStart(bun){const id=L.id,R_=rpInit();let plan=[],cand=null;
+ if(bun){cand=rpNewLetters(rpBunN());const sO=rpOpen("s3_snd"),wide=rpAdv();cand.forEach(c=>{const needS=sO&&SND.includes(c)&&!hasRec("S:"+c),needL=!hasRec("L:"+c);if(wide){if(needS)plan.push(["s3_snd",c]);else if(needL)plan.push(["s3_nm",c]);return}if(needL)plan.push(["s3_nm",c]);if(needS)plan.push(["s3_snd",c])});L.pkey="B:"+cand.join("")}
+ else if(rpIt(id)){const it=rpIntro(id);cand=it?it.items:[];plan=cand.map(c=>[id,c]);L.pkey=id}
+ else{plan=[[id,null],[id,null],[id,null]];L.pkey=id}
+ if(!plan.length){R_.pc[L.pkey]={d:ymd(),r:"none"};return rpPlan({})}
+ L.ph="pre";L.pre={plan,i:0,r:[],cand};L.slides=[];scr="lesson";rpAsk()}
+function rpPreAsk(){const P=L.pre,pl=P.plan[P.i];if(!pl)return rpPreEnd();L.done=0;L.flAcc=null;L.miss=0;L.hint=0;L.help=0;L.rt1=null;L.sup=0;L.cid=pl[0];L.rv=null;RPX.force=null;RPX.focus=null;RPX.cand=pl[1]?[pl[1]]:null;
+ L.q=rpGen(pl[0],0);RPX.cand=null;if(!L.q){P.r.push([pl[0],pl[1]||"",false]);P.i++;return rpPreAsk()}
+ L.msg=P.i==0?"Let’s see what you know!":"You can do it!";rpShow()}
+/* one try, no hints: this is a check, not a lesson (a wrong answer is just information) */
+function rpOne(i,ok){const q=L.q,sid=L.cid||L.id;L.done=1;clearHl();SQ++;
+ skAdd(rk(sid),ok?"1":"0","solo");if(q.it)skAdd(q.it,ok?"1":"0","solo");rpAtt(q,ok,L.rt1);rpMetAns(sid);if(!ok)rpErr(q,i);
+ (L.pre||L.dg).r.push([sid,q.it?q.it.slice(2):"",ok,q.gk||""]);
+ document.querySelectorAll(".opt,.tw").forEach((b,j)=>{b.disabled=1;if(j==q.c)b.classList.add(ok?"ok":"hl");else if(j==i)b.classList.add("no")});
+ ok?sfx.ok():sfx.click();pupReact(ok?"yay":"tilt");const m=ok?"Yes!":"That’s okay! It is this one.";const fb=$("#fb");if(fb)fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="adv()">${NR()?"▶":"Next ➜"}</button>`;talk(m);save()}
+function rpPreAdv(){const P=L.pre;P.i++;L.n++;const n=P.r.length,r=P.r.filter(x=>x[2]).length;
+ if(!P.cand){P.ext=P.ext||0;
+  if(n==3&&!P.ext){if(r<=1)return rpPreEnd("teach");if(r==3){P.ext=1;P.plan.push([L.id,null])}else{P.ext=2;P.plan.push([L.id,null],[L.id,null],[L.id,null])}}
+  else if(n==4&&P.ext==1){if(r==4)return rpPreEnd("skip");P.ext=2;P.plan.push([L.id,null],[L.id,null])}
+  else if(n>=6)return rpPreEnd(r>=5?"skip":r>=3?"part":"teach")}
+ else if(P.i>=P.plan.length||(n>=3&&P.r.slice(0,3).every(x=>!x[2]))||(rpAdv()&&n>=4&&P.r.filter(x=>!x[2]).length>=2)){P.stopped=P.i<P.plan.length;return rpPreEnd("items")}
+ rpAsk()}
+function rpPreEnd(kind){const P=L.pre,R_=rpInit(),id=L.id,key=L.pkey,r=P.r,n=r.length,c=r.filter(x=>x[2]).length,M=R_.m.pre=R_.m.pre||{a:0,s:0,p:0,t:0,i:0,k:0};M.a+=n;L.pre=null;L.ph="teach";
+ if(!P.cand){let k=kind;if(k=="skip"&&rpSt(id)<3)k="part";R_.pc[key]={d:ymd(),r:k,n,c};
+  if(k=="skip"){M.s++;return rpSkip()}
+  L.pm=k;M[k=="part"?"p":"t"]++;return rpPlan({reteach:k=="teach"})}
+ if(L.bun&&rpAdv()&&n>=5&&r.filter(x=>!x[2]).length<=(n>=8?1:0)){r.forEach(x=>{if(x[2]&&x[1]){const k=(x[0]=="s3_nm"?"L:":"S:")+x[1];plCredit(k,"check")}});plCredit(rk(id),"check");R_.m.bk=(R_.m.bk||0)+1;R_.pc[key]={d:ymd(),r:"wide",n,c};M.i++;M.k+=c;M.s++;return rpSkip()}
+ const per={};r.forEach(x=>{if(!x[1])return;const p=per[x[1]]=per[x[1]]||{};p[NMSK.test(x[0])?"n":"s"]=x[2]});
+ const askedN=ch=>P.plan.some(x=>x[1]==ch&&(L.bun?x[0]=="s3_nm":true)),askedS=ch=>L.bun&&P.plan.some(x=>x[1]==ch&&x[0]=="s3_snd"),tl=[];
+ P.cand.forEach(ch=>{const p=per[ch]||{},stopped=!(ch in per)&&P.stopped,tn=L.bun?(askedN(ch)&&(stopped||p.n===false||p.n===undefined)):0,ts=L.bun?(askedS(ch)&&(stopped||p.s===false||p.s===undefined)):0,tc=L.bun?0:(stopped||p.s===false||p.n===false||(p.n===undefined&&p.s===undefined));
+  if(tn||ts||tc)tl.push({c:ch,n:L.bun?(tn?1:0):1,s:L.bun?(ts?1:0):0})});
+ L.teach=tl;const known=P.cand.length-tl.length;L.pm=tl.length?(known?"part":"teach"):"known";M.i++;M.k+=known;if(L.bun)R_.m.bk=L.pm=="known"?(R_.m.bk||0)+1:0;
+ R_.pc[key]={d:ymd(),r:L.pm,n,c};if(L.bun)L.focus=rpFocusLetters(P.cand);
+ rpPlan({})}
+function rpSkip(){const R_=rpInit(),id=L.id,s=SKI[id];R_.cnt++;R_.lf.push(id);if(R_.lf.length>12)R_.lf.shift();markDay();S.coins+=3;S.earned+=3;S.level=rpLevel();rpMetTouch();save();
+ if(L.daily&&DYL)return dnext();scr="done";L.sum={id,skip:1};const m=`You already know this, ${S.name}!`;
+ app(`<div class="card" style="text-align:center"><div class="banner"><h1>You know this! ⭐</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><p class="qt">${s.n}</p><p>+3 🥭</p><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶ Next</button> <button class="ghost" onclick="go('home')">🏠 Home</button></div>`);MZ.sting("yay");talk(`${m} Let’s move on.`)}
+
+/* ---- discovery: show some examples, let the child notice, then say the rule ---- */
+const DISC={
+ s2_rhy:{disc:1,nr:1,words:["cat","hat","bat"],pics:1,say:"Listen. Cat. Hat. Bat. They all sound the same at the end! Which word sounds the same too?",opts:["rat","sun"],c:0,hint:"Listen to the end of each word. Cat, hat, bat, mat.",rule:"Words that sound the same at the end rhyme."},
+ s5_fam:{disc:1,words:["cat","hat","bat"],hl:"at",say:"Look at cat, hat and bat. What is the same in all three?",ask:"What is the same in all three words?",opts:["at","c"],c:0,hint:"Look at the end of each word.",rule:"They all end in at. They are in the at family."},
+ s5_chg:{disc:1,words:["sat","mat","rat"],hl:"at",say:"Look at sat, mat and rat. Only one letter changes. Which part stays the same?",ask:"Which part stays the same?",opts:["at","s"],c:0,hint:"Look at the end of each word.",rule:"Change just the first letter and you make a new word."},
+ s7_dg1:{disc:1,words:["ship","shop","fish"],hl:"sh",say:"Look at ship, shop and fish. Two letters stay together in every word. Which two?",ask:"Which two letters stay together?",opts:["sh","ip"],c:0,hint:"Find the two letters that are in every word.",rule:"S and h together say shh."},
+ s7_me:{disc:1,words:["cap","cape","tap","tape"],hl:"e",say:"Look at cap and cape. Tap and tape. What does the e on the end do to the a?",ask:"What does the e on the end do?",opts:["makes the a say its name","nothing"],c:0,hint:"Say cap. Now say cape. Did the a change?",rule:"The quiet e on the end makes the a say its name."}};
+function rpDisc(sl){const s=SKI[L.id],esc_=x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),hi=w=>sl.hl&&!sl.nr&&L.dsc&&L.dsc.show?w.replace(new RegExp(esc_(sl.hl)+"$|^"+esc_(sl.hl)),m=>`<mark>${m}</mark>`):w;
+ if(!L.dsc||L.dsc.sl!==sl)L.dsc={sl,miss:0,done:0,show:0};const D=L.dsc;
+ const words=`<div class="dws">${sl.words.map(w=>`<span class="dw">${sl.pics?pe(w)||"":""}${sl.nr?"":`<b>${hi(w)}</b>`}</span>`).join("")}</div>`;
+ const opts=sl.opts.map((o,j)=>`<button class="opt${sl.nr?"":" lt"}" onclick="rpDiscAns(${j})">${sl.nr&&pe(o)?pe(o):o}</button>`).join("");
+ L.vt=sl.say;app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${D.done?sl.rule:"Let’s find out something!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)">${words}</div>${sl.ask?`<p class="qt">${sl.ask}</p>`:""}${D.done?"":`<div class="opts${sl.nr?" pics":" s"}">${opts}</div>`}${D.done?`<button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":"Next ➜"}</button>`:""}<div id="fb"></div></div>`);
+ if(!D.done)talk(sl.say);else talk(sl.rule)}
+function rpDiscAns(j){const sl=L.slides[L.ti],D=L.dsc;if(!sl||!sl.disc||D.done)return;if(j==sl.c){D.done=1;D.show=1;sfx.ok();pupReact("yay");rpDisc(sl);return}
+ D.miss++;D.show=1;sfx.no();const b=document.querySelectorAll(".opt")[j];if(b){b.classList.add("no");b.disabled=1}
+ if(D.miss>=2){D.done=1;rpDisc(sl);return}const fb=$("#fb");if(fb)fb.innerHTML=`<p><b>${sl.hint}</b></p>`;talk(sl.hint);const ws=document.querySelector(".dws");if(ws&&sl.hl&&!sl.nr)ws.innerHTML=sl.words.map(w=>`<span class="dw"><b>${w.replace(new RegExp(sl.hl.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"$|^"+sl.hl.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")),m=>`<mark>${m}</mark>`)}</b></span>`).join("")}
+
+/* ---- what the child did, kept in a plain way for the parent and for spotting patterns ---- */
+const stripT=x=>String(x==null?"":x).replace(/<[^>]*>/g,"").replace(/&nbsp;/g," ").trim().slice(0,14);
+function rpAtt(q,ok,rt){const R_=rpInit(),sid=L.cid||L.id,cat=rpCat(sid),f=(q.t=="tile"||q.t=="trace")?"b":(rpPics(q)||/class="p[ev]"/.test(String(q.big||"")))?"p":"t",p=L.ph=="pre"?"p":L.diag?"d":L.ph=="solo"||L.quiz?"s":"g";
+ R_.att.push({s:sid,f,o:ok?1:0,n:q.nov?1:0,w:q.gk||"",i:q.it||"",d:ymd(),p,c:cat});if(R_.att.length>160)R_.att.shift();
+ if(p!="g"){const m=R_.m[cat]=R_.m[cat]||{n:0,c:0};m.n++;if(ok)m.c++;if(q.nov){const t=R_.m.nov=R_.m.nov||{n:0,c:0};t.n++;if(ok)t.c++}}}
+function rpErr(q,i){const R_=rpInit(),sid=L.cid||L.id;R_.err.push({s:sid,i:q.it||"",a:q.a?stripT(q.a[i]):"",b:q.a?stripT(q.a[q.c]):"",f:(q.t=="tile")?"b":(rpPics(q)?"p":"t"),d:ymd(),g:q.gk||"",p:L.ph=="pre"?"p":L.diag?"d":L.ph=="solo"?"s":"g"});if(R_.err.length>60)R_.err.shift()}
+function rpMetAns(sid){const R_=rpInit(),m=R_.met[sid]=R_.met[sid]||{t0:Date.now(),a:0,sec:0};m.a++;m.sec+=Math.min(60,Math.round((L.rt1||0)/1000));if(!m.t3&&rpSt(sid)>=3){m.t3=Date.now();m.a3=m.a;m.s3=m.sec;m.d3=Math.max(1,Math.round((m.t3-m.t0)/864e5)+1)}}
+function rpMetTouch(){const R_=rpInit();SKILLS.forEach(s=>{const rec=rpRec(s.id);if(!rec)return;const m=R_.met[s.id]=R_.met[s.id]||{t0:rec.t||Date.now(),a:0,sec:0};if(!m.t3&&rpSt(s.id)>=3){m.t3=Date.now();m.a3=Math.max(m.a,rec.n);m.s3=m.sec;m.d3=Math.max(1,Math.round((m.t3-m.t0)/864e5)+1)}})}
+function rpRetention(sid,right){const R_=rpInit(),r0=rpRec(sid),M=R_.met[sid];if(!r0||!M||!M.t3||!(L.rv||L.mode=="review"||L.refresh))return;if(Date.now()-r0.t<6.5*DAYMS)return;const t=R_.m.ret=R_.m.ret||{n:0,c:0};t.n++;if(right)t.c++}
+function rpSelf(){const R_=rpInit(),t=R_.m.say=R_.m.say||{n:0,c:0};t.n++}
+
+/* ---- noticing patterns in mistakes (never from one wrong answer), then a short check, then help with just that ---- */
+const DGN={letterpair:"Mixing up two letters",blend:"Putting sounds together",segment:"Breaking words into sounds",vowel:"Vowel sounds",digraph:"Letter pairs like sh, ch and th",pictures:"May be guessing from the pictures",choices:"Finds spelling and building words harder than choosing",unfamiliar:"Knows words they have seen, but new words are harder",longwords:"Longer words"};
+const rpLet=t=>{t=String(t||"").toLowerCase();if(t.length==1)return t;const l=SND.find(c=>PH[c]&&PH[c][0].toLowerCase()==t);return l||null};
+function rpDetect(){const R_=rpInit(),D=R_.dg,now=Date.now(),days=a=>new Set(a.map(x=>x.d)).size;
+ const add=(t,s,x)=>{if(D.q.some(y=>y.t==t)||(D.d[t]&&now-D.d[t]<3*DAYMS)||D.f[t])return;if(!SKI[s])return;D.q.push(Object.assign({t,s,at:R_.cnt},x||{}))};
+ const A=R_.att.filter(x=>x.p!="g"),E=R_.err.filter(x=>x.p!="g").slice(-40),acc=a=>a.length?a.filter(x=>x.o).length/a.length:null;
+ /* 1. two letters mixed up again and again */
+ const pr={};E.forEach(x=>{if(!/^[LS]:/.test(x.i))return;const a=x.i.slice(2),b=rpLet(x.a);if(!b||b==a)return;const k=[a,b].sort().join("");(pr[k]=pr[k]||[]).push(x)});
+ Object.keys(pr).forEach(k=>{if(pr[k].length>=3&&(days(pr[k])>=2||pr[k].length>=4)){const sk=pr[k].filter(x=>x.i[0]=="S").length>pr[k].length/2?"s3_snd":"s3_nm";add("letterpair",sk,{a:k[0],b:k[1]})}});
+ /* 2. blending, 3. segmenting: many misses in those skills lately */
+ const cat=c=>A.filter(x=>x.c==c).slice(-12);
+ {const b=cat("bl");if(b.length>=8&&acc(b)<.55){const t=["s2_bl2","s2_bl3","s4_b2","s4_b3"].find(x=>rpRec(x)&&rpSt(x)<3)||"s2_bl3";add("blend",t)}}
+ {const b=cat("seg");if(b.length>=6&&acc(b)<.5)add("segment",["s2_seg","s4_sg","s5_spl"].find(x=>rpRec(x)&&rpSt(x)<3)||"s2_seg")}
+ /* 4. vowels: three-letter words that differ only in the middle, 5. digraphs mixed with single letters */
+ {const v=E.filter(x=>x.a.length==3&&x.b.length==3&&x.a[0]==x.b[0]&&x.a[2]==x.b[2]&&x.a[1]!=x.b[1]);if(v.length>=3){const cnt={};v.forEach(x=>{cnt[x.b[1]]=(cnt[x.b[1]]||0)+1});const vv=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];add("vowel","s5_"+(/[aeiou]/.test(vv)?vv:"a"))}}
+ {const dg=/(sh|ch|th|wh)/,v=E.filter(x=>x.a&&x.b&&x.a.length>=3&&x.b.length>=3&&!!dg.test(x.a)!=!!dg.test(x.b));if(v.length>=3)add("digraph","s7_dg1")}
+ /* 6. pictures: right with pictures, wrong without them */
+ {const d=A.filter(x=>x.c=="dec"||x.c=="hfw"),p=d.filter(x=>x.f=="p"),t=d.filter(x=>x.f=="t");if(p.length>=5&&t.length>=4&&acc(p)>=.8&&acc(t)<=.4)add("pictures","s4_rd")}
+ /* 7. words found among choices, not built; 8. words seen before, not new ones */
+ {const d=A.filter(x=>x.c=="dec"),b=d.filter(x=>x.f=="b"),c=d.filter(x=>x.f!="b");if(b.length>=4&&c.length>=6&&acc(b)<=.4&&acc(c)>=.8)add("choices","s4_sg")}
+ {const d=A.filter(x=>x.c=="dec"||x.c=="hfw"),fam=d.filter(x=>!x.n),nov=d.filter(x=>x.n);if(fam.length>=6&&nov.length>=4&&acc(fam)>=.85&&acc(nov)<=.4)add("unfamiliar","s4_unf")}
+ /* 9. longer words */
+ {const l=A.filter(x=>/^s8_/.test(x.s)).slice(-10);if(l.length>=8&&acc(l)<.5)add("longwords","s8_syl")}}
+const rpDgClear=rem=>{if(rem&&rem.dg){const D=rpInit().dg;delete D.f[rem.dg];D.d[rem.dg]=Date.now()}};
+function rpDiagPlan(d){const t=d.t,s=d.s,ok=x=>SKI[x]&&(rpRec(x)||rpOpen(x)),pk=(a,n)=>{const o=a.filter(ok);const b=o.length?o:[a[0]];return Array.from({length:n},(_,i)=>[b[i%b.length]])};
+ if(t=="letterpair")return[["s3_snd",d.a,"S:"],["s3_snd",d.b,"S:"],["s3_nm",d.a,"L:"],["s3_nm",d.b,"L:"]];
+ if(t=="blend")return pk(["s2_bl3","s4_b3"],4);if(t=="segment")return pk(["s2_seg","s4_sg"],4);if(t=="vowel"||t=="digraph"||t=="longwords")return pk([s],4);
+ if(t=="pictures")return pk(["s4_rd"],4);if(t=="choices")return pk(["s4_sg"],4);return pk(["s4_unf"],4)}
+function rpDiagStart(t){const R_=rpInit(),d=R_.dg.q.find(x=>x.t==t)||{t,s:L.id};L.diag=t;L.dg={t,d,r:[],i:0,plan:rpDiagPlan(d)};L.ph="solo";L.cid=L.id;scr="lesson";L.msg="Let’s play a quick game!";rpDiagAsk()}
+function rpDiagAsk(){const G_=L.dg,pl=G_.plan[G_.i];if(!pl)return rpDiagEnd();L.done=0;L.flAcc=null;L.miss=0;L.hint=0;L.help=0;L.rt1=null;L.sup=0;L.cid=pl[0];L.rv=null;RPX.focus=null;RPX.cand=null;RPX.force=pl[1]?{pre:pl[2],items:[pl[1]]}:null;RPX.nopic=G_.t=="pictures";
+ L.q=rpGen(pl[0],0);RPX.force=null;RPX.nopic=false;if(!L.q){G_.r.push([pl[0],"",false]);G_.i++;return rpDiagAsk()}L.msg=G_.i==0?"Let’s play a quick game!":"You can do it!";rpShow()}
+function rpDiagAdv(){L.dg.i++;L.n++;if(L.dg.i>=L.dg.plan.length)return rpDiagEnd();rpAsk()}
+function rpDiagEnd(){const R_=rpInit(),D=R_.dg,G_=L.dg,right=G_.r.filter(x=>x[2]).length,t=G_.t,d=G_.d,target=d.s;D.q=D.q.filter(x=>x.t!=t);R_.cnt++;R_.lf.push(L.id);if(R_.lf.length>12)R_.lf.shift();markDay();rpMetTouch();
+ let m;if(right>=3){D.d[t]=Date.now();m="You are doing great at this! Let’s keep going."}
+ else{D.f[t]={d:ymd(),s:target,a:d.a||"",b:d.b||""};R_.rem={to:target,back:null,left:1,dg:t,force:t=="letterpair"?{pre:SKI[target].g=="nm"?"L:":"S:",items:[d.a,d.b]}:null};D.d[t]=Date.now();m="Let’s practise this together for a little while."}
+ save();if(L.daily&&DYL)return dnext();scr="done";L.sum={id:L.id,diag:1};const m2=m;
+ app(`<div class="card" style="text-align:center"><div class="banner"><h1>${right>=3?"Great job!":"Good try!"}</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m2}</div></div><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶ Next</button> <button class="ghost" onclick="go('home')">🏠 Home</button></div>`);talk(m2)}
+
+/* words in word-reading practice must be built from letters the child has learned: swap out any wrong-answer word that is not */
+const DECSK=new Set(["s4_rd","s4_unf","s4_sg","s4_pic","s5_a","s5_i","s5_o","s5_u","s5_e","s5_fam","s5_chg","s5_unf"]);
+function rpDecFix(q,id){if(!DECSK.has(id)||!q||!q.a||q.t=="tile"||q.t=="trace")return;const K=KLET(),ok=w=>[...w.toLowerCase()].every(c=>K.includes(c));
+ q.a.forEach((o,i)=>{if(i==q.c||typeof o!="string"||!/^[A-Za-z]+$/.test(o)||ok(o))return;const used=new Set(q.a.map(String)),pool=CV.filter(w=>typeof w=="string"&&ok(w)&&w.length==o.length&&!used.has(w));if(pool.length)q.a[i]=pp(pool)})}
+
+/* ===== ReadTrail Mini Stories: the stories themselves, and the rule that decides if a word can be sounded out =====
+   Every word in a story is either (a) built only from sounds the child has learned (letters L, letter pairs G),
+   or (b) a listed tricky word (H) or a name (N), which is shown to the child before the story begins.
+   stBad(story) returns the words that break this rule; the audit script and the build both use it. */
+const STIRR=new Set("of to do into who two one once some come done none love give live move have are were was what want water said says you your they there where here the her his has as is he she me we be my by go so no I a put pull full push bush could would should their people very every any many friend oh also only both other mother brother father does goes eyes busy build guess guard island aunt laugh enough through though thought caught bought eight weigh pretty sugar above month today buy gone shall school chef ache something anything everything nothing another wash watch water war warm wasp want swan head bread dead great break steak heavy ready weather feather heart bear pear wear tear swear sweat thread spread instead health wealth breath dread old cold gold hold told bold fold sold wild child mild kind find mind bind blind grind most post host".split(" "));
+const STDG={ch:1,sh:1,th:1,ck:1,ng:1,nk:1,qu:1,wh:1,ai:1,ay:1,ee:1,ea:1,oa:1,ow:1,igh:1,oo:1,ar:1,or:1,er:1,ur:1,ir:1,ou:1,oi:1,oy:1,aw:1,ew:1};
+const stWords=txt=>(String(txt).toLowerCase().match(/[a-z]+/g)||[]);
+function stWordOK(w,s){w=w.toLowerCase();const L=new Set(s.L.split("")),G=s.G||[],V="aeiou",tr=x=>G.includes(x);
+ if((s.H||[]).map(x=>x.toLowerCase()).includes(w)||(s.N||[]).map(x=>x.toLowerCase()).includes(w))return true;
+ const parse=(t,i)=>{if(i==t.length)return true;
+  for(const n of[3,2]){const g=t.substr(i,n);if(g.length==n&&STDG[g]&&tr(g)&&parse(t,i+n))return true}
+  const c=t[i];if(!L.has(c))return false;
+  if(V.includes(c)&&i>0&&V.includes(t[i-1])&&!(i>1&&t.substr(i-2,2)=="qu"))return false;
+  if(c=="y"&&i>0&&V.includes(t[i-1]))return false;
+  if(c=="w"&&i>0&&V.includes(t[i-1]))return false;
+  if(V.includes(c)&&t[i+1]=="r"&&(i+2>=t.length||!V.includes(t[i+2])))return false;
+  if(i+1<t.length&&t[i+1]==c&&!V.includes(c)&&parse(t,i+2))return true;
+  return parse(t,i+1)};
+ const base=t=>{if(STIRR.has(t)||t.length<1)return false;
+  if(/^kn|^wr|^gn|ph|mb$/.test(t))return false;if(/gh/.test(t)&&!tr("igh"))return false;
+  if(/a(ll|lk|lt|lf|lm)/.test(t)||/wa(r|sh|tch|nt|ter|sp)/.test(t)||/wor[dkmst]/.test(t))return false;
+  if(!tr("soft")&&(/c[eiy]/.test(t)||(/g[eiy]/.test(t)&&!/^gets?$/.test(t)&&!/gg[eiy]/.test(t))))return false;
+  if(!parse(t,0))return false;const last=t[t.length-1];
+  if(t.length>=2&&"aeiou".includes(last)&&!/(ee|ay|ow|oy|oa|ea|ai|oo|igh)$/.test(t))return false;
+  if(t.length>=2&&last=="y"&&!/(ay|oy)$/.test(t))return false;return true};
+ if(STIRR.has(w))return false;
+ const mg=t=>tr("magic")&&/^[a-z]*[aeiou][b-df-hj-np-tv-z]e$/.test(t)&&[...t].every(c=>L.has(c))&&!STIRR.has(t)&&t.length>=3&&!/(ee|oo|ie|ue)/.test(t);
+ if(mg(w)||base(w))return true;
+ const stem=t=>base(t)||mg(t);
+ if(tr("s")&&w.length>=3&&w.endsWith("s")&&!w.endsWith("ss")&&stem(w.slice(0,-1)))return true;
+ if(tr("es")&&w.endsWith("es")&&stem(w.slice(0,-2)))return true;
+ for(const[suf,key]of[["ed","ed"],["ing","ing"]]){if(tr(key)&&w.endsWith(suf)){const t=w.slice(0,-suf.length);if(stem(t)||stem(t+"e")||(t.length>=3&&t[t.length-1]==t[t.length-2]&&stem(t.slice(0,-1))))return true}}
+ return false}
+const stBad=s=>{const b=[];s.pages.forEach(p=>stWords(p[0]).forEach(w=>{if(!stWordOK(w,s)&&!b.includes(w))b.push(w)}));return b};
+const stBadQ=s=>{const b=[];(s.q||[]).forEach(q=>q.slice(1).forEach(o=>{if(/^[^A-Za-z]*$/.test(o))return;stWords(o).forEach(w=>{if(!stWordOK(w,s)&&!b.includes(w))b.push(w)})}));return b};
+const stText=s=>s.pages.map(p=>p[0]).join(" ");
+
+/* tier: 1 first words · 2 more letters · 3 letter pairs · 4 silent e · 5 vowel teams and endings
+   pre: skills the child must already be ready in · q: [question, right answer, wrong, wrong] (answers can be pictures) */
+const STORIES=[
+{id:"m1",t:"Rain on the Tin",tier:1,L:"satpin",G:["s"],H:["a","the","is"],N:[],pre:["s4_rd"],
+ pages:[["Pat sat.","🧒"],["Tip, tap, tip, tap.","🌧️"],["Pat is in a tin.","🧒🥫"],["Tip, tap! Pat sat in the tin.","🌧️🧒🥫"]],
+ q:[["Who sat in the tin?","Pat","Nan","Nat"],["What went tip, tap?","🌧️","☀️","🐶"]]},
+{id:"m2",t:"Nan and the Pin",tier:1,L:"satpin",G:["s"],H:["a","the","is"],N:[],pre:["s4_rd"],
+ pages:[["Nan sat in a pit.","👵🕳️"],["A pin! A pin is in the pit.","📌"],["Nan nips the pin.","👵📌"],["Nan sits. Nan taps the pin. Tap, tap, tap.","👵📌"]],
+ q:[["What is in the pit?","A pin","A tin","A pan"],["Who sat in the pit?","Nan","Pat","Tip"]]},
+{id:"m3",t:"Dan and Tip",tier:2,L:"satpinmdgo",G:["s"],H:["a","the","is","has"],N:[],pre:["s4_rd"],
+ pages:[["Dan has a dog.","🧒🐶"],["The dog is Tip.","🐶"],["Tip digs and digs.","🐶🕳️"],["Dan sat on a mat. Tip sat on Dan.","🧒🐶"],["Tip got a tin! Dan and Tip sit and nap.","🐶🥫"]],
+ q:[["Who has a dog?","Dan","Pam","Tom"],["What did Tip do?","🕳️","🏃","🎵"],["What did Tip get?","🥫","📚","🍎"]]},
+{id:"m4",t:"Sam and Tim",tier:2,L:"satpinmdgo",G:["s"],H:["a","the","is","has"],N:[],pre:["s4_rd"],
+ pages:[["Sam and Tim sat on a mat.","🧒🧒"],["Sam got a map. Tim got a pot.","🗺️🍲"],["Tim taps the pot. Tip, tap, tap!","🍲🥁"],["Sam taps the map. Tap, tap, tap!","🗺️🥁"],["Sam and Tim sit and nap. Tim has the map.","😴🗺️"]],
+ q:[["Who got a map?","Sam","Tim","Dan"],["What did Tim tap?","🍲","🗺️","🎩"]]},
+{id:"m5",t:"The Red Hen",tier:2,L:"satpinmdgockeruh",G:["s"],H:["a","the","is","to","said","she"],N:[],pre:["s4_rd"],
+ pages:[["A red hen sat on a mat.","🐔"],["She got up and ran to the pot.","🐔🍲"],["The hen met a pig. “Dig, dig, dig!” said the hen.","🐔🐷"],["The pig did dig. The hen got a nut.","🐷🥜"],["The hen and the pig had a hug.","🐔🐷"]],
+ q:[["What did the hen meet?","A pig","A dog","A cat"],["What did the hen get?","A nut","A tin","A pin"],["What did they have at the end?","A hug","A map","A nap"]]},
+{id:"m6",t:"The Hut",tier:2,L:"satpinmdgockeruh",G:["s"],H:["a","the","is","to","said","she"],N:[],pre:["s4_rd"],
+ pages:[["Kip got to a hut.","🧒🛖"],["“Is it hot in the hut?” said Kip.","🛖🔥"],["Mum ran up. “It is hot. Get the mud pot,” she said.","👩🍲"],["Kip got the pot. Kip and Mum set up the hut.","🧒👩🛖"],["Kip had a hug and a nap in the hut.","😴🛖"]],
+ q:[["Where did Kip go?","To a hut","To a pit","To a mat"],["What did Mum say to get?","The pot","The hat","The cup"]]},
+{id:"m7",t:"Fish and Chips",tier:3,L:"satpinmdgockeruhbflj",G:["s","sh","ch"],H:["a","the","is","to","said"],N:[],pre:["s4_rd","s7_dg1"],
+ pages:[["Josh and Meg ran to the shed.","🧒👧🛖"],["“A fish!” said Josh. “It is on the dish.”","🐟🍽️"],["Meg got a chip. Josh got a chip.","🍟"],["“Munch, munch, munch!” Josh and Meg had fish and chips.","🐟🍟"],["Josh and Meg had lunch and a nap in the shed.","😴🛖"]],
+ q:[["What was on the dish?","A fish","A hen","A pig"],["Who got a chip?","Josh and Meg","Dan and Tim","Kip and Mum"]]},
+{id:"m8",t:"The Chick",tier:3,L:"satpinmdgockeruhbflj",G:["s","sh","ch"],H:["a","the","is","to","said","she"],N:[],pre:["s4_rd","s7_dg1"],
+ pages:[["A chick sat in the sun. She had a soft bed.","🐥☀️"],["“Chip, chip, chip!” said the chick.","🐥"],["Josh ran up. “It is a chick!” said Josh.","🧒🐥"],["The chick had a bath in the dish. Splash, splash!","🐥💦"],["Josh and the chick had fun in the sun.","🧒🐥☀️"]],
+ q:[["Where did the chick sit?","In the sun","In a bed","In a bus"],["Where did the chick have a bath?","In a dish","In a tub","In a pot"]]},
+{id:"m9",t:"Thump!",tier:3,L:"satpinmdgockeruhbflj",G:["s","sh","ch","th","ck"],H:["a","the","is","to","said","she","what","was"],N:[],pre:["s4_rd","s7_dg2"],
+ pages:[["Thump, thump, thump! Beth sat up in bed.","🛏️👧"],["“What is that?” said Beth. She got the red sock.","👧🧦"],["Thud! A thing is in the dish rack.","🍽️"],["Beth ran to the shed. It was a cat! The cat had a fish.","🐱🐟"],["The cat ran off. Beth got back in bed.","🐱🛏️"]],
+ q:[["What did Beth hear?","Thump, thump","A bell","A song"],["Who was in the shed?","A cat","A dog","A hen"]]},
+{id:"m10",t:"The Cake",tier:4,L:"satpinmdgockeruhbfljvwy",G:["s","magic","sh","ch","th"],H:["a","the","is","to","said","he","they","what"],N:[],pre:["s4_rd","s7_me"],
+ pages:[["Mum and Kip bake a cake.","👩🧒🎂"],["“Get the eggs, Kip,” said Mum. Kip got the eggs.","🥚"],["Mum made a hot fire. The cake went in.","🔥🎂"],["Dad came home. “What a nice cake!” he said.","👨🎂"],["They ate the cake. Kip had a big, big smile.","😁🎂"]],
+ q:[["What did Mum and Kip bake?","A cake","A fish","A pig"],["Who came home?","Dad","Beth","Josh"]]},
+{id:"m11",t:"The Kite",tier:4,L:"satpinmdgockeruhbfljvwy",G:["s","magic","sh","ch","th","ck","ed"],H:["a","the","is","to","said","he","has","what"],N:[],pre:["s4_rd","s7_me","s7_dg2"],
+ pages:[["Tim has a kite. It is a big, red kite.","🧒🪁"],["Tim ran and ran. The kite went up, up, up!","🪁⬆️"],["The wind hit the kite. It spun and spun.","💨🪁"],["Then the kite got stuck up in the rocks!","⛰️🪁"],["Tim hopped up. He got the kite back. What a ride!","🧒🪁"]],
+ q:[["What did Tim have?","A kite","A bike","A hat"],["What did the kite get stuck in?","🪨","🌊","🏠"]]},
+{id:"m12",t:"The Rain Day",tier:5,L:"satpinmdgockeruhbfljvwyz",G:["s","ing","ed","magic","sh","ch","th","ck","ai","ay","ee","ea"],H:["a","the","is","to","said","I","was","he","she","of"],N:[],pre:["s4_rd","s7_vt2"],
+ pages:[["It was a day of rain. Rain fell on the tin hut. Tip, tap, tip, tap!","🌧️🛖"],["“I can not play,” said Pam. “Let us play in the hut.”","👧🛖"],["Pam and Dan made a train from ten tins. It had ten seats.","🚂🥫"],["“Chug, chug!” said Dan. The train ran past the green bed and the tree.","🚂🛏️🌳"],["Then the rain stopped. The sun came up. Pam and Dan played in the sun and had fun.","☀️🧒🧒"]],
+ q:[["What was the day like?","🌧️","☀️","💨"],["What did Pam and Dan make?","A train","A kite","A cake"],["What did they do when the sun came up?","🏃☀️","😴","🍲"]]},
+{id:"m13",t:"Pam Feeds the Goat",tier:5,L:"satpinmdgockeruhbfljvwyz",G:["s","ing","ed","magic","sh","ch","th","ck","ai","ay","ee","ea","oa","ow"],H:["a","the","is","to","said","was","he","she","has","of"],N:[],pre:["s4_rd","s7_vt3"],
+ pages:[["Pam has a goat. The goat is brown. It eats grass.","👧🐐"],["Each day, Pam feeds the goat oats and a drink.","🌾🐐"],["The goat was not eating. It sat at the gate and bleated.","🐐🚪"],["Pam went to the gate. A weed was stuck in the latch. Pam got it off.","👧🌿"],["The goat went to the green grass. It was eating and eating. Pam was glad.","🐐🌿😊"]],
+ q:[["What does the goat eat?","Grass","Meat","Cake"],["What was stuck in the gate?","A weed","A stick","A rope"],["How did Pam feel at the end?","Glad","Sad","Mad"]]}
+];
+
+/* ===== ReadTrail Mini Stories: short stories the child can read using only what they have learned ===== */
+let ST_=null;
+const stI=()=>{const R_=rpInit();return R_.stm=R_.stm||{}};
+const stUsedLetters=s=>{const u=new Set();stWords(stText(s)).forEach(w=>{if((s.H||[]).includes(w)||(s.N||[]).includes(w))return;[...w].forEach(c=>u.add(c))});return[...u]};
+const STHF={1:"the a i is to my",2:"see we he she me be",3:"was said you are one come",4:"have they were what where there",5:"from want with could would some"};
+const stHKnown=w=>skSt("H:"+w)>=2||Object.keys(STHF).some(t=>STHF[t].split(" ").includes(w)&&rpReady("s6_hf"+t));
+const stNewWords=s=>{const seen=stI()[s.id],h=new Set();stWords(stText(s)).forEach(w=>{if((s.H||[]).map(x=>x.toLowerCase()).includes(w)&&!stHKnown(w))h.add(w);if((s.N||[]).map(x=>x.toLowerCase()).includes(w)&&!seen)h.add(w)});return[...h]};
+function stLock(s){const miss=s.pre.find(x=>!rpReady(x));if(miss)return`First learn: ${SKI[miss].n}.`;
+ const nl=rpAdv()?[]:stUsedLetters(s).filter(c=>skSt("S:"+c)<2);if(nl.length)return`Learn more letter sounds first.`;
+ if(stNewWords(s).length>3)return`Learn a few more tricky words first.`;return""}
+const stOpenList=()=>STORIES.filter(s=>!stLock(s));
+/* a child who already reads patterns like silent e or vowel pairs starts with longer stories, not the tiny first ones */
+const stMinTier=()=>!rpAdv()?1:rpReady("s7_vt2")?5:rpReady("s7_me")?4:rpReady("s7_dg1")?3:1;
+function stNext(){const M=stI(),R_=rpInit(),mt=stMinTier(),o=stOpenList().filter(s=>s.tier>=mt||M[s.id]);
+ const again=o.find(s=>M[s.id]&&M[s.id].again&&R_.cnt-(M[s.id].at||0)>=3);if(again)return again;
+ return o.find(s=>!M[s.id])||null}
+const stSt=id=>{const m=stI()[id];return m?(m.st=="ind"?"⭐":"📖"):""};
+/* ---- open, read ---- */
+function stOpen(id){const s=STORIES.find(x=>x.id==id);if(!s)return rpGo();L=null;scr="story";
+ ST_={s,pi:0,pt:{},tw:{},fw:[0,0],qi:0,qc:0,qn:0,m:0,qs:stQs(s)};const nw=stNewWords(s);ST_.nw=nw;nw.length?stIntro():stRead()}
+function stQs(s){const q=shuf(s.q.slice()).slice(0,3).map(x=>({t:"q",q:x[0],c:x[1],o:shuf(x.slice(1))}));const f=stFindQ(s);if(f)q.push(f);return q}
+function stFindQ(s){const ws=[...new Set(stWords(stText(s)).filter(w=>w.length>=3&&w.length<=5&&!(s.H||[]).includes(w)&&!(s.N||[]).includes(w)))];if(ws.length<4)return null;
+ const t=pp(ws),near=ws.filter(w=>w!=t&&w.length==t.length&&(w[0]==t[0]||w.slice(-1)==t.slice(-1))),rest=ws.filter(w=>w!=t&&!near.includes(w)),d=shuf([...shuf(near),...shuf(rest)]).slice(0,2);return d.length<2?null:{t:"w",q:`Tap the word ${t}.`,c:t,o:shuf([t,...d]),w:t}}
+function stIntro(){const s=ST_.s,w=ST_.nw;app(`<div class="card stc">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${w.length>1?"Here are some new words!":"Here is a new word!"}</div></div><div class="stnw">${w.map(x=>`<button class="stw big" onclick="talk('${x}')">${esc(x)} 🔊</button>`).join("")}</div><p class="qt">${esc(s.t)}</p><button class="btn" onclick="stRead()">${NR()?"▶":"Read ➜"}</button></div>`);talk(w.length>1?"Here are some new words. Tap each one to hear it.":"Here is a new word. Tap it to hear it.")}
+const stTok=t=>esc(t).replace(/[A-Za-z]+/g,w=>`<span class="stw" onclick="stTapW(this)">${w}</span>`);
+function stRead(){const s=ST_.s,p=s.pages[ST_.pi],last=ST_.pi==s.pages.length-1;
+ app(`<div class="card stc">${XB()}<small>${esc(s.t)} · ${ST_.pi+1}/${s.pages.length}</small><div class="stpic" role="img" aria-label="A picture for this page">${p[1]}</div><div class="stp">${stTok(p[0])}</div><div class="stbt"><button class="ghost" aria-label="Read this page to me" onclick="stSay()">🔊</button><button class="btn" onclick="stFwd()">${last?"Questions ➜":"Next ➜"}</button></div></div>`)}
+function stTapW(e){const w=e.textContent;ST_.pt[ST_.pi]=1;ST_.tw[w.toLowerCase()]=1;e.classList.add("tapped");talk(w)}
+function stSay(){ST_.pt[ST_.pi]=1;ST_.m++;talk(ST_.s.pages[ST_.pi][0])}
+function stFwd(){const s=ST_.s;if(ST_.pi<s.pages.length-1){ST_.pi++;return stRead()}stAsk()}
+/* ---- questions: first try right counts as independent ---- */
+function stAsk(){const Q=ST_.qs[ST_.qi];if(!Q)return stEnd();ST_.t1=1;ST_.done=0;const pic=o=>/^[^A-Za-z]+$/.test(o);
+ app(`<div class="card stc">${XB()}<small>${esc(ST_.s.t)}</small><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${esc(Q.q)}</div></div><div class="opts${Q.o.every(pic)?" pics":""}" id="sto">${Q.o.map((o,j)=>`<button class="opt${pic(o)?"":" lt"}" onclick="stAns(${j})">${pic(o)?`<span class="stem">${o}</span>`:esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`);talk(Q.q)}
+function stAns(j){const Q=ST_.qs[ST_.qi];if(ST_.done)return;const ok=Q.o[j]==Q.c,bs=[...document.querySelectorAll("#sto .opt")],fb=$("#fb");
+ if(ok){ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;if(ST_.t1){ST_.qc++;if(Q.t=="w")ST_.fw[0]++}
+  bs.forEach((b,i)=>{b.disabled=1;if(i==j)b.classList.add("ok")});sfx.ok();pupReact("yay");const m=ST_.t1?"Yes!":"Yes, that is it!";fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="ST_.qi++;stAsk()">${NR()?"▶":"Next ➜"}</button>`;talk(m);return}
+ sfx.no();bs[j].disabled=1;bs[j].classList.add("no");if(ST_.t1){ST_.t1=0;const h=Q.t=="w"?"Not that one. Look at the letters and try again.":"Not that one. Think about the story and try again.";fb.innerHTML=`<p><b>${h}</b></p>`;talk(h);return}
+ ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;bs.forEach((b,i)=>{b.disabled=1;if(Q.o[i]==Q.c)b.classList.add("hl")});const m="That’s okay! It is this one.";fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="ST_.qi++;stAsk()">${NR()?"▶":"Next ➜"}</button>`;talk(m)}
+function stEnd(){const R_=rpInit(),s=ST_.s,M=stI(),pg=s.pages.length,help=Object.keys(ST_.pt).length,ind=pg-help,taps=Object.keys(ST_.tw).length,ok=ind/pg>=.75&&ST_.qn&&ST_.qc*3>=ST_.qn*2,prev=M[s.id]||{};
+ M[s.id]={d:ymd(),n:(prev.n||0)+1,pg,ind,taps,qc:ST_.qc,qn:ST_.qn,fw:ST_.fw,st:ok?"ind":"help",again:!ok&&(prev.n||0)<2,at:R_.cnt};
+ const m=R_.m.story=R_.m.story||{n:0,pg:0,ind:0,q:0,qc:0,fn:0,fc:0};m.n++;m.pg+=pg;m.ind+=ind;m.q+=ST_.qn;m.qc+=ST_.qc;m.fn+=ST_.fw[1];m.fc+=ST_.fw[0];
+ Object.keys(ST_.tw).filter(w=>w.length>=3&&!(s.H||[]).includes(w)&&!(s.N||[]).includes(w)).slice(0,4).forEach(w=>skAdd("D:"+w,"h","story"));
+ R_.cnt++;R_.lf.push("st:"+s.id);if(R_.lf.length>12)R_.lf.shift();S.lessons++;S.coins+=5;S.earned+=5;S.level=rpLevel();markDay();rpMetTouch();save();
+ scr="done";const msg=ok?`You read it by yourself, ${S.name}!`:`Good reading, ${S.name}! We will read it again another day.`;
+ app(`<div class="card" style="text-align:center"><div class="banner"><h1>${ok?"You read a story! ⭐":"Nice reading! 📖"}</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${msg}</div></div><p class="qt">${esc(s.t)}</p><p>+5 🥭</p><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶ Next</button> <button class="ghost" onclick="go('home')">🏠 Home</button></div>`);MZ.sting("yay");talk(msg)}
+/* ---- the shelf: stories that are open, and what each one still needs ---- */
+function stShelf(){const M=stI(),open=stOpenList().length;scr="shelf";
+ app(bar(1)+`<div class="pm"><h2>📚 Mini Stories</h2><p class="lgsub">${open?"Pick a story to read!":"Learn a few more letters and words to open the first story."}</p>${(()=>{let shown=0;return STORIES.filter(s=>{if(!stLock(s))return true;return shown++<1})})().map(s=>{const lk=stLock(s),st=stSt(s.id);return `<button class="pms stl${lk?" lock":""}" style="--c:#b98ad6" ${lk?`onclick="talk('${lk.replace(/'/g,"’")}')"`:`onclick="stOpen('${s.id}')"`}><span class="pmi">${lk?"🔒":st||"📗"}</span><span class="pmt"><b>${esc(s.t)}</b><small>${lk?lk:st=="⭐"?"Read by myself":st?"Read with help":"Ready to read"}</small></span></button>`}).join("")}</div>`)}
 
 /* ===== Reading Path: placement ("play with Biscuit") =====
    Ten kinds of checks, always in the same order, several different items each. A foundation must be shown before the
@@ -3033,7 +3338,7 @@ function plDomEnd(){const P=rpInit(),pl=P.plc,d=L.dom,r={n:L.n,c:L.c,pct:plPct({
  app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">⭐</div><button class="btn" style="font-size:34px;padding:6px 30px" onclick="plDomain()">▶</button> <button class="ghost" onclick="go('home')">💤 Stop for now</button></div>`);talk(m)}
 const plCredit=(k,g,days)=>{S.sk=S.sk||{};const o=S.sk[k]||{h:"",n:0,c:0,d:[],g:[],t:0,b:0};if(skSt(k)>=3)return;o.h=days?"1111":"11";o.n=Math.max(o.n,o.h.length);o.c=Math.max(o.c,o.h.length);const d=ymd();if(!o.d.includes(d))o.d.push(d);if(!o.g.includes("place"))o.g.push("place");o.t=Date.now();o.b=Math.max(o.b,1);S.sk[k]=o},
  plPart=(k)=>{S.sk=S.sk||{};if(S.sk[k])return;S.sk[k]={h:"hh",n:2,c:2,d:[ymd()],g:["place"],t:Date.now(),b:0}};
-function plFinish(){const P=rpInit(),pl=P.plc,res=pl.res,notes=[];
+function plFinish(){const P=rpInit(),pl=P.plc,res=pl.res,notes=[];setTimeout(()=>{try{rpMetTouch()}catch(e){}},0);
  /* a child who clearly succeeds at a later group of games has shown the skills underneath it too, so one slightly shaky early group is not held against them */
  const lvl=k=>{const i=PLD.findIndex(d=>d.id==k),r=res[k];if(i<0||!r||r.skip||!(r.n>=6))return 0;const strong=PLD.slice(i+2).filter(d=>{const x=res[d.id];return x&&!x.skip&&x.n>=6&&x.pct>=.8}).length>=2;return r.pct>=.8||(strong&&r.pct>=.6)?2:(r.pct>=.67||(strong&&r.pct>=.45))?1:0};
  PLD.forEach(d=>{const r=res[d.id];if(!r||r.skip||!r.n)return;const big=r.n>=6,pass=lvl(d.id)==2,part=lvl(d.id)==1;
@@ -3101,14 +3406,39 @@ function pmHere(){const id=S.placed?rpNext().id:null,i=PLACES.findIndex(p=>p[7].
 function pmGo(i){const p=PLACES[i],id=p[7].find(x=>rpOpen(x)&&!rpDone(x));if(!id){const done=p[7].every(rpDone);return preTap(done?p[1]+" is finished! Well done!":"Let’s learn a few more things first.",()=>rpGo())}preTap(p[1]+".",()=>rpStart(id,{reteach:rpSt(id)<=1}))}
 function pmap(){const here=pmHere();
  app(bar(1)+`<div class="pm"><h2>🗺️ ${esc(S.pet)}’s Journey</h2><p class="lgsub">Tap a place to visit!</p>${PLACES.map((p,i)=>{const sc=Math.round(p[3]()*100),fd=Math.round(p[6]()*100),dn=sc>=80;
-  return `<button class="pms${i==here?" here":""}${dn?" done":""}" style="--c:${p[5]}" onclick="pmGo(${i})"><span class="pmi">${p[0]}</span><span class="pmt"><b>${p[1]}</b><small>${p[2]}</small><span class="pmb"><u style="width:${Math.max(fd,sc)}%"></u><i style="width:${sc}%"></i></span><em>${p[4]()}</em></span>${i==here?'<span class="pmh" aria-label="You are here">'+ART.dog+'</span>':dn?'<span class="pmh" aria-label="Done">⭐</span>':""}</button>${i<5?'<div class="pmd" aria-hidden="true">· · ·</div>':""}`}).join("")}</div>`)}
+  return `<button class="pms${i==here?" here":""}${dn?" done":""}" style="--c:${p[5]}" onclick="pmGo(${i})"><span class="pmi">${p[0]}</span><span class="pmt"><b>${p[1]}</b><small>${p[2]}</small><span class="pmb"><u style="width:${Math.max(fd,sc)}%"></u><i style="width:${sc}%"></i></span><em>${p[4]()}</em></span>${i==here?'<span class="pmh" aria-label="You are here">'+ART.dog+'</span>':dn?'<span class="pmh" aria-label="Done">⭐</span>':""}</button>${i<5?'<div class="pmd" aria-hidden="true">· · ·</div>':""}`}).join("")}<div class="pmd" aria-hidden="true">· · ·</div><button class="pms" style="--c:#b98ad6" onclick="stShelf()"><span class="pmi">📚</span><span class="pmt"><b>Mini Stories</b><small>${stOpenList().length} ready to read</small></span></button></div>`)}
 const learnGo=()=>rpGo(),preLearn=()=>preTap(S.placed?`Let’s learn with ${S.pet}!`:"Let’s play some games!",()=>S.placed?rpGo():placeIntro()),preExplore=()=>placeIntro();
 /* ---- grown-ups: where each skill stands, what needs more practice, where learning started ---- */
 function rpWeak(){return SKILLS.filter(s=>{const r=rpRec(s.id);if(!r||r.n<6)return false;const l=r.h.slice(-6),bad=(l.match(/[h0]/g)||[]).length;return rpSt(s.id)<3&&bad>=3}).map(s=>s.id)}
+/* ---- grown-ups: real progress in plain words (what the child can do on their own, what is slipping, how fast learning is going) ---- */
+const rpMed=a=>{if(!a.length)return null;a=a.slice().sort((x,y)=>x-y);const m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2};
+const rpPc=o=>o&&o.n>=5?`${Math.round(100*o.c/o.n)}% <small>(${o.c} of ${o.n} right first time)</small>`:`<small>not enough answers yet</small>`;
+function rpGrowth(N){const R_=rpInit(),M=R_.m||{},rec=id=>rpRec(id),has=id=>/h/.test((rec(id)||{h:""}).h.slice(-6));
+ const all=SKILLS.filter(s=>rec(s.id)),on=all.filter(s=>rpSt(s.id)>=3&&!has(s.id)),help=all.filter(s=>rpSt(s.id)>=3&&has(s.id)),dev=all.filter(s=>rpSt(s.id)<3),
+  weak=new Set(rpWeak().concat(R_.rem?[R_.rem.to]:[])),due=rpDueList(),slip=rpForget(),fromPlay=all.filter(s=>{const r=rec(s.id);return r&&rpSt(s.id)>=3&&r.g&&r.g.length==1&&r.g[0]=="place"}).length,
+  list=(ids,t)=>ids.length?`<details class="rps"><summary>${t} <b>${ids.length}</b></summary><ul class="rpl">${ids.slice(0,40).map(id=>`<li class="rpr"><span class="rpn">${esc(SKI[id].n)}</span> <small>Stage ${SKI[id].st}</small></li>`).join("")}</ul></details>`:`<p class="skl">${t} <b>0</b></p>`;
+ const met=Object.values(R_.met||{}).filter(x=>x.t3),att=met.map(x=>x.a3).filter(x=>x>0),days=met.map(x=>x.d3).filter(x=>x>0),pre=M.pre||{a:0,s:0,p:0,t:0,i:0,k:0},st=M.story,
+  A=R_.att||[],ind=A.filter(x=>x.p!="g"),bld=ind.filter(x=>x.f=="b"&&(x.c=="dec"||x.c=="seg")),txt=ind.filter(x=>x.f=="t"&&x.c=="dec"),ac=a=>({n:a.length,c:a.filter(x=>x.o).length});
+ const pat=Object.keys(R_.dg.f||{}).map(t=>DGN[t]).filter(Boolean);
+ return `<h4>What ${N} can do right now</h4><p class="skl">“On their own” means right the first time, without a hint. This is based only on what ${N} did here. It is not a reading age or a grade level.</p>
+ ${list(on.map(s=>s.id),"Can do on their own:")}${on.length?`<p class="skl"><small>${on.filter(s=>rpSt(s.id)==4).length} of these are fully “Mastered”: right first time on at least two different days.</small></p>`:""}${list(help.map(s=>s.id),"Can do, but still needing some hints:")}${list(dev.map(s=>s.id),"Still learning:")}${list([...weak].filter(id=>SKI[id]),"Needs extra practice (we go back a step):")}${list(due,"Due for a quick review soon:")}${list(slip,"Slipping — knew it before, now being refreshed:")}
+ ${fromPlay?`<p class="skl"><small>${fromPlay} of these were shown in the starting games and have not been practised since.</small></p>`:""}
+ ${pat.length?`<h4>Patterns we are helping with</h4><ul class="skl">${pat.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><p class="skl"><small>We only name a pattern after it showed up several times and a short check confirmed it.</small></p>`:""}
+ <h4>Reading, in numbers</h4><ul class="skl">
+ <li>Sounding out words: ${rpPc(M.dec)}</li><li>Reading words they have never seen: ${rpPc(M.nov)}</li><li>Putting sounds together: ${rpPc(M.bl)}</li><li>Breaking a word into sounds: ${rpPc(M.seg)}</li>
+ <li>Choosing a word they have read (no picture help): ${rpPc(ac(txt))}</li><li>Building words from sounds (letter tiles): ${rpPc(ac(bld))}</li>
+ <li>Tricky words: ${rpPc(M.hfw)}</li><li>Reading sentences: ${rpPc(M.sen)}</li><li>Reading smoothly: ${rpPc(M.flu)}</li><li>Word meanings: ${rpPc(M.voc)}</li><li>Understanding stories: ${rpPc(M.cmp)}</li>
+ <li>Remembering after a week or more: ${rpPc(M.ret)}</li>
+ <li>Mini Stories: ${st&&st.n?`${st.n} read · ${Math.round(100*st.ind/st.pg)}% of pages without help · questions ${st.q?Math.round(100*st.qc/st.q)+"%":"-"} right first time · finding a word ${st.fn?Math.round(100*st.fc/st.fn)+"%":"-"}`:"<small>none yet</small>"}</li></ul>
+ <h4>How fast is learning going?</h4><ul class="skl"><li>Skills ${N} has reached: <b>${met.length}</b>${att.length?` · usually after about <b>${Math.round(rpMed(att))}</b> answers over <b>${Math.round(rpMed(days))}</b> day${rpMed(days)>1?"s":""}`:""}</li>
+ <li>Skipped after a quick check (already known): <b>${pre.s}</b> skills · partly known, only the missing part taught: <b>${pre.p+pre.i}</b> · taught in full: <b>${pre.t}</b></li>
+ ${pre.k?`<li>Letters ${N} already knew and did not need to be taught again: <b>${pre.k}</b></li>`:""}</ul>
+ <p class="skl"><small>Badges and streaks are for fun. This page is the record of what ${N} can really do.</small></p>`}
 function rpReportCard(){const P=rpInit(),N=esc(S.name),pf=P.prof,weak=rpWeak(),due=rpDueList(),nx=S.placed?rpNext():null,
  row=id=>{const s=SKI[id],st=rpSt(id),r=rpRec(id),t=rpIt(id);return `<li class="rpr"><span class="rpd" style="background:${RPC[st]}"></span><span class="rpn">${esc(s.n)}</span><b style="color:${RPC[st]}">${RPN[st]}</b>${t?` <small>(${rpCov(id)} of ${t.pool.length} ${t.p=="L:"?"letters":"sounds"} on their own)</small>`:""}${r&&skDue(rk(id))&&st>=3?" <small>· revisit soon</small>":""}</li>`};
  return `<div class="card"><h3>📘 Reading path</h3><p class="skl">${N} learns in ten stages, in a fixed order. A skill moves on only when ${N} can do it <b>on their own</b>, with right-the-first-time answers on at least two different days, never after one answer. A right answer after a mistake or a hint counts as “practising”.</p>
  ${pf?`<h4>Where ${N} started (${esc(pf.date)})</h4><ul class="skl">${(pf.notes||[]).map(x=>`<li>${esc(x)}</li>`).join("")||"<li>Started from the beginning.</li>"}</ul>`:`<p class="skl">${N} has not played the starting games yet. <button class="ghost" onclick="placeIntro()">🎲 Play them now</button></p>`}
+ ${rpGrowth(N)}
  ${nx?`<p>Next on the path: <b>${esc(SKI[nx.id].n)}</b> <small>(${nx.mode=="remedial"?"going back to practise a step first":nx.mode=="review"?"reviewing":"new"})</small></p>`:""}
  ${weak.length?`<h4>Needs more practice</h4><ul class="skl">${weak.slice(0,8).map(id=>`<li>${esc(SKI[id].n)} <small>(Stage ${SKI[id].st})</small></li>`).join("")}</ul><p class="skl">These come back in short, easier steps, and ${S.pet} goes back to the step before if it is still hard.</p>`:""}
  <p class="skl">${due.length} skill${due.length==1?"":"s"} will be revisited soon.</p>
