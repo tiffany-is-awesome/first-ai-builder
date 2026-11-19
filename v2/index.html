@@ -482,6 +482,11 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 .skc{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;font-weight:800;margin:2px;background:#d9d3c3;color:#6a6350;text-transform:uppercase}
 .pch{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:4px}.pcc{display:flex;flex-direction:column;align-items:center;font-size:26px;line-height:1.1;min-height:54px;min-width:58px;padding:2px 8px}.pcc small{font-size:13px;font-weight:700}
 #chb{margin:8px 0 2px;background:var(--grain),#fffaf0;color:var(--ink);border:3px solid var(--gold);border-radius:20px;padding:8px;box-shadow:0 4px 0 var(--goldD)}#chb .pch{flex-wrap:nowrap;gap:4px}#chb .pcc{flex:1 1 0;min-width:0;padding:2px 0;font-size:30px}#chb #cty{margin-top:6px;display:flex;gap:6px}#chb #cty input{font-size:18px;margin:0}@media(max-width:520px){#chb .pcc small{display:none}}
+/* talk bubbles sit just above the head they belong to (child on the left, puppy on the right), with the tail pointing at them */
+#sc #bd,#sc #bk{top:auto!important;left:auto!important}#sc #bd::after,#sc #bk::after{left:auto;right:15px}
+.scene.night #bd{right:calc(28.3% - 24px);bottom:42%;max-width:39%}.scene.night #bk{right:calc(69.9% - 24px);bottom:48%;max-width:calc(28% + 24px)}
+#sc.day #bd,#sc.sunset #bd{left:calc(61% - 40px)!important;right:auto;bottom:36%;max-width:calc(39% + 32px)}#sc.day #bd::after,#sc.sunset #bd::after{left:31px;right:auto}
+@media(max-width:430px){#sc #bd{font-size:14px;line-height:1.2;padding:5px 9px}}.scene.day #bk,.scene.sunset #bk{right:calc(62.7% - 24px);bottom:53%;max-width:calc(34.3% + 24px)}
 .calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important}
 @media(max-width:520px){.lgc{min-width:92px;min-height:92px}.lgc.bal{width:104px;height:130px}.lgdog{width:72px}.pms{width:100%}}
 /* learning path, demos, cards, PIN */
@@ -1005,7 +1010,7 @@ if(has(/\b(no|nope|nah)\b/))return `That’s okay! I’m here whenever you want 
 if(has(/\b(hi|hello|hey|hiya|good morning)\b/))return pu("hi",HI);
 FB=1;if(S.likes&&Math.random()<.3)return `Remember you like ${S.likes}? Me too! Well… I like treats.`;
 RB=say("Let’s play!")+say("Tell me a joke")+say("Read a story");return pu("f",["I’m not sure! Can you show me? Tap one of these, {n}:","Ruff, my puppy brain didn’t get that. Want to try one of these?","I’m still learning words! Tap one of these:"])}
-function chat(){const sc=$("#sc");if(!sc)return;sc.classList.add("look");const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent="Woof! What is it?";talk("Woof! What is it?");setTimeout(()=>{const k=$("#bk");k.style.display="none";let hb=$("#chb");if(!hb){hb=document.createElement("div");hb.id="chb";$("#sc").after(hb)}hb.innerHTML=chatUI();if(!(S.pre&&!PREFULL))$("#ci").focus();$("#ci").onkeydown=e=>{if(e.key=="Enter")sendC()}},700)}
+function chat(){const sc=$("#sc");if(!sc)return;sc.classList.add("look");const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent="Woof! What is it?";talk("Woof! What is it?");setTimeout(()=>{const k=$("#bk"),t=S.pre&&!PREFULL;/* typing happens in the child's own talk bubble (hidden for pre-readers, who use the picture buttons) */k.innerHTML=`<input id="ci" aria-label="Ask your dog" placeholder="Type here…" maxlength="80"> <button class="ghost cb" onclick="sendC()">Send</button>`;k.style.display=t?"none":"block";let hb=$("#chb");if(!hb){hb=document.createElement("div");hb.id="chb";$("#sc").after(hb)}hb.innerHTML=chatUI();if(!t)$("#ci").focus();$("#ci").onkeydown=e=>{if(e.key=="Enter")sendC()}},700)}
 /* the dog remembers the question it just asked, so the child's answer makes sense */
 const CQT=[[/Bones and mangoes/,"food"],[/fluffy fur! What’s yours/,"color"],[/favou?rite animal\?/,"animal"],[/favou?rite book\?/,"book"],[/Fetch! I could play/,"game"],[/How old are you/,"age"],[/How are you|How about you|How are you feeling/,"feel"],[/Want a cuddle\?/,"cuddle"],[/Better\?/,"better"]];
 function ctxA(q,t,raw){const N=S.name,yes=/\b(yes|yeah|yep|ok|okay|sure|please)\b/.test(t),no=/\b(no|nope|nah|not)\b/.test(t);
@@ -2724,7 +2729,7 @@ setInterval(()=>{try{if(!S.name||document.hidden||Date.now()-LASTP>9e4)return;co
 
 /* the dog can be talked to with pictures: no typing needed */
 const CHP=[["😂","Tell me a joke","Joke",1],["😊","I'm happy","Happy",1],["😢","I'm sad","Sad",1],["📖","Read a story","Story"],["🧩","Let's play","Play"]];
-function chatUI(){const t=S.pre&&!PREFULL;return `<div class="pch">${CHP.map((c,i)=>t&&!c[3]?"":`<button class="ghost cb pcc" onclick="pickC(${i})" aria-label="${c[1]}">${c[0]}<small>${c[2]}</small></button>`).join("")}<button class="ghost cb pcc" id="mb" onclick="mic()" aria-label="Speak">🎤<small>Talk</small></button></div><div id="cty"${t?' style="display:none"':""}><input id="ci" aria-label="Ask your dog" placeholder="Or type to ${esc(S.pet)}…" maxlength="80"> <button class="ghost" onclick="sendC()">Send</button></div>`}
+function chatUI(){const t=S.pre&&!PREFULL;return `<div class="pch">${CHP.map((c,i)=>t&&!c[3]?"":`<button class="ghost cb pcc" onclick="pickC(${i})" aria-label="${c[1]}">${c[0]}<small>${c[2]}</small></button>`).join("")}<button class="ghost cb pcc" id="mb" onclick="mic()" aria-label="Speak">🎤<small>Talk</small></button></div>`}
 function pickC(i){const e=$("#ci");if(e){e.value=CHP[i][1];sendC()}}
 /* offline: on the website (not inside Claude), keep a copy so it opens without internet */
 try{if("serviceWorker" in navigator&&(location.protocol=="https:"||location.hostname=="localhost")&&window.top===window)navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}
