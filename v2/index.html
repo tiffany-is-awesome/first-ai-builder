@@ -481,7 +481,16 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 .par{text-align:left}.par .card{margin:12px 0}.par h3{margin:2px 0 6px}.par h4{margin:12px 0 4px}.skl{font-size:18px;line-height:1.6}.skl li{margin-left:20px}
 .skc{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;font-weight:800;margin:2px;background:#d9d3c3;color:#6a6350;text-transform:uppercase}
 .pch{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:4px}.pcc{display:flex;flex-direction:column;align-items:center;font-size:26px;line-height:1.1;min-height:54px;min-width:58px;padding:2px 8px}.pcc small{font-size:13px;font-weight:700}
+/* say-the-sound step */
+.sayr{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0 6px;flex-wrap:wrap}.say-mic{font-size:30px;line-height:1;min-width:68px;min-height:64px;border-radius:50%;padding:6px 16px}.say-mic.on{animation:sayPulse 1s ease-in-out infinite}.saytx{margin:0;font-size:22px;font-weight:700}.nudge{animation:sayNudge .9s ease-in-out 3}@keyframes sayPulse{50%{transform:scale(1.1);box-shadow:0 0 0 8px rgba(255,160,40,.35)}}@keyframes sayNudge{50%{transform:scale(1.14)}}@media(prefers-reduced-motion:reduce){.say-mic.on,.nudge{animation:none}}
+/* starting-games progress bar */
+.plh{display:flex;align-items:center;gap:12px;margin:0 0 8px}.plh .exitb{margin:0;flex:0 0 auto}.plbar{position:relative;flex:1;height:16px;border-radius:10px;background:rgba(0,0,0,.14);border:2px solid var(--gold)}.plbar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#f6a21a,#ffd35a);transition:width .6s ease}.plbar b{position:absolute;top:-9px;margin-left:-9px;font-size:18px;line-height:1;transition:left .6s ease;filter:drop-shadow(0 1px 0 rgba(0,0,0,.3))}@media(prefers-reduced-motion:reduce){.plbar i,.plbar b{transition:none}}
 #chb{margin:8px 0 2px;background:var(--grain),#fffaf0;color:var(--ink);border:3px solid var(--gold);border-radius:20px;padding:8px;box-shadow:0 4px 0 var(--goldD)}#chb .pch{flex-wrap:nowrap;gap:4px}#chb .pcc{flex:1 1 0;min-width:0;padding:2px 0;font-size:30px}#chb #cty{margin-top:6px;display:flex;gap:6px}#chb #cty input{font-size:18px;margin:0}@media(max-width:520px){#chb .pcc small{display:none}}
+/* talk bubbles sit just above the head they belong to (child on the left, puppy on the right), with the tail pointing at them */
+#sc #bd,#sc #bk{top:auto!important;left:auto!important}#sc #bd::after,#sc #bk::after{left:auto;right:15px}
+.scene.night #bd{right:calc(28.3% - 24px);bottom:42%;max-width:39%}.scene.night #bk{right:calc(69.9% - 24px);bottom:48%;max-width:calc(28% + 24px)}
+#sc.day #bd,#sc.sunset #bd{left:calc(61% - 40px)!important;right:auto;bottom:36%;max-width:calc(39% + 32px)}#sc.day #bd::after,#sc.sunset #bd::after{left:31px;right:auto}
+@media(max-width:430px){#sc #bd{font-size:14px;line-height:1.2;padding:5px 9px}}.scene.day #bk,.scene.sunset #bk{right:calc(62.7% - 24px);bottom:53%;max-width:calc(34.3% + 24px)}
 .calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important}
 @media(max-width:520px){.lgc{min-width:92px;min-height:92px}.lgc.bal{width:104px;height:130px}.lgdog{width:72px}.pms{width:100%}}
 /* learning path, demos, cards, PIN */
@@ -1005,7 +1014,7 @@ if(has(/\b(no|nope|nah)\b/))return `That’s okay! I’m here whenever you want 
 if(has(/\b(hi|hello|hey|hiya|good morning)\b/))return pu("hi",HI);
 FB=1;if(S.likes&&Math.random()<.3)return `Remember you like ${S.likes}? Me too! Well… I like treats.`;
 RB=say("Let’s play!")+say("Tell me a joke")+say("Read a story");return pu("f",["I’m not sure! Can you show me? Tap one of these, {n}:","Ruff, my puppy brain didn’t get that. Want to try one of these?","I’m still learning words! Tap one of these:"])}
-function chat(){const sc=$("#sc");if(!sc)return;sc.classList.add("look");const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent="Woof! What is it?";talk("Woof! What is it?");setTimeout(()=>{const k=$("#bk");k.style.display="none";let hb=$("#chb");if(!hb){hb=document.createElement("div");hb.id="chb";$("#sc").after(hb)}hb.innerHTML=chatUI();if(!(S.pre&&!PREFULL))$("#ci").focus();$("#ci").onkeydown=e=>{if(e.key=="Enter")sendC()}},700)}
+function chat(){const sc=$("#sc");if(!sc)return;sc.classList.add("look");const d=$("#bd");d.style.display="block";d.style.left="50%";d.textContent="Woof! What is it?";talk("Woof! What is it?");setTimeout(()=>{const k=$("#bk"),t=S.pre&&!PREFULL;/* typing happens in the child's own talk bubble (hidden for pre-readers, who use the picture buttons) */k.innerHTML=`<input id="ci" aria-label="Ask your dog" placeholder="Type here…" maxlength="80"> <button class="ghost cb" onclick="sendC()">Send</button>`;k.style.display=t?"none":"block";let hb=$("#chb");if(!hb){hb=document.createElement("div");hb.id="chb";$("#sc").after(hb)}hb.innerHTML=chatUI();if(!t)$("#ci").focus();$("#ci").onkeydown=e=>{if(e.key=="Enter")sendC()}},700)}
 /* the dog remembers the question it just asked, so the child's answer makes sense */
 const CQT=[[/Bones and mangoes/,"food"],[/fluffy fur! What’s yours/,"color"],[/favou?rite animal\?/,"animal"],[/favou?rite book\?/,"book"],[/Fetch! I could play/,"game"],[/How old are you/,"age"],[/How are you|How about you|How are you feeling/,"feel"],[/Want a cuddle\?/,"cuddle"],[/Better\?/,"better"]];
 function ctxA(q,t,raw){const N=S.name,yes=/\b(yes|yeah|yep|ok|okay|sure|please)\b/.test(t),no=/\b(no|nope|nah|not)\b/.test(t);
@@ -1030,10 +1039,11 @@ function sendC(){const v=$("#ci").value.trim();if(!v)return;const r=reply(v);$("
 let CR=null,DI=null,DL=false,DT="",DNO=false,DM=null,DC=false,FDONE=null;
 (async()=>{try{if(!window.claude||!claude.use)return;const d=await claude.use("dictation");if(!d)return;DI=d;
 d.onPartial(({text})=>{const ci=$("#ci");if(DM=="dog"&&ci&&DL)ci.value=(DT?DT+" ":"")+text});
-d.onFinal(({text})=>{DT+=(DT?" ":"")+text;if(DM=="dog"){const ci=$("#ci");if(ci)ci.value=DT}if(DL&&(DM=="dog"||(DM=="read"&&!DC)))d.stop().catch(()=>{})});
+d.onFinal(({text})=>{DT+=(DT?" ":"")+text;if(DM=="dog"){const ci=$("#ci");if(ci)ci.value=DT}if(DL&&(DM=="dog"||DM=="say"||(DM=="read"&&!DC)))d.stop().catch(()=>{})});
 d.onState(({state})=>{if(state=="listening"){DL=true;const b=DM=="read"?$("#flb"):$("#mb");if(b)b.textContent=DM=="read"?"⏹ I’m done":"⏹";return}
 if(state!="idle")return;const was=DL,mode=DM,t=DT.trim();DL=false;DM=null;DT="";if(!was)return;
 if(mode=="read"){const f=FDONE;FDONE=null;if(f)f(t);return}
+if(mode=="say"){const f=SAYF;SAYF=null;if(f)f(t);return}
 const b=$("#mb"),bd=$("#bd"),ci=$("#ci");if(b)b.textContent="🎤";
 if(t&&ci){ci.value=t;sendC()}else if(bd&&bd.textContent.startsWith("I’m listening"))bd.textContent="I didn’t catch that. Tap 🎤 and try again!"})}catch(e){}})();
 function mic(){const d=$("#bd"),b=$("#mb");
@@ -1239,7 +1249,7 @@ try{const u=mkU(x||".");let d=0;const nx=()=>{if(d++)return;setTimeout(()=>go(k+
 
 
 const XB=()=>'<button class="ghost exitb" onclick="leave()" aria-label="Back to home">🏠 Home</button>';
-function leave(){try{speechSynthesis.cancel()}catch(e){}SQ++;clearTimeout(HT);L=null;scr="home";render()}
+function leave(){try{speechSynthesis.cancel()}catch(e){}try{sayReset()}catch(e){}SQ++;clearTimeout(HT);L=null;scr="home";render()}
 
 
 
@@ -2068,17 +2078,22 @@ function sgEnd(G,key,title,again){if(G.done)return;G.done=1;const n=Math.max(1,G
 const sgNew=o=>Object.assign({run:1,keys:1,pts:0,streak:0,best:0,parts:[],msg:"",mt:0},o);
 
 /* ---------- 1. Night-Vision Flashlight Search (sight words) ---------- */
-const SGA=[["🦉","SLEEPY OWL","Owls can turn their heads almost all the way around!"],["🐆","SPOTTY LEOPARD","Leopards carry their food up into trees to keep it safe."],["🦒","TALL GIRAFFE","A giraffe’s tongue is as long as your arm!"],["🐸","LEAPING FROG","Some frogs can jump twenty times their own body length!"],["🦓","STRIPY ZEBRA","Every zebra has its own special pattern of stripes."],["🐰","FLUFFY HARE","Hares can see behind them without turning their heads."],["🐘","GENTLE ELEPHANT","Elephants use their trunks to drink, to smell and to hug!"],["🦇","FLAPPY BAT","Bats find bugs in the dark by listening for echoes."],["🦛","HUNGRY HIPPO","Hippos stay in the water all day and eat grass at night."],["🍄","SPOTTED MUSHROOM","Never eat a wild mushroom. Some can make you very sick!"],["🐢","SLOW TORTOISE","A tortoise carries its home on its back."],["🌳","BIG BAOBAB","Baobab trees store water in their fat trunks."]];
+const SGA=[["🦉","SLEEPY OWL","Owls can turn their heads almost all the way around!"],["🐆","SPOTTY LEOPARD","Leopards carry their food up into trees to keep it safe."],["🦒","TALL GIRAFFE","A giraffe’s tongue is as long as your arm!"],["🐸","LEAPING FROG","Some frogs can jump twenty times their own body length!"],["🦓","STRIPY ZEBRA","Every zebra has its own special pattern of stripes."],["🐰","FLUFFY HARE","Hares can see behind them without turning their heads."],["🐘","GENTLE ELEPHANT","Elephants use their trunks to drink, to smell and to hug!"],["🦇","FLAPPY BAT","Bats find bugs in the dark by listening for echoes."],["🦛","HUNGRY HIPPO","Hippos stay in the water all day and eat grass at night."],["🍄","SPOTTED MUSHROOM","Never eat a wild mushroom. Some can make you very sick!"],["🐢","SLOW TORTOISE","A tortoise carries its home on its back."],["🌳","BIG BAOBAB","Baobab trees store water in their fat trunks."],["🦁","PROUD LION","Lions live together in families called prides."],["🦏","GRUMPY RHINO","A rhino’s horn is made of the same stuff as your fingernails."],["🐒","CHEEKY MONKEY","Monkeys use their long tails to help them balance."],["🦩","PINK FLAMINGO","Flamingos are born grey. They turn pink from the food they eat!"],["🐊","SNAPPY CROCODILE","A mother crocodile carries her babies gently in her mouth."],["🦅","HIGH EAGLE","Eagles can spot tiny animals from very high in the sky."],["🐝","BUSY BEE","Bees dance to show their friends where the flowers are."],["🐜","TINY ANT","Ants can carry things much heavier than they are."],["🐌","SLOW SNAIL","A snail leaves a sticky trail as it slides along."],["🐞","LUCKY LADYBIRD","Ladybirds eat the tiny bugs that nibble plants."],["🦋","PRETTY BUTTERFLY","Butterflies taste with their feet!"],["🐪","DESERT CAMEL","A camel’s hump stores fat, so it can go a long time without food."],["🦍","GENTLE GORILLA","Gorillas sleep in cosy nests made of leaves."],["🦊","CLEVER FOX","Foxes can hear tiny sounds from far away."],["🦈","FAST SHARK","Sharks lose teeth and grow new ones all their lives."],["🐬","HAPPY DOLPHIN","Dolphins talk to each other with clicks and whistles."],["🐙","SQUISHY OCTOPUS","An octopus has three hearts!"],["🐧","WADDLING PENGUIN","Penguins are birds that swim instead of fly."],["🦆","SPLASHY DUCK","A duck’s oily feathers keep the rain off."],["🐓","NOISY ROOSTER","A rooster crows to say that morning has come."],["🐄","GENTLE COW","A cow chews its food twice."],["🐐","CLIMBING GOAT","Goats are great at climbing steep rocks."],["🐑","WOOLLY SHEEP","A sheep’s wool keeps it warm, and it can be made into clothes."],["🐕","LOYAL DOG","A dog’s nose is much better at smelling than ours."],["🐈","CURIOUS CAT","Cats can see well in the dark."],["🦔","PRICKLY HEDGEHOG","A hedgehog rolls into a ball to stay safe."],["🐍","SNEAKY SNAKE","A snake smells with its tongue."],["🦎","QUICK LIZARD","Some lizards can grow a new tail."],["🌻","TALL SUNFLOWER","Young sunflowers turn to follow the sun."],["🦜","CHATTY PARROT","Some parrots can copy the words that people say."],["🦦","PLAYFUL OTTER","Sea otters hold hands when they sleep so they don’t drift apart."],["🐋","BIG WHALE","A whale breathes air through a hole on top of its head."]];
 const sgWords=()=>[...new Set((S.level||1)<46?SL[0].concat(SL[1]):SL.flat())];
-function sgFlash(){cgStop();const W=800,H=450,NS=6+R(3),its0=shuf(SGA).slice(0,NS),seen=S.sgfw||[],all=shuf(sgWords()),fresh=all.filter(v=>!seen.includes(v)),tg=(fresh.length>=5?fresh:all).slice(0,5),rest=all.filter(v=>!tg.includes(v)),lk=shuf(rest.filter(v=>tg.some(q=>q[0]==v[0]))),ws=shuf(tg.concat(lk.slice(0,Math.ceil((NS-5)/2)).concat(shuf(rest.filter(v=>!lk.includes(v)))).slice(0,NS-tg.length)));S.sgfw=tg.concat(seen).slice(0,10);
+function sgFlash(){cgStop();const W=800,H=450,NR=5,seen=S.sgfw||[],all=shuf(sgWords()),fresh=all.filter(v=>!seen.includes(v)),tg=(fresh.length>=NR?fresh:all).slice(0,NR),rest=all.filter(v=>!tg.includes(v));S.sgfw=tg.concat(seen).slice(0,10);
  app(cgShell("Flashlight Search","🔦","Shine your flashlight through the dark forest. Find the sign with the word, then tap it!",`<div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div><div class="cgrow"><button class="cgk cgsm" id="sgfh">🔊 Hear the word</button></div><p class="cgtip">Mouse: move to shine, click to choose. Touch: drag your finger, tap to choose. Keys: arrows to shine, Space to choose.</p>`));
- const[c,x]=cgCanvas(cq("#cgst"),W,H),sp=[];for(let k=0;k<4000&&sp.length<NS;k++){const q=[90+R(620),135+R(195)];if(sp.every(o=>Math.abs(o[0]-q[0])>=125||Math.abs(o[1]-q[1])>=118))sp.push(q)}if(sp.length<NS){sp.length=0;shuf([[100,165],[245,150],[390,165],[535,150],[680,170],[100,320],[245,310],[390,325],[535,310],[680,325]]).slice(0,NS).forEach(q=>sp.push(q))}
- const its=its0.map((a,i)=>({e:a[0],n:a[1],f:a[2],w:ws[i],x:sp[i][0],y:sp[i][1],got:0})),order=shuf(its.map((_,i)=>i).filter(i=>tg.includes(its[i].w))).slice(0,5);
+ const[c,x]=cgCanvas(cq("#cgst"),W,H);
+ /* every round is a brand-new forest: new animals, new words (never a word that is still to come), new places */
+ const spots=NS=>{const sp=[];for(let k=0;k<4000&&sp.length<NS;k++){const q=[90+R(620),135+R(195)];if(sp.every(o=>Math.abs(o[0]-q[0])>=125||Math.abs(o[1]-q[1])>=118))sp.push(q)}if(sp.length<NS){sp.length=0;shuf([[100,165],[245,150],[390,165],[535,150],[680,170],[100,320],[245,310],[390,325],[535,310],[680,325]]).slice(0,NS).forEach(q=>sp.push(q))}return sp};
+ let its=[],usedA=[],usedD=[];
+ const board=r=>{const NS=6+R(2),tw=tg[r],age=v=>usedD.lastIndexOf(v),cand=shuf(rest).sort((p,q)=>age(p)-age(q)),lk=cand.filter(v=>v[0]==tw[0]).slice(0,2),ds=lk.concat(cand.filter(v=>!lk.includes(v))).slice(0,NS-1);usedD=usedD.concat(ds);
+  let an=shuf(SGA.filter(a=>!usedA.includes(a)));if(an.length<NS)an=an.concat(shuf(SGA.filter(a=>usedA.includes(a))));an=an.slice(0,NS);usedA=usedA.concat(an);
+  const ws=shuf([tw].concat(ds)),sp=spots(NS);its=an.map((a,i)=>({e:a[0],n:a[1],f:a[2],w:ws[i],x:sp[i][0],y:sp[i][1],got:0}));if(CG&&CG.its)CG.its=its};
  const G=sgNew({lx:W/2,ly:H/2,qi:0,flash:0,busy:0,s1:1+Math.random()*2,s2:1.5+Math.random()*2,ff:Array.from({length:10+R(12)},()=>({x:Math.random()*W,y:Math.random()*H,p:Math.random()*6}))});CG=G;
- const T=()=>its[order[G.qi]];G.its=its;G.T=T;const ask=()=>{G.lis=G.qi>0&&R(5)<2;G.msg=G.lis?"🔊 Listen! Find the word you hear.":`Find the word: ${T().w.toUpperCase()}`;G.mt=99;talk(`Find the word ${T().w}.`)};cq("#sgfh").onclick=()=>{if(!G.done)talk(T().w)};
+ board(0);const T=()=>its.find(i=>i.w==tg[G.qi]);G.its=its;G.T=T;const ask=()=>{G.lis=G.qi>0&&R(5)<2;G.msg=G.lis?"🔊 Listen! Find the word you hear.":`Find the word: ${T().w.toUpperCase()}`;G.mt=99;talk(`Find the word ${T().w}.`)};cq("#sgfh").onclick=()=>{if(!G.done)talk(T().w)};
  const pick=(px,py)=>{if(G.busy||G.done)return;let b=null,bd=1e9;for(const it of its){if(it.got)continue;const d=Math.hypot(it.x-px,it.y+10-py);if(d<bd){bd=d;b=it}}if(!b||bd>75||Math.hypot(b.x-G.lx,b.y-G.ly)>170)return;
-  if(b===T()){b.got=1;G.busy=1;const m=sgGood(G);G.flash=1;sgSnd.beam();setTimeout(cgSnd.chime,200);cgBurst(G.parts,b.x,b.y,"#ffd34d",26);G.msg=`${b.n}: ${b.f}  +${m} ⭐`;G.mt=99;talk(`Yes! ${b.w}. ${b.f}`);
-   setTimeout(()=>{if(CG!==G)return;G.busy=0;G.qi++;if(G.qi>=order.length)sgEnd(G,"flash","🔦 All found!","sgFlash()");else ask()},4200)}
+  if(b===T()){b.got=1;G.busy=1;const m=sgGood(G);G.flash=1;G.fl={x:b.x,y:b.y};sgSnd.beam();setTimeout(cgSnd.chime,200);cgBurst(G.parts,b.x,b.y,"#ffd34d",26);G.msg=`${b.n}: ${b.f}  +${m} ⭐`;G.mt=99;talk(`Yes! ${b.w}. ${b.f}`);
+   setTimeout(()=>{if(CG!==G)return;G.busy=0;G.qi++;if(G.qi>=NR)sgEnd(G,"flash","🔦 All found!","sgFlash()");else{board(G.qi);G.flash=0;ask()}},4200)}
   else{sgBad(G);cgSnd.boing();G.msg=G.lis?`That sign says ${b.w.toUpperCase()}. Listen again!`:`That sign says ${b.w.toUpperCase()}. Find ${T().w.toUpperCase()}!`;G.mt=99;talk(`That sign says ${b.w}. Find ${T().w}.`)}};
  const mv=e=>{const[px,py]=cgPt(c,e,W,H);G.lx=px;G.ly=py-(e.pointerType=="touch"?45:0)};
  c.addEventListener("pointermove",mv);c.addEventListener("pointerdown",e=>{e.preventDefault();mv(e);const[px,py]=cgPt(c,e,W,H);pick(px,py)});
@@ -2087,15 +2102,15 @@ function sgFlash(){cgStop();const W=800,H=450,NS=6+R(3),its0=shuf(SGA).slice(0,N
  cgLoop(G,(dt,t)=>{const k=(CGK.ArrowRight?1:0)-(CGK.ArrowLeft?1:0),k2=(CGK.ArrowDown?1:0)-(CGK.ArrowUp?1:0);G.lx=Math.max(0,Math.min(W,G.lx+k*330*dt));G.ly=Math.max(0,Math.min(H,G.ly+k2*330*dt));
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#0b1638");g.addColorStop(1,"#1d3b2b");x.fillStyle=g;x.fillRect(0,0,W,H);
   cgPines(x,W,250,0,0,"#122a4f",38,G.s1);cgPines(x,W,430,0,0,"#103a2c",58,G.s2);x.fillStyle="#163a29";x.fillRect(0,415,W,35);
-  const art=it=>{x.font="54px serif";x.textAlign="center";x.textBaseline="middle";x.fillText(it.e,it.x,it.y-18);x.fillStyle="#6b4423";x.fillRect(it.x-3,it.y+46,6,16);x.fillStyle="#8a5a32";cgRR(x,it.x-50,it.y+12,100,36,9);x.fill();x.strokeStyle="#5a3a1a";x.lineWidth=2;x.stroke();x.fillStyle="#fff3c4";x.font="700 25px Fredoka, 'Baloo 2', sans-serif";x.fillText(it.w,it.x,it.y+31)};
+  const art=it=>{x.font="54px serif";x.textAlign="center";x.textBaseline="middle";x.fillText(it.e,it.x,it.y-18);x.fillStyle="#6b4423";x.fillRect(it.x-3,it.y+46,6,16);x.fillStyle="#8a5a32";cgRR(x,it.x-50,it.y+12,100,36,9);x.fill();x.strokeStyle="#5a3a1a";x.lineWidth=2;x.stroke();if(it.got||Math.hypot(it.x-G.lx,it.y+31-G.ly)<125){x.fillStyle="#fff3c4";x.font="700 25px Fredoka, 'Baloo 2', sans-serif";x.fillText(it.w,it.x,it.y+31)}};
   its.forEach(art);
-  const lr=G.flash>0?520:125,dg=x.createRadialGradient(G.lx,G.ly,lr*.42,G.lx,G.ly,lr);dg.addColorStop(0,"rgba(2,4,16,0)");dg.addColorStop(1,"rgba(2,4,16,.97)");x.fillStyle=dg;x.fillRect(0,0,W,H);
+  const lr=125,dg=x.createRadialGradient(G.lx,G.ly,lr*.42,G.lx,G.ly,lr);dg.addColorStop(0,"rgba(2,4,16,0)");dg.addColorStop(1,"rgba(2,4,16,.97)");x.fillStyle=dg;x.fillRect(0,0,W,H);
   for(const it of its)if(it.got){const gg=x.createRadialGradient(it.x,it.y,8,it.x,it.y,95);gg.addColorStop(0,"rgba(255,210,90,.5)");gg.addColorStop(1,"rgba(255,210,90,0)");x.fillStyle=gg;x.fillRect(it.x-95,it.y-95,190,190);art(it)}
   x.fillStyle="rgba(255,240,170,.07)";x.beginPath();x.moveTo(W/2-16,H);x.lineTo(G.lx-55,G.ly);x.lineTo(G.lx+55,G.ly);x.lineTo(W/2+16,H);x.fill();
   for(const f of G.ff){f.x=(f.x+Math.sin(t+f.p)*22*dt+W)%W;f.y=(f.y+Math.cos(t*.8+f.p)*15*dt+H)%H;x.globalAlpha=.35+.65*Math.abs(Math.sin(t*2+f.p));x.fillStyle="#fff59a";x.beginPath();x.arc(f.x,f.y,2.4,0,7);x.fill()}x.globalAlpha=1;
   for(const it of its)if(!it.got&&Math.hypot(it.x-G.lx,it.y-G.ly)<85){x.font="700 15px Fredoka, sans-serif";x.fillStyle="#ffd34d";x.textAlign="center";x.textBaseline="middle";x.fillText(it.n,it.x,it.y-58)}
-  if(G.flash>0){x.fillStyle=`rgba(255,240,190,${G.flash*.45})`;x.fillRect(0,0,W,H);G.flash=Math.max(0,G.flash-dt*1.1)}
-  cgParts(x,G.parts,dt);sgHud(x,G,W,`Word ${Math.min(G.qi+1,order.length)} of ${order.length}`);if(G.mt>0)sgPill(x,W,H,G.msg)})}
+  if(G.flash>0){const fg=G.fl?x.createRadialGradient(G.fl.x,G.fl.y,6,G.fl.x,G.fl.y,110):null;if(fg){fg.addColorStop(0,`rgba(255,240,190,${G.flash*.5})`);fg.addColorStop(1,"rgba(255,240,190,0)");x.fillStyle=fg;x.fillRect(G.fl.x-110,G.fl.y-110,220,220)}G.flash=Math.max(0,G.flash-dt*1.1)}
+  cgParts(x,G.parts,dt);sgHud(x,G,W,`Word ${Math.min(G.qi+1,NR)} of ${NR}`);if(G.mt>0)sgPill(x,W,H,G.msg)})}
 
 /* ---------- 2. Slingshot Marshmallow Target Practice (rhyming) ---------- */
 function sgSling(){cgStop();const W=800,H=450,R0=[140,300],GR=900,K=6.2,GY=418;
@@ -2139,17 +2154,19 @@ function sgFly(){cgStop();const W=800,H=450,lv=S.level||1,ix=Math.max(0,Math.min
  app(cgShell("Firefly Sky-Writer","✨","Watch the fireflies write in the sky. Then trace their glowing path before it fades!",`<div class="cgst" id="cgst"><div class="cgov" id="cgov"></div></div><div class="cgrow"><button class="cgk cgsm" id="sgfr">🔁 Show me again</button><button class="cgk cgsm" id="sgfs">⏭ Skip</button></div><p class="cgtip">Trace with your finger or mouse. The path fades slower while you are tracing.</p>`));
  const[c,x]=cgCanvas(cq("#cgst"),W,H),seq=[0,1,0,1,0].map(k=>k?pp(cw):pp(lets.filter(ch=>TG[ch]))),G=sgNew({i:0,down:0,trail:[],lp:null});CG=G;
  const build=it=>{const ch=[...it],gl=ch.map(k=>TG[k]),wd=gl.map(g=>{let a=1e9,b=-1e9;g.forEach(s=>s.forEach(p=>{a=Math.min(a,p[0]);b=Math.max(b,p[0])}));return[a,Math.max(b-a,8)]}),gap=20,tot=wd.reduce((a,b)=>a+b[1],0)+gap*(ch.length-1),hh=ch.some(k=>"gjpqy".includes(k))?115:80,s=Math.min(3.4,640/tot,320/hh),ox=(W-tot*s)/2,oy=(H-hh*s)/2+6;
-  let cx=0;const P=[];gl.forEach((g,li)=>{g.forEach(st=>trRes(st).forEach(p=>P.push({x:(p[0]-wd[li][0]+cx)*s+ox,y:p[1]*s+oy,c:0})));cx+=wd[li][1]+gap});return P};
- const start=keep=>{const it=seq[G.i];G.it=it;G.P=build(it);G.ph="swarm";G.sw=0;G.glow=1;G.fade=it.length>1?26:18;G.ff=Array.from({length:12},()=>({x:Math.random()*W,y:Math.random()*H}));
+  let cx=0,si=0;const P=[];gl.forEach((g,li)=>{g.forEach(st=>{si++;const r=trRes(st);r.forEach((p,pi)=>P.push({x:(p[0]-wd[li][0]+cx)*s+ox,y:p[1]*s+oy,c:0,si,fs:pi==0,ls:pi==r.length-1}))});cx+=wd[li][1]+gap});return P};
+ const start=keep=>{const it=seq[G.i];G.it=it;G.P=build(it);G.ss={};G.se={};G.ph="swarm";G.sw=0;G.glow=1;G.fade=it.length>1?26:18;G.ff=Array.from({length:12},()=>({x:Math.random()*W,y:Math.random()*H}));
   G.msg=it.length>1?`Trace the word: ${it}`:`Trace the letter: ${it}`;G.mt=99;if(!keep)talk(it.length>1?`Watch the fireflies write the word ${it}.`:`Watch the fireflies write the letter ${NM[it]}.`)};
  const next=()=>{G.i++;if(G.i>=seq.length)sgEnd(G,"fly","✨ Sky-writer!","sgFly()");else start()};
  cq("#sgfr").onclick=()=>{if(G.ph!="done"&&!G.done)start(1)};cq("#sgfs").onclick=()=>{if(G.ph!="done"&&!G.done){sgBad(G);next()}};
- const tol=26,cover=(px,py)=>{let on=0;for(const p of G.P)if(Math.hypot(p.x-px,p.y-py)<tol){if(!p.c)p.c=1;on=1}return on};
+ /* done only when EVERY line of EVERY letter is traced: at least 95% of it covered AND both its start and its very end reached (checked line by line, so a line that overlaps an earlier one can't be skipped) */
+ const sgDone=P=>{const m={};P.forEach(q=>{const a=m[q.si]||(m[q.si]=[0,0]);a[1]++;if(q.c)a[0]++});return Object.entries(m).every(([si,[c,n]])=>c/n>=(n<=3?1:.95)&&G.ss[si]&&G.se[si])};
+ const tol=26,cover=(px,py)=>{let on=0;for(const p of G.P){const d=Math.hypot(p.x-px,p.y-py);if(d<tol){if(!p.c)p.c=1;on=1}if(d<22){if(p.fs)G.ss[p.si]=1;if(p.ls)G.se[p.si]=1}}return on};
  const at=e=>cgPt(c,e,W,H);
  c.addEventListener("pointerdown",e=>{e.preventDefault();if(G.ph!="trace")return;G.down=1;try{c.setPointerCapture(e.pointerId)}catch(_){}G.lp=at(e);cover(...G.lp)});
  c.addEventListener("pointermove",e=>{if(!G.down||G.ph!="trace")return;const p=at(e),a=G.lp||p,n=Math.max(1,Math.ceil(Math.hypot(p[0]-a[0],p[1]-a[1])/8));let on=0;for(let k=1;k<=n;k++)on=cover(a[0]+(p[0]-a[0])*k/n,a[1]+(p[1]-a[1])*k/n)||on;G.lp=p;G.hue=(G.hue||0)+12;
   G.trail.push({x:p[0],y:p[1],l:.7,on});if(on&&Math.random()<.7)G.parts.push({x:p[0],y:p[1],vx:(Math.random()-.5)*80,vy:(Math.random()-.5)*80,l:.6,c:`hsl(${G.hue%360},100%,65%)`,r:2+Math.random()*3});
-  const done=G.P.filter(q=>q.c).length/G.P.length;if(done>=.86)win()});
+  if(sgDone(G.P))win()});
  const up=()=>{G.down=0;G.lp=null};c.addEventListener("pointerup",up);c.addEventListener("pointercancel",up);
  const win=()=>{if(G.ph!="trace")return;G.ph="done";G.down=0;const n=sgGood(G);cgSnd.chime();sgSnd.sparkle();G.P.forEach((p,i)=>{if(i%4==0)G.parts.push({x:p.x,y:p.y,vx:(Math.random()-.5)*160,vy:-60-Math.random()*120,l:1,c:`hsl(${(i*9)%360},100%,65%)`,r:2+Math.random()*3})});
   const it=G.it;G.msg=`Beautiful! +${n} ⭐`;G.mt=99;talk(it.length>1?`You wrote ${it}! ${it}.`:`${it.toUpperCase()}! ${it.toUpperCase()} says ${PH[it][0]}, like ${PH[it][1]}.`);setTimeout(()=>{if(CG===G)next()},2600)};
@@ -2717,7 +2734,7 @@ setInterval(()=>{try{if(!S.name||document.hidden||Date.now()-LASTP>9e4)return;co
 
 /* the dog can be talked to with pictures: no typing needed */
 const CHP=[["😂","Tell me a joke","Joke",1],["😊","I'm happy","Happy",1],["😢","I'm sad","Sad",1],["📖","Read a story","Story"],["🧩","Let's play","Play"]];
-function chatUI(){const t=S.pre&&!PREFULL;return `<div class="pch">${CHP.map((c,i)=>t&&!c[3]?"":`<button class="ghost cb pcc" onclick="pickC(${i})" aria-label="${c[1]}">${c[0]}<small>${c[2]}</small></button>`).join("")}<button class="ghost cb pcc" id="mb" onclick="mic()" aria-label="Speak">🎤<small>Talk</small></button></div><div id="cty"${t?' style="display:none"':""}><input id="ci" aria-label="Ask your dog" placeholder="Or type to ${esc(S.pet)}…" maxlength="80"> <button class="ghost" onclick="sendC()">Send</button></div>`}
+function chatUI(){const t=S.pre&&!PREFULL;return `<div class="pch">${CHP.map((c,i)=>t&&!c[3]?"":`<button class="ghost cb pcc" onclick="pickC(${i})" aria-label="${c[1]}">${c[0]}<small>${c[2]}</small></button>`).join("")}<button class="ghost cb pcc" id="mb" onclick="mic()" aria-label="Speak">🎤<small>Talk</small></button></div>`}
 function pickC(i){const e=$("#ci");if(e){e.value=CHP[i][1];sendC()}}
 /* offline: on the website (not inside Claude), keep a copy so it opens without internet */
 try{if("serviceWorker" in navigator&&(location.protocol=="https:"||location.hostname=="localhost")&&window.top===window)navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}
@@ -3016,10 +3033,40 @@ function rpPlan(o){o=o||{};const id=L.id,s=SKI[id],st=rpSt(id),pm=L.pm;L.slides=
  else if(!L.bun&&!L.slides.length&&st==2&&(!o.mini||L.refresh)&&pm!="known"&&pm!="part")L.slides.push([s.t[0][0],"Let us remember. "+s.t[0][1]]);
  if(pm=="known"){L.need=Math.min(L.need,4);L.gl=0}
  if(L.slides.length){scr="lesson";rpTeach()}else{L.ph=(st>=3||pm=="known")?"solo":"guided";scr="lesson";rpAsk()}}
-function rpTeach(){const sl=L.slides[L.ti];if(!sl){L.ph=((rpSt(L.id)>=3||L.pm=="known")&&!L.rem)?"solo":"guided";L.n=0;return rpAsk()}if(sl.disc)return rpDisc(sl);const s=SKI[L.id];L.vt=sl[1];S.sk=S.sk||{};
- app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p><button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
+function rpTeach(){sayReset();const sl=L.slides[L.ti];if(!sl){L.ph=((rpSt(L.id)>=3||L.pm=="known")&&!L.rem)?"solo":"guided";L.n=0;return rpAsk()}if(sl.disc)return rpDisc(sl);const s=SKI[L.id];L.vt=sl[1];S.sk=S.sk||{};const cs=sayLetters(sl);
+ app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p>${sayHtml(cs)}<button class="btn" id="tnext" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
  if(sl[2])sl[2].forEach(c=>{const p=sl.cm||[SKI[L.id].it[0]];p.forEach(pp_=>{if(!S.sk[pp_+c])S.sk[pp_+c]={h:"",n:0,c:0,d:[],g:[],t:Date.now(),b:0}})});
- rpInit().taught[L.id]=1;save();talk(sl[1])}
+ rpInit().taught[L.id]=1;save();if(cs.length)SAY={cs,i:0,tries:0,busy:0,l:L,ti:L.ti};talk(sl[1]+(cs.length?` Now you say it: ${PH[cs[0]][0]}!`:""))}
+/* "Now you say it!": after hearing a letter sound the child says it out loud. This is practice, never a test: any try is cheered, nothing is
+   marked wrong and nothing is saved. A microphone helps (it can cheer "I heard sss!"), but without one the child is simply asked to say it aloud. */
+let SAY=null,SAYF=null;
+const sayCan=()=>!!(DI||window.SpeechRecognition||window.webkitSpeechRecognition);
+function sayLetters(sl){const p=sl.cm||[(SKI[L.id]&&SKI[L.id].it&&SKI[L.id].it[0])||""];return p.includes("S:")&&Array.isArray(sl[2])?sl[2].filter(c=>PH[c]):[]}
+function sayReset(){const A=SAY;SAY=null;SAYF=null;if(A){clearTimeout(A.to);try{A.stop&&A.stop()}catch(e){}}if(DM=="say"){try{DI&&DI.stop().catch(()=>{})}catch(e){}DL=false;DM=null;DT=""}}
+function sayHtml(cs){if(!cs.length)return"";const sn=PH[cs[0]][0];return`<div class="sayr">${sayCan()?`<button class="btn say-mic" id="saym" onclick="sayGo()" aria-label="Say the sound ${sn}">🎤</button>`:""}<p class="saytx" id="sayt" aria-live="polite">Your turn! Say: <b>${sn}</b></p></div>`}
+const sayHit=(t,c)=>{const w=String(t||"").toLowerCase().split(/[^a-z]+/).filter(Boolean),p=PH[c];return w.some(x=>x==c||x==p[0]||x==p[1]||x==NM[c]||x[0]==c)};
+function sayListen(cb,A){
+ if(DI){if(DNO){cb("","denied");return}DT="";DM="say";DL=true;SAYF=t=>cb(t,t?"":"none");A.stop=()=>{DI.stop().catch(()=>{})};
+  DI.start().catch(e=>{DL=false;DM=null;SAYF=null;const why=String(e&&(e.reason||e.code||e.message)||e);if(why.includes("not_granted")){DNO=true;cb("","denied")}else cb("","fail")});return}
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){cb("","nosr");return}
+ const r=new SR();r.lang="en-US";r.interimResults=false;r.maxAlternatives=3;let txt="",over=0;
+ r.onresult=e=>{txt=[...e.results[e.results.length-1]].map(a=>a.transcript).join(" ")};
+ r.onerror=e=>{if(over)return;over=1;cb("",e.error=="not-allowed"||e.error=="service-not-allowed"?"denied":e.error=="no-speech"?"none":"fail")};
+ r.onend=()=>{if(over)return;over=1;cb(txt,txt?"":"none")};
+ A.stop=()=>{try{r.stop()}catch(e){}};try{r.start()}catch(e){over=1;cb("","fail")}}
+function sayGo(){const A=SAY;if(!A||A.l!==L||A.ti!==L.ti)return;if(A.busy){try{A.stop&&A.stop()}catch(e){}return}
+ const c=A.cs[A.i],sn=PH[c][0],t=$("#sayt"),b=$("#saym");try{speechSynthesis.cancel()}catch(e){}
+ A.busy=1;A.tries++;if(b){b.classList.add("on");b.textContent="⏹"}if(t)t.innerHTML=`I’m listening… say <b>${sn}</b>! 👂`;let done=0;
+ const say=(h,p)=>{const t2=$("#sayt");if(t2)t2.innerHTML=h;talk(p)};
+ const fin=(txt,err)=>{if(done||SAY!==A||L!==A.l)return;done=1;A.busy=0;clearTimeout(A.to);const b2=$("#saym");if(b2){b2.classList.remove("on");b2.textContent="🎤"}
+  if(err=="denied"||err=="nosr"){if(b2)b2.style.display="none";return say(`That’s okay! Say <b>${sn}</b> out loud, then tap ▶.`,`That’s okay! Say ${sn} out loud, then tap the button.`)}
+  if(err){if(A.tries>=2){return say(`That’s okay! Say <b>${sn}</b> out loud, then tap ▶.`,`That’s okay! Say ${sn} out loud, then tap the button.`)}return say(`I didn’t hear anything. Tap 🎤 and say <b>${sn}</b> a little louder!`,`I didn’t hear anything. Tap the microphone and say ${sn} a little louder!`)}
+  const hit=sayHit(txt,c);sfx.ok();pupReact("yay");A.i++;A.tries=0;
+  const more=A.i<A.cs.length,nx=more?PH[A.cs[A.i]][0]:"";
+  say(hit?`Yes! I heard <b>${sn}</b>! 🎉`:`I heard you! 🎉 Nice try!`,hit?`Yes! I heard ${sn}!`:`I heard you! Nice try!`);
+  if(more)setTimeout(()=>{if(SAY===A&&L===A.l){const t3=$("#sayt"),bb=$("#saym");if(t3)t3.innerHTML=`Now say: <b>${nx}</b>`;if(bb)bb.setAttribute("aria-label","Say the sound "+nx);talk(`Now you say it: ${nx}!`)}},1700);
+  else setTimeout(()=>{if(SAY===A&&L===A.l){const n=$("#tnext");if(n)n.classList.add("nudge")}},1500)};
+ A.to=setTimeout(()=>{try{A.stop&&A.stop()}catch(e){}},7000);sayListen(fin,A)}
 function rpAsk(){const R_=rpInit();if(L.ph=="pre")return rpPreAsk();if(L.diag)return rpDiagAsk();L.done=0;L.flAcc=null;L.miss=0;L.hint=0;L.help=0;L.rt1=null;const s=SKI[L.id];L.sup=(L.ph=="guided"||L.simp)?1:0;
  let id=L.id,rv=null;if(L.ph=="solo"&&!L.quiz&&L.tot%4==3&&!L.rem){const d=rpDueList().filter(x=>x!=L.id&&SKI[x]&&!SKI[x].nr||(S.pre));const dd=d.filter(x=>x!=L.id);if(dd.length)rv=pp(dd.slice(0,4))}
  if(L.quiz){id=L.qs[L.n%L.qs.length]}else if(rv)id=rv;else if(L.bun)id=rpBunPick();L.cid=id;L.rv=rv;
@@ -3363,33 +3410,44 @@ function placeIntro(){const P=rpInit();scr="lesson";L=null;const go1=P.plc&&P.pl
  app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${go1?"Let’s keep playing!":"Let’s play some games with me!"}</div></div><p class="qt">There are lots of little games. Do your best. It is okay if some are tricky!</p><button class="btn" style="font-size:34px;padding:6px 30px" onclick="plBegin(${go1?0:1})">▶</button></div>`);talk(go1?"Let’s keep playing!":"Let’s play some games with me! It is okay if some are tricky.")}
 function plBegin(fresh){const P=rpInit();if(fresh||!P.plc)P.plc={di:0,res:{},ok:{},gens:{},t:Date.now()};save();plDomain()}
 function plNext(){const P=rpInit(),pl=P.plc;while(pl.di<PLD.length){const d=PLD[pl.di];if(!d.need||d.need(pl.res))return d;pl.res[d.id]={n:0,c:0,pct:0,skip:1};pl.di++}return null}
-function plDomain(){const P=rpInit(),pl=P.plc,d=plNext();if(!d)return plFinish();const flat=[];d.items.forEach(([g,n])=>{for(let i=0;i<n;i++)flat.push(g)});
- L={pl:1,d:d.id,dom:d,flat:shuf(flat),i:0,n:0,c:0,used:new Set(),subs:{},stop:0,u:0,nrm:d.nr};
- RPX.pl=1;RPX.plq=d.lp?plLetters():null;RPX.plK=(pl.res.lsn&&pl.ok.S)?pl.ok.S:null;
- SQ++;const m=d.say;app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">${pl.di+1<=PLD.length?["👂","📖","🗣️","🎵","🔤","🅰️","🔊","🧩","✂️","📖","🧸","🌟","✍️","🎨","🌈","🚀","💡","🏔️"][pl.di]||"⭐":"⭐"}</div><button class="btn" style="font-size:34px;padding:6px 30px" onclick="plAskQ()">▶</button></div>`);talk(m)}
-function plAskQ(){const d=L.dom;if(L.i>=L.flat.length&&!L.stop&&!L.ext&&L.n>=6&&L.c/L.n>=.5&&L.c/L.n<.8){L.ext=1;const gs=[];d.items.forEach(([g])=>gs.push(g));for(let i=0;i<4;i++)L.flat.push(gs[i%gs.length])}
- if(L.i>=L.flat.length||L.stop)return plDomEnd();const g=L.flat[L.i];RPX.n=3;RPX.f=.5;let q=null;
+/* How long the starting games last: every area asks 4 questions (5 where it has five kinds of question). A child who is clearly right
+   (4 of 4, or 4 of 5) or clearly lost (1 of 4) stops there; only an in-between child gets 1 or 2 more, never more than 6. Nothing to tap between areas. */
+const PLN=d=>d.lp?8:Math.max(4,Math.min(6,d.items.filter(x=>d.cr.some(c=>c[1]==x[0])).length));
+/* the two areas that check letter by letter (names, sounds) ask 8 (at most 10): the path needs at least 6 letters known before it moves on */
+function plFlat(d){const o=[];for(let r=0;r<4;r++)shuf(d.items.filter(x=>x[1]>r)).forEach(x=>o.push(x[0]));return o.slice(0,Math.max(8,PLN(d)+2))}
+function plProg(){const pl=S.rp&&S.rp.plc;if(!pl)return 0;let done=0;for(const k in pl.res){const r=pl.res[k];if(r&&!r.skip)done+=r.n||0}
+ const cur=L&&L.pl&&L.dom,cn=cur?L.n:0;done+=cn;let rem=cur?Math.max(0,L.min-cn):0;const opt={};PLD.forEach(x=>opt[x.id]=pl.res[x.id]||{n:1,c:1,pct:1});
+ for(let j=pl.di+1;j<PLD.length;j++){const x=PLD[j];if(!x.need||x.need(opt))rem+=4.5}
+ pl.pp=Math.max(pl.pp||0,Math.min(.97,done+rem?done/(done+rem):0));return Math.round(pl.pp*100)}
+/* a slim bar with a paw print walking along it (never moves backwards; no numbers, so little readers can follow it too) */
+function plBar(){const p=plProg(),pv=(S.rp.plc&&S.rp.plc.pv)||0;return`<div class="plh">${XB()}<div class="plbar" role="progressbar" aria-label="How far along the games are" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}" data-to="${p}"><i style="width:${pv}%"></i><b style="left:${pv}%" aria-hidden="true">🐾</b></div></div>`}
+function plBarGo(){const e=$(".plbar");if(!e)return;const to=+e.dataset.to,i=e.querySelector("i"),b=e.querySelector("b");requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=to+"%";b.style.left=to+"%"}));if(S.rp.plc)S.rp.plc.pv=to}
+function plDomain(){const P=rpInit(),pl=P.plc,d=plNext();if(!d)return plFinish();
+ L={pl:1,d:d.id,dom:d,flat:plFlat(d),i:0,n:0,c:0,min:PLN(d),max:d.lp?10:6,used:new Set(),subs:{},stop:0,end:0,u:0,nrm:d.nr};
+ RPX.pl=1;RPX.plq=d.lp?plLetters():null;RPX.plK=(pl.res.lsn&&pl.ok.S)?pl.ok.S:null;scr="lesson";
+ SQ++;const m=(pl.lead||"")+d.say,l0=L;pl.lead="";
+ app(`<div class="card" style="text-align:center">${plBar()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">${["👂","📖","🗣️","🎵","🔤","🅰️","🔊","🧩","✂️","📖","🧸","🌟","✍️","🎨","🌈","🚀","💡","🏔️"][PLD.indexOf(d)]||"⭐"}</div></div>`);plBarGo();talk(m);
+ setTimeout(()=>{if(L===l0&&!L.q)plAskQ()},Math.max(1800,Math.min(4200,m.length*75)))}
+function plAskQ(){const d=L.dom;if(L.i>=L.flat.length||L.stop||L.end)return plDomEnd();const g=L.flat[L.i];RPX.n=3;RPX.f=.5;let q=null;
  for(let k=0;k<60;k++){try{q=G[g](.5)}catch(e){RPFAIL.push("place "+g+": "+e.message);q=null}if(!q||(!q.a&&q.t!="tile"))continue;artify(q);const key=q.it||q.k;if(!L.used.has(key)&&!L.used.has(q.k)){L.used.add(key);L.used.add(q.k);break}}
  if(!q||(!q.a&&q.t!="tile")){L.i++;return plAskQ()}L.q=q;L.g=g;L.done=0;L.t0=Date.now();plShow()}
 function plShow(){const q=L.q,nr=L.nrm||S.pre;let body="";if(q.t=="tile")body='<div id="tz"></div>';else if(q.t=="tapw")body=`<div class="pgw">${q.lines.map((l,li)=>`<div>${l.map((w,wi)=>{const ix=q.lines.slice(0,li).reduce((a,x)=>a+x.length,0)+wi;return`<button class="tw${ix==q.hl?" on":""}" onclick="ans(${ix})">${w}</button>`}).join(" ")}</div>`).join("")}</div>`;
  else body=(q.sb?padH(q):"")+`<div class="opts${q.ltr?" lt":""}${rpPics(q)?" pics":""}${q.a.every(o=>String(o).replace(/<[^>]+>/g,"").length<=5)?" s":""}">${q.a.map((o,i)=>`<button class="opt" onclick="ans(${i})" aria-label="${esc(nameOf(o))}">${o}</button>`).join("")}</div>`;
- app(`<div class="card${nr?" nr":""}">${XB()}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.dom.n}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);if(q.t=="tile")tileInit();replay()}
+ app(`<div class="card${nr?" nr":""}">${plBar()}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.dom.n}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);plBarGo();if(q.t=="tile")tileInit();replay()}
 function plAns(i){if(L.done)return;L.done=1;SQ++;const q=L.q,ok=i==q.c;L.n++;if(ok)L.c++;const s=L.subs[L.g]=L.subs[L.g]||{n:0,c:0};s.n++;if(ok)s.c++;
  const pl=S.rp.plc;if(ok&&q.it){const k=q.it;if(k.startsWith("S:"))(pl.ok.S=pl.ok.S||[]).includes(k.slice(2))||pl.ok.S.push(k.slice(2));if(k.startsWith("L:"))(pl.ok.L=pl.ok.L||[]).includes(k.slice(2))||pl.ok.L.push(k.slice(2));(pl.ok.I=pl.ok.I||[]).push(k)}
  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=1;if(j==q.c&&ok)b.classList.add("ok");else if(j==i)b.classList.add("no")});
- if(ok){sfx.ok();pupReact("yay")}else{pupReact("tilt")}L.i++;if(L.n==4&&L.c<=1)L.stop=1;
+ if(ok){sfx.ok();pupReact("yay")}else{pupReact("tilt")}L.i++;if(L.n==4&&L.c<=1)L.stop=1;else{const n=L.n,c=L.c;if((n>=L.min&&c/n>=.8)||n>=L.max||(n>=5&&c/n<=.4))L.end=1}
  const m=ok?"Yes!":"That’s okay!";const fb=$("#fb");if(fb)fb.innerHTML=`<p><b>${m}</b></p>`;SQ++;setTimeout(()=>{if(L&&L.pl&&L.done)plAdv()},ok?850:1100)}
 function plAdv(){if(!L||!L.pl)return;plAskQ()}
-function plDomEnd(){const P=rpInit(),pl=P.plc,d=L.dom,r={n:L.n,c:L.c,pct:plPct({n:L.n,c:L.c}),subs:L.subs,stop:L.stop};pl.res[d.id]=r;pl.di++;save();RPX.pl=0;
- const m=pl.di>=PLD.length?"All done!":L.stop?"That’s okay! Let’s play something else.":"Great job! Let’s play another game.";scr="lesson";SQ++;
- app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">⭐</div><button class="btn" style="font-size:34px;padding:6px 30px" onclick="plDomain()">▶</button> <button class="ghost" onclick="go('home')">💤 Stop for now</button></div>`);talk(m)}
+function plDomEnd(){const P=rpInit(),pl=P.plc,d=L.dom,r={n:L.n,c:L.c,pct:plPct({n:L.n,c:L.c}),subs:L.subs,stop:L.stop};pl.res[d.id]=r;pl.di++;pl.lead=L.stop?"That’s okay! ":"Great job! ";save();RPX.pl=0;scr="lesson";plDomain()}
 const plCredit=(k,g,days)=>{S.sk=S.sk||{};const o=S.sk[k]||{h:"",n:0,c:0,d:[],g:[],t:0,b:0};if(skSt(k)>=3)return;o.h=days?"1111":"11";o.n=Math.max(o.n,o.h.length);o.c=Math.max(o.c,o.h.length);const d=ymd();if(!o.d.includes(d))o.d.push(d);if(!o.g.includes("place"))o.g.push("place");o.t=Date.now();o.b=Math.max(o.b,1);S.sk[k]=o},
  plPart=(k)=>{S.sk=S.sk||{};if(S.sk[k])return;S.sk[k]={h:"hh",n:2,c:2,d:[ymd()],g:["place"],t:Date.now(),b:0}};
 function plFinish(){const P=rpInit(),pl=P.plc,res=pl.res,notes=[];setTimeout(()=>{try{rpMetTouch()}catch(e){}},0);
  /* a child who clearly succeeds at a later group of games has shown the skills underneath it too, so one slightly shaky early group is not held against them */
- const lvl=k=>{const i=PLD.findIndex(d=>d.id==k),r=res[k];if(i<0||!r||r.skip||!(r.n>=6))return 0;const strong=PLD.slice(i+2).filter(d=>{const x=res[d.id];return x&&!x.skip&&x.n>=6&&x.pct>=.8}).length>=2;return r.pct>=.8||(strong&&r.pct>=.6)?2:(r.pct>=.67||(strong&&r.pct>=.45))?1:0};
- PLD.forEach(d=>{const r=res[d.id];if(!r||r.skip||!r.n)return;const big=r.n>=6,pass=lvl(d.id)==2,part=lvl(d.id)==1;
-  d.cr.forEach(([sid,g])=>{const sub=g&&r.subs[g];let ok=pass;if(sub&&sub.n>=3)ok=pass&&sub.n-sub.c<=1;else if(sub&&sub.n<3)ok=pass&&sub.c==sub.n;if(ok){plCredit(rk(sid),"place");P.taught[sid]=1}else if(part||(pass&&!ok)){plPart(rk(sid));P.taught[sid]=1}})});
+ const lvl=k=>{const i=PLD.findIndex(d=>d.id==k),r=res[k];if(i<0||!r||r.skip||!(r.n>=4))return 0;const strong=PLD.slice(i+2).filter(d=>{const x=res[d.id];return x&&!x.skip&&x.n>=4&&x.pct>=.8}).length>=2;return r.pct>=.8||(strong&&r.pct>=.6)?2:(r.pct>=.67||(strong&&r.pct>=.45))?1:0};
+ PLD.forEach(d=>{const r=res[d.id];if(!r||r.skip||!r.n)return;const big=r.n>=4,pass=lvl(d.id)==2,part=lvl(d.id)==1,top=d.id=="read2"||d.id=="read3"; /* word meaning and story understanding need more than a short check: placement only starts them as Practising, and the lesson's own quick check confirms them */
+  d.cr.forEach(([sid,g])=>{const sub=g&&r.subs[g];let ok=pass;if(sub&&sub.n>=3)ok=pass&&sub.n-sub.c<=1;else if(sub&&sub.n<3)ok=pass&&sub.c==sub.n;else if(g&&!sub)ok=false;if(ok&&!top){plCredit(rk(sid),"place");P.taught[sid]=1}else if(ok||part||(pass&&!ok)){plPart(rk(sid));P.taught[sid]=1}})});
  const pc=pl.ok,okd=lvl;   /* a single right answer is never enough: letters count only when the whole group of games went well */
  (pc.S||[]).forEach(c=>{const q=okd("lsn");q==2?plCredit("S:"+c):q==1?plPart("S:"+c):0});(pc.L||[]).forEach(c=>{const q=okd("ltr");q==2?plCredit("L:"+c):q==1?plPart("L:"+c):0});
  const p=k=>res[k]&&!res[k].skip?res[k].pct:null,say=(c,t)=>{if(c)notes.push(t)};
