@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ReadTrail 2 · Developer testing (not for children)</title>
+<style>
+:root{--bg:#f4f1fa;--ink:#1f1a2e;--mut:#6b6480;--ok:#1b8a3a;--bad:#c62828;--warn:#b26a00;--pur:#6a1b9a;--card:#fff;--line:#e2dcef}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--pur);color:#fff;padding:12px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+header h1{font-size:17px;margin:0 12px 0 0}header .tag{background:#fff3;padding:3px 8px;border-radius:6px;font-size:12px}
+nav{display:flex;gap:4px;padding:8px 18px 0;background:var(--pur)}nav button{background:#ffffff22;color:#fff;border:0;padding:8px 14px;border-radius:8px 8px 0 0;font:inherit;cursor:pointer}
+nav button.on{background:var(--bg);color:var(--ink);font-weight:600}
+main{padding:16px 18px;max-width:1400px}.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 8px}.card h3{font-size:14px;margin:12px 0 6px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button.b{background:#fff;border:1px solid #c9bfe0;border-radius:7px;padding:6px 10px;font:inherit;cursor:pointer}button.b:hover{background:#f3eefc}
+button.p{background:var(--pur);color:#fff;border-color:var(--pur)}button.d{color:var(--bad);border-color:#e7b3b3}
+select,input[type=text],input[type=number]{font:inherit;padding:5px 7px;border:1px solid #c9bfe0;border-radius:6px}
+.split{display:grid;grid-template-columns:410px 1fr;gap:16px}@media(max-width:900px){.split{grid-template-columns:1fr}}
+iframe{width:390px;height:760px;border:10px solid #222;border-radius:24px;background:#000}
+pre,.mono{font:12px/1.4 ui-monospace,Menlo,Consolas,monospace}pre{background:#f7f5fb;border:1px solid var(--line);padding:8px;border-radius:6px;max-height:340px;overflow:auto;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}th{background:#f7f5fb;position:sticky;top:0}
+.tw{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:6px}
+.pass{color:var(--ok);font-weight:600}.fail{color:var(--bad);font-weight:600}.warn{color:var(--warn);font-weight:600}.info{color:var(--mut);font-weight:600}
+.st0{color:#9aa3ad}.st1{color:#3b82c4}.st2{color:#c27d00}.st3{color:#2e7d32}.st4{color:#8d6e00;font-weight:700}
+.note{background:#fff8e1;border:1px solid #f0d58a;border-radius:8px;padding:10px;margin-bottom:12px}
+.pill{display:inline-block;padding:1px 7px;border-radius:9px;font-size:11.5px;background:#eee}
+.pill.auto{background:#e3f2fd;color:#0d47a1}.pill.human{background:#fce4ec;color:#880e4f}
+#log{max-height:200px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px}
+</style>
+</head>
+<body>
+<header><h1>🧪 ReadTrail 2 · Developer testing</h1><span class="tag">Not for children</span><span class="tag">Uses test sandboxes only: real explorers on this device are never read or changed</span></header>
+<nav id="nav"><button data-t="sandbox" class="on">Sandbox</button><button data-t="tests">Automated tests</button><button data-t="audit">Self-audit</button><button data-t="about">How this works</button></nav>
+<main>
+
+<!-- ======================= SANDBOX ======================= -->
+<section class="tab on" id="t-sandbox">
+<div class="split">
+ <div><iframe id="fr" title="ReadTrail 2 in a test sandbox"></iframe></div>
+ <div>
+  <div class="card"><h2>Sandbox</h2>
+   <div class="row">Sandbox name <input type="text" id="sbn" value="dev1" size="8"> <button class="b" onclick="UI.load()">Open</button> <button class="b" onclick="UI.reload()">Reload page (refresh test)</button> <button class="b d" onclick="UI.reset()">Reset sandbox</button></div>
+   <h3>Start as a simulated learner</h3>
+   <div class="row" id="profBtns"></div>
+   <p class="mono" id="profNote" style="color:var(--mut)"></p>
+  </div>
+  <div class="card"><h2>Move around</h2>
+   <div class="row">Jump to skill <select id="skSel"></select> <button class="b" onclick="UI.jump()">Start lesson</button> <button class="b" onclick="UI.jump(true)">Start with prerequisites credited</button></div>
+   <div class="row" style="margin-top:8px"><button class="b" onclick="UI.x('rpGo()')">Next lesson (as the app chooses)</button> <button class="b" onclick="UI.x('go(\'home\')')">Home</button> <button class="b" onclick="UI.x('go(\'map\')')">Trail map</button> <button class="b" onclick="UI.x('parentArea()')">Grown-ups page</button> <button class="b" onclick="UI.x('S.placed=false;save();placeIntro()')">Starting games again</button></div>
+  </div>
+  <div class="card"><h2>Answer for the child</h2>
+   <div class="row"><button class="b" onclick="UI.answer(true)">✓ Answer correctly</button> <button class="b" onclick="UI.answer(false)">✗ Answer wrongly</button> <button class="b" onclick="UI.next()">▶ Continue</button> <button class="b" onclick="UI.auto(1)">Finish this lesson as the profile</button> <button class="b" onclick="UI.auto(5)">Run 5 lessons as the profile</button></div>
+   <div class="row" style="margin-top:8px"><button class="b" onclick="UI.struggle()">Trigger remediation (fail current skill)</button> <button class="b" onclick="UI.makeDue()">Make all reached skills due for review</button> <button class="b" onclick="UI.creditAll()">Credit every skill (unlock all)</button></div>
+  </div>
+  <div class="card"><h2>Clock (for review timing)</h2>
+   <div class="row">Sandbox clock: <b id="clk">+0 days</b> <button class="b" onclick="UI.clock(1)">+1 day</button> <button class="b" onclick="UI.clock(7)">+7 days</button> <button class="b" onclick="UI.clock(0,1)">Back to today</button></div>
+  </div>
+  <div class="card"><h2>Inspect</h2>
+   <div class="row"><button class="b" onclick="UI.skills()">Skill states</button> <button class="b" onclick="UI.saved()">Saved data</button> <button class="b" onclick="UI.exportSave()">Export save</button> <label class="b">Import save <input type="file" id="imp" accept=".json" style="display:none" onchange="UI.importSave(this)"></label></div>
+   <div id="insp"></div>
+  </div>
+  <div class="card"><h2>Log</h2><pre id="log"></pre></div>
+ </div>
+</div>
+</section>
+
+<!-- ======================= TESTS ======================= -->
+<section class="tab" id="t-tests">
+ <div class="card"><h2>Automated functional tests</h2>
+  <p>Each test runs in its own hidden sandbox. Results show what actually happened, including failures. Simulated learners are models, not children: a pass means the logic behaves as designed, not that children learn.</p>
+  <div class="row"><button class="b p" id="runAll" onclick="T.runAll()">Run all tests</button> <span id="tprog" class="mono"></span></div>
+ </div>
+ <div class="card"><div class="tw"><table><thead><tr><th style="width:60px">Result</th><th style="width:260px">Test</th><th>What happened</th><th style="width:60px">Time</th></tr></thead><tbody id="tres"></tbody></table></div></div>
+ <iframe id="tfr" style="position:absolute;left:-9999px;width:390px;height:760px" title="hidden test sandbox"></iframe>
+</section>
+
+<!-- ======================= AUDIT ======================= -->
+<section class="tab" id="t-audit">
+ <div class="note"><b>Two kinds of checks.</b> <span class="pill auto">automatic</span> checks are measured by the code below each time you press Run. <span class="pill human">needs a person</span> items cannot be judged by code (is a picture clear, is the voice right, is it fun). They are never shown as passed until you tick them yourself.</div>
+ <div class="card"><div class="row"><button class="b p" onclick="A.run()">Run self-audit</button> <span id="aprog" class="mono"></span></div></div>
+ <div id="aout"></div>
+ <div class="card"><h2>Checks that need a person <span class="pill human">needs a person</span></h2><div id="human"></div></div>
+</section>
+
+<!-- ======================= ABOUT ======================= -->
+<section class="tab" id="t-about">
+ <div class="card"><h2>How this testing page works</h2>
+ <ul>
+  <li>This page is not linked from the app. It opens ReadTrail 2 inside a frame with <code>?sandbox=NAME</code> in the address. In a sandbox the app saves under <code>readtrail2__sandbox_NAME</code> (its own browser storage and its own backup database), never syncs to an account, and shows a purple "TEST SANDBOX" tag. Real explorers saved under <code>readtrail2</code> are never read or written.</li>
+  <li>The sandbox clock can be moved forward to test spaced review. It only changes time inside that sandbox.</li>
+  <li>Simulated learners answer through the app's own answer buttons logic (<code>ans()</code>), so the real lesson, quick check, placement and mastery code runs. Their answers come from a simple model: a chance of knowing each skill and letter, learning a little from each lesson, and guessing when they do not know.</li>
+  <li>Nothing here proves that children learn. It shows whether the rules work the way they are meant to.</li>
+ </ul></div>
+</section>
+</main>
+
+<script>
+/* ============================================================
+   Shared helpers: talking to the app inside a frame
+   ============================================================ */
+const $=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const DAY=864e5;
+const LOG=m=>{const e=$("#log");e.textContent=(new Date().toLocaleTimeString()+"  "+m+"\n"+e.textContent).slice(0,8000)};
+const keyOf=n=>"readtrail2__sandbox_"+n;
+
+/* the in-app helper: installed into the sandbox page so it can reach the app's own variables */
+const HELPER=`(()=>{if(window.__dev)return;
+ const said=[];window.__said=said;
+ try{if(window.speechSynthesis){speechSynthesis.speak=u=>{said.push(u.text);if(said.length>400)said.shift()};speechSynthesis.cancel=()=>{}}}catch(e){}
+ window.__dev={
+  said,
+  kid(name,age){const id="k"+Math.random().toString(36).slice(2,8);ALL.kids[id]=Object.assign(clone(),{name,age,placed:true,pre:age<=5,toured:1,voice:true,music:false});ALL.cur=id;adopt();S.rp.v=2;save();L=null;scr="home";render();return id},
+  credit(ids){ids.forEach(id=>{plCredit(rk(id),"dev");rpInit().taught[id]=1})},
+  creditPre(id){const seen=new Set();const walk=x=>{SKI[x].pre.forEach(p=>{if(!seen.has(p)){seen.add(p);walk(p)}})};walk(id);this.credit([...seen]);
+    /* letter skills open only with enough letters: give the first 12 letters and sounds */
+    LTO.slice(0,12).forEach(c=>{plCredit("L:"+c,"dev");plCredit("S:"+c,"dev")});save()},
+  st(){return SKILLS.map(s=>({id:s.id,n:s.n,st:s.st,state:rpSt(s.id),open:rpOpen(s.id),ready:rpReady(s.id),rec:rpRec(s.id)||null,due:rpRec(s.id)?skDue(rk(s.id)):null}))},
+  view(){return{scr,L:L?{id:L.id,ph:L.ph,pl:!!L.pl,done:L.done,q:!!L.q,mode:L.mode}:null,story:!!(typeof ST_!="undefined"&&ST_&&scr=="story")}}
+ };})()`;
+
+/* a model of a child. k = chance of really knowing a skill (0..1); letters and sounds known item by item */
+const PROFILES={
+ p1:{name:"1 · Absolute beginner",age:5,desc:"Knows no letters, cannot read, no phonics. Learns slowly from demonstrations.",
+     base:id=>0,L:"",S:"",learn:.16,slip:.06,nov:0,forget:0,guess:1},
+ p2:{name:"2 · Emerging learner",age:6,desc:"Some letters, a few sounds, some first sounds, struggles to blend.",
+     base:id=>/^s1_|^v1_|^v2_/.test(id)?.9:/^s2_(rhy|nrhy|syl|fst)$/.test(id)?.8:/^s2_(lst|mid)$/.test(id)?.5:/^s2_bl/.test(id)?.25:/^s3_(nm|uc|lc|ml)$/.test(id)?.75:/^s3_(snd|s2l|bgn)$/.test(id)?.45:/^l5_|^v3_/.test(id)?.6:0,
+     L:"satpinmdgockeu",S:"satmp",learn:.14,slip:.06,nov:0,forget:0,guess:1},
+ p3:{name:"3 · Developing reader",age:7,desc:"Decodes simple words, knows short vowels; weak on unfamiliar words and longer sentences.",
+     base:id=>/^s[1-3]_|^v1_|^v2_|^v3_|^l5_/.test(id)?.93:/^s4_unf$/.test(id)?.55:/^s4_/.test(id)?.9:/^s5_unf$/.test(id)?.5:/^s5_/.test(id)?.85:/^s6_hf[12]$/.test(id)?.8:/^s6_hf/.test(id)?.5:/^s6_(phr|sen)$/.test(id)?.6:/^s6_/.test(id)?.35:/^s7_(dg1|lv)$/.test(id)?.3:0,
+     L:"abcdefghijklmnopqrstuvwxyz",S:"abcdefghijklmnoprstuvw",learn:.14,slip:.05,nov:.45,forget:0,guess:1},
+ p4:{name:"4 · Advanced beginner",age:8,desc:"Reads simple sentences, basic phonics; needs vocabulary, fluency and comprehension.",
+     base:id=>/^s[1-6]_|^v[1-4]_|^l5_/.test(id)?.93:/^s7_/.test(id)?.8:/^s8_/.test(id)?.55:/^s9_/.test(id)?.4:/^s10_/.test(id)?.3:0,
+     L:"abcdefghijklmnopqrstuvwxyz",S:"abcdefghijklmnopqrstuvwxyz",learn:.12,slip:.05,nov:.15,forget:0,guess:1},
+ p5:{name:"5 · Inconsistent learner",age:7,desc:"Good on familiar items, many mistakes on new ones, forgets, sometimes guesses lucky.",
+     base:id=>/^s[1-3]_|^v1_|^v2_/.test(id)?.8:/^s4_unf$|^s5_unf$/.test(id)?.25:/^s4_|^s5_/.test(id)?.7:/^s6_hf1$/.test(id)?.6:0,
+     L:"abcdefghijklmnoprstu",S:"abcdefghimnoprstu",learn:.12,slip:.18,nov:.7,forget:.08,guess:1},
+ rnd:{name:"Random guesser (loophole test)",age:6,desc:"Knows nothing and never learns. Every right answer is luck.",base:id=>0,L:"",S:"",learn:0,slip:0,nov:0,forget:0,guess:1},
+ ace:{name:"Perfect answerer",age:7,desc:"Always right. Used to check that every activity can be finished.",base:id=>1,L:"abcdefghijklmnopqrstuvwxyz",S:"abcdefghijklmnopqrstuvwxyz",learn:0,slip:0,nov:0,forget:0,guess:1}
+};
+
+/* a learner's live knowledge (kept by this page, not by the app) */
+function mkLearner(pid,seed){const P=PROFILES[pid];const k={},it={};
+ (P.L||"").split("").forEach(c=>it["L:"+c]=.92);(P.S||"").split("").forEach(c=>it["S:"+c]=.9);
+ let s=seed||12345;const rnd=()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff};
+ return{pid,P,k,it,rnd,days:0,log:[],
+  K(id){if(!(id in k))k[id]=this.P.base(id);return k[id]},
+  know(id,q){let v=this.K(id);if(q&&q.it&&/^[LS]:/.test(q.it)){const iv=it[q.it]!=null?it[q.it]:(this.pid=="ace"?1:0);v=/^s3_/.test(id)||/^(L|S):/.test(q.it)?Math.max(Math.min(v+.15,1)*(iv>0?1:.2),iv):v}
+   if(q&&q.nov)v*=1-this.P.nov;return Math.max(0,Math.min(1,v))},
+  learnFrom(id,amt,items){const a=this.P.learn*amt;if(!a)return;const ki=this.K(id);k[id]=ki+(1-ki)*a;(items||[]).forEach(x=>{const v=it[x]||0;it[x]=v+(1-v)*a*1.4})},
+  forgetDays(n){if(!this.P.forget)return;for(const id in k)k[id]*=Math.pow(1-this.P.forget,n);for(const x in it)it[x]*=Math.pow(1-this.P.forget,n)}};
+}
+/* choose an answer index for the current question, the way this learner would */
+function chooseAns(lr,q,sid){const nOpt=q.t=="tile"?6:q.t=="trace"?1:q.t=="tapw"?q.lines.flat().length:(q.a||[]).length||2;
+ if(q.t=="trace")return{i:q.c,ok:true};
+ const kv=lr.know(sid,q),p=(1-lr.P.slip)*kv+(1-kv)*(1/nOpt),ok=lr.rnd()<p;
+ if(ok)return{i:q.c,ok};const wrong=q.t=="tile"?[1]:[...Array(nOpt).keys()].filter(j=>j!=q.c);return{i:wrong[Math.floor(lr.rnd()*wrong.length)],ok}}
+
+/* ============================================================
+   Driving a sandbox
+   ============================================================ */
+class Box{
+ constructor(fr){this.fr=fr;this.name=null}
+ get w(){return this.fr.contentWindow}
+ x(code){return this.w.eval(code)}
+ async open(name,{reset=false,extra=""}={}){this.name=name;if(reset)await Box.wipe(name);
+  await new Promise(ok=>{this.fr.onload=ok;this.fr.src="index.html?sandbox="+encodeURIComponent(name)+extra+"&r="+Date.now()});
+  await sleep(250);this.w.eval(HELPER);return this}
+ async reload(){await new Promise(ok=>{this.fr.onload=ok;this.fr.contentWindow.location.reload()});await sleep(700);this.w.eval(HELPER);return this}
+ static async wipe(name){const k=keyOf(name);localStorage.removeItem(k);localStorage.removeItem(k+"__clock");
+  await new Promise(ok=>{try{const r=indexedDB.deleteDatabase(k);r.onsuccess=r.onerror=r.onblocked=()=>ok()}catch(e){ok()}})}
+ clockDays(){return Math.round((+localStorage.getItem(keyOf(this.name)+"__clock")||0)/DAY)}
+ setClock(days){const off=days*DAY;localStorage.setItem(keyOf(this.name)+"__clock",String(off));
+  const W=this.w,D0=W.__D0||(W.__D0=W.Date);W.Date=class extends D0{constructor(...a){a.length?super(...a):super(D0.now()+off)}static now(){return D0.now()+off}}}
+ errs(){return(this.w.__sbxErr||[]).slice()}
+ said(){return this.x("__dev.said.splice(0)")}
+ /* one step of whatever is on screen, answered by the learner. Returns a short word describing what happened. */
+ step(lr,trace){const W=this.w,L=this.x("L"),scr=this.x("scr");
+  if(L&&L.pl){if(!L.q||L.done){if(L.done)this.x("plAdv()");else this.x("plAskQ()");return"place"}
+   const cr=L.dom.cr,hit=cr.find(c=>c[1]==L.g),sid=hit?hit[0]:(cr.find(c=>new RegExp("_"+L.g.replace(/\d+$/,"")+"\\d*$").test(c[0]))||cr[0])[0];const a=chooseAns(lr,L.q,sid);this.x(`ans(${a.i})`);return"place"}
+  if(scr=="story"){const ST=this.x("ST_");const html=this.x("document.querySelector('#app').innerHTML");
+   if(/stRead\(\)/.test(html)&&!/stFwd/.test(html)){this.x("stRead()");return"story"}
+   if(/stFwd\(\)/.test(html)){this.x("stFwd()");return"story"}
+   if(ST&&ST.qs&&ST.qs[ST.qi]){const Q=ST.qs[ST.qi];if(ST.done){this.x("ST_.qi++;stAsk()");return"story"}
+    const kv=lr.know("s10_dec",null),okp=(1-lr.P.slip)*Math.max(kv,lr.K("s6_sen"))+(1-Math.max(kv,lr.K("s6_sen")))/Q.o.length;const j=lr.rnd()<okp?Q.o.indexOf(Q.c):Q.o.findIndex(o=>o!=Q.c);this.x(`stAns(${j})`);return"story"}
+   return"story?"}
+  if(scr=="done")return"done";
+  if(!L||!L.rp)return"idle";
+  if(L.ph=="teach"){const sl=L.slides[L.ti];if(lr.demo&&sl){if(L.bun&&sl.cm)lr.demo.add("s3_nm").add("s3_uc").add("s3_lc").add(sl.cm.includes("S:")?"s3_snd":"s3_nm");else lr.demo.add(sl.sk||L.id)}if(sl&&sl.disc){const D=L.dsc;if(D&&D.done){this.x("L.ti++;rpTeach()");lr.learnFrom(L.id,.5);return"teach"}
+    const kv=lr.K(L.id),j=lr.rnd()<kv+(1-kv)/sl.opts.length?sl.c:(sl.c?0:1);this.x(`rpDiscAns(${j})`);return"disc"}
+   lr.learnFrom(L.id,.6,sl&&sl[2]?(sl.cm||["L:"]).flatMap(p=>sl[2].map(c=>p+c)):[]);this.x("L.ti++;rpTeach()");return"teach"}
+  if(L.q&&!L.done){const sid=L.cid||L.id,ph=L.ph,a=chooseAns(lr,L.q,sid);if(trace)trace.push({sid,ph,ok:a.ok,q:L.q.k,nov:!!L.q.nov,opts:(L.q.a||[]).length});if(lr.demo&&(ph=="guided"||ph=="solo")&&!L.rv&&!lr.demo.has(sid)&&!this.x(`(()=>{const r=rpRec(${JSON.stringify(sid)});return !!(r&&r.g.includes("place"))})()`))lr.undemo[sid]=(lr.undemo[sid]||0)+1;
+   this.x(`ans(${a.i})`);if(!a.ok&&ph!="pre"&&!L.diag){const a2=chooseAns(lr,L.q,sid);this.x(`ans(${a2.ok?L.q.c:a2.i})`);if(!this.x("L.done"))this.x(`ans(${L.q.c})`)}
+   lr.learnFrom(sid,ph=="guided"?.35:.2,L.q.it?[L.q.it]:[]);return"answer"}
+  if(L.done){this.x("adv()");return"adv"}
+  return"stuck"}
+ /* run one lesson chosen by the app (rpGo) to its end */
+ lesson(lr,{max=160,trace}={}){this.x("rpGo()");const start=this.x("L?L.id:(scr=='story'?'story:'+ST_.s.id:null)"),mode=this.x("L?L.mode:'story'");let n=0,last="";
+  while(n++<max){last=this.step(lr,trace);if(last=="done")return{id:start,mode,ok:true,steps:n,scr:this.x("scr"),sum:this.x("L&&L.sum")};if(last=="stuck"||last=="idle"||last=="story?")return{id:start,mode,ok:false,steps:n,why:last}}
+  return{id:start,mode,ok:false,steps:n,why:"too many steps"}}
+ placement(lr,max=400){this.x("S.placed=false;rpInit().plc=null;plBegin(1)");let n=0;while(n++<max){if(this.x("S.placed"))return{ok:true,steps:n};this.step(lr)}return{ok:false,steps:n}}
+}
+
+/* ============================================================
+   Sandbox tab
+   ============================================================ */
+const box=new Box($("#fr"));let LR=null;
+const UI={
+ sk(){return $("#sbn").value.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"")||"dev1"},
+ async load(){await box.open(this.sk());this.fill();this.clk();LOG("opened sandbox "+box.name)},
+ async reload(){const before=JSON.stringify(box.x("S.sk"));await box.reload();const after=JSON.stringify(box.x("S.sk"));LOG(before==after?"reloaded: progress the same ✓":"reloaded: progress CHANGED ✗");this.clk()},
+ async reset(){if(!confirm("Reset sandbox "+this.sk()+"?"))return;await Box.wipe(this.sk());await this.load();LOG("sandbox reset")},
+ fill(){const sel=$("#skSel");if(sel.options.length)return;box.x("SKILLS").forEach(s=>{const o=document.createElement("option");o.value=s.id;o.textContent=`S${s.st} · ${s.n} (${s.id})`;sel.appendChild(o)})},
+ async prof(pid){await Box.wipe(this.sk());await box.open(this.sk());const P=PROFILES[pid];box.x(`__dev.kid(${JSON.stringify("Test "+pid)},${P.age})`);LR=mkLearner(pid,Date.now()%99991);
+  $("#profNote").textContent=P.desc+(pid.startsWith("p")?"  Running the starting games as this learner…":"");
+  if(pid.startsWith("p")){const r=box.placement(LR);await sleep(50);box.x("go('home')");LOG(`${P.name}: starting games ${r.ok?"finished":"did NOT finish"} in ${r.steps} steps. Start: ${box.x("S.rp.prof&&S.rp.prof.start")}`)}else LOG(P.name+" ready")},
+ x(c){try{box.x(c)}catch(e){LOG("error: "+e.message)}},
+ jump(pre){const id=$("#skSel").value;if(pre)box.x(`__dev.creditPre(${JSON.stringify(id)})`);const open=box.x(`rpOpen(${JSON.stringify(id)})`);if(!open&&!pre){LOG("locked: prerequisites not ready (use 'with prerequisites credited')")}box.x(`rpStart(${JSON.stringify(id)},{bundle:LETG.includes(${JSON.stringify(id)})})`)},
+ answer(ok){const L=box.x("L"),scr=box.x("scr");if(scr=="story"){const ST=box.x("ST_"),Q=ST.qs[ST.qi];if(!Q)return;const j=ok?Q.o.indexOf(Q.c):Q.o.findIndex(o=>o!=Q.c);box.x(`stAns(${j})`);return}
+  if(!L||!L.q||L.done){LOG("no open question");return}const q=L.q;const n=q.t=="tile"?2:q.t=="tapw"?q.lines.flat().length:(q.a||[]).length;const i=ok?q.c:[...Array(n).keys()].find(j=>j!=q.c);box.x(`ans(${i})`);LOG((ok?"right":"wrong")+" answer on "+(L.cid||L.id||"placement"))},
+ next(){const L=box.x("L");if(L&&L.ph=="teach")box.x("L.ti++;rpTeach()");else if(L&&L.pl)box.x(L.done?"plAdv()":"plAskQ()");else if(L&&L.done)box.x("adv()");else if(box.x("scr")=="done")box.x("rpGo()")},
+ async auto(n){if(!LR){LR=mkLearner("p3",7);LOG("no profile chosen: using Developing reader")}for(let i=0;i<n;i++){let r;if(i==0&&box.x("L&&L.rp&&scr=='lesson'")){let c=0,s;while(c++<160&&(s=box.step(LR))!="done"&&s!="stuck"&&s!="idle");r={id:box.x("L&&L.id"),ok:s=="done",steps:c}}else r=box.lesson(LR);LOG(`lesson ${r.id} (${r.mode||"current"}): ${r.ok?"finished":"NOT finished: "+r.why} in ${r.steps} steps`);await sleep(30)}},
+ struggle(){const L=box.x("L");if(!L||!L.rp){LOG("start a lesson first");return}let n=0;box.x("L.ph='solo';L.slides=[];L.n=0;if(!L.q)rpAsk()");
+  while(n++<40&&box.x("scr")=="lesson"&&box.x("L&&L.rp")){const l=box.x("L");if(l.ph=="teach"){box.x("L.ti++;rpTeach()");continue}if(l.q&&!l.done){const q=l.q,nn=(q.a||[]).length||2;const w=[...Array(nn).keys()].find(j=>j!=q.c);box.x(`ans(${w})`);if(!box.x("L.done"))box.x(`ans(${w==0?1:0})`);if(!box.x("L.done"))box.x(`ans(${q.c})`)}else box.x("adv()")}
+  LOG("after struggling: remediation = "+JSON.stringify(box.x("rpInit().rem")))},
+ makeDue(){box.x("Object.values(S.sk).forEach(r=>r.t=0);save()");LOG("all records marked as last seen long ago; due list: "+box.x("rpDueList().join(', ')"))},
+ creditAll(){box.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')});save();go('home')");LOG("every skill credited as 'Developing independence'")},
+ clk(){$("#clk").textContent="+"+box.clockDays()+" days"},
+ clock(d,back){const n=back?0:box.clockDays()+d;box.setClock(n);if(LR&&d)LR.forgetDays(d);this.clk();LOG("sandbox clock now +"+n+" days")},
+ skills(){const rows=box.x("__dev.st()");$("#insp").innerHTML=`<div class="tw" style="max-height:420px"><table><tr><th>Skill</th><th>State</th><th>Open</th><th>Last answers</th><th>Days</th><th>Due</th></tr>${rows.map(r=>`<tr><td>S${r.st} ${r.n}<br><span class="mono">${r.id}</span></td><td class="st${r.state}">${["Not introduced","Learning","Practising","Developing independence","Mastered"][r.state]}</td><td>${r.open?"yes":"no"}</td><td class="mono">${r.rec?r.rec.h:""}</td><td>${r.rec?r.rec.d.length:""}</td><td>${r.due==null?"":r.due?"due":"not yet"}</td></tr>`).join("")}</table></div>`},
+ saved(){const raw=localStorage.getItem(keyOf(box.name))||"";$("#insp").innerHTML=`<p>${raw.length.toLocaleString()} characters saved under <code>${keyOf(box.name)}</code>.</p><pre>${raw.slice(0,6000).replace(/</g,"&lt;")}${raw.length>6000?"\n…":""}</pre>`},
+ exportSave(){const raw=localStorage.getItem(keyOf(box.name))||"{}";const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([raw],{type:"application/json"}));a.download="readtrail2-sandbox-"+box.name+".json";a.click()},
+ async importSave(inp){const f=inp.files[0];if(!f)return;const t=await f.text();try{JSON.parse(t)}catch(e){LOG("not valid JSON");return}localStorage.setItem(keyOf(box.name),t);await box.reload();LOG("imported into sandbox "+box.name)}
+};
+$("#profBtns").innerHTML=Object.entries(PROFILES).map(([k,p])=>`<button class="b" onclick="UI.prof('${k}')" title="${p.desc}">${p.name}</button>`).join("");
+
+/* ============================================================
+   Automated tests
+   ============================================================ */
+const tbox=new Box($("#tfr"));
+const REAL="readtrail2";
+const T={list:[],add(name,fn){this.list.push({name,fn})},
+ async runAll(){const btn=$("#runAll");btn.disabled=1;$("#tres").innerHTML="";const realBefore=localStorage.getItem(REAL);let i=0,sum={pass:0,fail:0,warn:0,info:0};
+  for(const t of this.list){i++;$("#tprog").textContent=`running ${i}/${this.list.length}: ${t.name}`;const t0=performance.now();let r;
+   try{r=await t.fn()}catch(e){r={s:"fail",d:"The test itself crashed: "+e.message}}
+   if(tbox.w&&tbox.w.__sbxErr&&tbox.w.__sbxErr.length&&r.s=="pass"){r={s:"fail",d:r.d+" · but the app reported errors: "+tbox.w.__sbxErr.join(" | ")}}
+   sum[r.s]=(sum[r.s]||0)+1;this.row(r,t.name,performance.now()-t0);await sleep(10)}
+  const realAfter=localStorage.getItem(REAL);const iso=realBefore===realAfter;sum[iso?"pass":"fail"]++;this.row({s:iso?"pass":"fail",d:iso?"The real explorers' save ('readtrail2') was identical before and after all tests.":"The real save CHANGED during testing."},"Tests never touch real explorers",0);
+  $("#tprog").textContent=`done: ${sum.pass} passed, ${sum.fail} failed, ${sum.warn} warnings, ${sum.info||0} information`;window.__T={sum,rows:[...document.querySelectorAll("#tres tr")].map(tr=>[...tr.children].map(td=>td.innerText))};btn.disabled=0;return window.__T},
+ row(r,name,ms){const tr=document.createElement("tr");tr.innerHTML=`<td class="${r.s}">${r.s.toUpperCase()}</td><td>${name}</td><td>${r.d}</td><td class="mono">${(ms/1000).toFixed(1)}s</td>`;$("#tres").appendChild(tr)}};
+const ok=d=>({s:"pass",d}),bad=d=>({s:"fail",d}),warn=d=>({s:"warn",d}),info=d=>({s:"info",d});
+async function fresh(pid="ace",{extra=""}={}){await tbox.open("autotest",{reset:true,extra});const P=PROFILES[pid];tbox.x(`__dev.kid("Tess",${P.age})`);return mkLearner(pid,4242)}
+const q2txt=o=>String(o).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+
+T.add("The app opens with no errors",async()=>{await tbox.open("autotest",{reset:true});const e=tbox.errs(),h=tbox.x("document.querySelector('#app').innerHTML.length");return e.length?bad("Errors: "+e.join(" | ")):h>200?ok(`Opened the first screen (${h.toLocaleString()} characters of page).`):bad("The first screen was empty.")});
+
+T.add("Every skill makes valid questions",async()=>{await fresh("ace");tbox.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')})");
+ const r=tbox.x(`(()=>{const out=[];RPFAIL.length=0;SKILLS.forEach(s=>{let n=0,bad=[],star=0,dup=0,noSay=0,undef=0;for(const ph of ["guided","solo"]){L={rp:1,id:s.id,used:new Set(),ph,n:0,sf:[],streak:0,quiz:0,tot:0};for(let i=0;i<20;i++){const q=rpGen(s.id,ph=="guided"?1:0);if(!q){continue}n++;
+   if(/^x/.test(q.k||"")&&/Tap the star/.test(q.q))star++;
+   const isCh=Array.isArray(q.a)&&q.a.length;if(q.t!="trace"&&q.t!="tile"&&q.t!="tapw"&&!q.fl&&!isCh)bad.push("no choices");
+   if(isCh&&(typeof q.c!="number"||q.c<0||q.c>=q.a.length))bad.push("answer index "+q.c+" of "+q.a.length);
+   if(isCh){const names=q.a.map(o=>nameOf(o)+"|"+String(o));if(new Set(names).size<names.length)dup++}
+   const txt=String(q.say||q.q||"");if(!txt.trim())noSay++;if(/undefined|NaN|\\[object/.test(txt+String(q.big||"")+(q.a||[]).join(" ")))undef++}}
+  out.push({id:s.id,n,bad:[...new Set(bad)],star,dup,noSay,undef})});L=null;return{out,fail:RPFAIL.slice(0,20)}})()`);
+ const probs=r.out.filter(o=>!o.n||o.bad.length||o.star||o.dup||o.noSay||o.undef);window.__GEN=r;
+ return probs.length||r.fail.length?bad(`${probs.length} of ${r.out.length} skills had problems: `+probs.map(o=>`${o.id} (${[!o.n&&"no questions",...o.bad,o.star&&o.star+" fallback 'tap the star'",o.dup&&o.dup+" with duplicate choices",o.noSay&&o.noSay+" with nothing to say",o.undef&&o.undef+" with 'undefined' text"].filter(Boolean).join(", ")})`).join("; ")+(r.fail.length?" · generator errors: "+r.fail.join(" | "):"")):ok(`All ${r.out.length} skills made valid questions (${r.out.reduce((a,o)=>a+o.n,0)} questions checked: answer is one of the choices, no duplicate choices, something to say aloud).`)});
+
+T.add("Sound hints never name the answer",async()=>{await fresh("ace");tbox.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')})");
+ /* the voice cannot say a sound alone, so it says "the start of sun". If the hint word IS the right picture, the child only has to match the word it heard. */
+ const r=tbox.x(`(()=>{const out=[];let tot=0;SKILLS.forEach(s=>{let n=0,leak=0,ex="";for(const ph of["guided","solo"]){L={rp:1,id:s.id,used:new Set(),ph,n:0,sf:[],streak:0,tot:0};for(let i=0;i<20;i++){const q=rpGen(s.id,ph=="guided"?1:0);if(!q||!Array.isArray(q.a)||q.a.length<2)continue;
+   if(typeof SNDAV!="undefined")SNDAV=new Set(q.a.map(o=>nameOf(o).toLowerCase()).filter(Boolean));
+   const sp=spk((q.preSay?q.preSay+" ":"")+(q.say||q.q)).toLowerCase();if(typeof SNDAV!="undefined")SNDAV=null;const hints=[...sp.matchAll(/(?:the )?(?:start|end) of ([a-z]+)/g)].map(m=>m[1]);if(!hints.length)continue;n++;
+   const right=nameOf(q.a[q.c]).toLowerCase(),opt=q.a.map(o=>nameOf(o).toLowerCase());if(hints.some(h=>opt.includes(h))){leak++;if(!ex)ex=sp.slice(0,120)+" → "+right}}}
+  tot+=n;if(leak)out.push({id:s.id,n,leak,ex})});L=null;return{out,tot}})()`);
+ window.__LEAK=r;return r.out.length?bad(`In ${r.out.length} skills a spoken sound hint uses a word that is one of the answer pictures: `+r.out.map(o=>`${o.id} ${o.leak}/${o.n} e.g. “${o.ex}”`).join("; ")):ok(`Checked ${r.tot} questions that use spoken sound hints: no hint word was one of the answer choices.`)});
+
+T.add("Questions where only the right answer is heard (for a person to judge)",async()=>{await fresh("ace");tbox.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')})");
+ const r=tbox.x(`(()=>{const out=[];SKILLS.forEach(s=>{let n=0,echo=0,ex="";L={rp:1,id:s.id,used:new Set(),ph:"solo",n:0,sf:[],streak:0,tot:0};for(let i=0;i<20;i++){const q=rpGen(s.id,0);if(!q||!Array.isArray(q.a)||q.a.length<2||q.shown)continue;n++;
+   const sp=" "+spk((q.preSay?q.preSay+" ":"")+(q.say||q.q)).toLowerCase().replace(/[^a-z ]/g," ")+" ",nm=o=>nameOf(o).toLowerCase().replace(/[^a-z ]/g," ").replace(/ +/g," ").trim(),r=nm(q.a[q.c]);
+   if(r.length>1&&sp.includes(" "+r+" ")&&!q.a.some((o,j)=>j!=q.c&&nm(o)&&sp.includes(" "+nm(o)+" "))){echo++;if(!ex)ex=sp.trim().slice(0,100)+" → "+r}}
+  if(echo)out.push({id:s.id,n,echo,ex})});L=null;return out})()`);window.__ECHO=r;
+ return info(`${r.length} skills have solo questions where the right answer's words are spoken and no wrong answer's words are. That is fine for “listen, then find the word or picture” tasks, but in comprehension and vocabulary it means a child can answer by matching words they heard instead of understanding: `+r.map(o=>`${o.id} ${o.echo}/${o.n} (“${o.ex}”)`).join("; "))});
+
+T.add("Prerequisite map has no gaps, loops or unreachable skills",async()=>{await fresh("ace");const r=tbox.x(`(()=>{const ids=new Set(SKILLS.map(s=>s.id)),miss=[],late=[];SKILLS.forEach(s=>s.pre.forEach(p=>{if(!ids.has(p))miss.push(s.id+"→"+p);else if(SKI[p].st>s.st)late.push(s.id+" needs later "+p)}));
+ const done=new Set();let changed=1;while(changed){changed=0;SKILLS.forEach(s=>{if(!done.has(s.id)&&s.pre.every(p=>done.has(p))){done.add(s.id);changed=1}})}
+ return{miss,late,unreach:SKILLS.filter(s=>!done.has(s.id)).map(s=>s.id),roots:SKILLS.filter(s=>!s.pre.length).map(s=>s.id)}})()`);
+ return r.miss.length||r.unreach.length?bad(`Missing: ${r.miss.join(", ")||"none"} · Unreachable (loop or missing link): ${r.unreach.join(", ")||"none"}`):r.late.length?warn("Needs a skill from a later stage: "+r.late.join(", ")):ok(`All prerequisites exist, no loops, every skill reachable from the ${r.roots.length} starting skills (${r.roots.join(", ")}).`)});
+
+T.add("A perfect learner can finish every skill's lesson",async()=>{const L0=await fresh("ace");const ids=tbox.x("SKILLS.map(s=>s.id)"),fails=[],weak=[];let steps=0;
+ for(const id of ids){tbox.x(`(()=>{const k=ALL.kids[ALL.cur];S.sk={};S.rp={v:2,taught:{},cnt:0,lf:[],rem:null,prof:null,qz:{},sn:[]};__dev.creditPre(${JSON.stringify(id)});rpStart(${JSON.stringify(id)},{bundle:LETG.includes(${JSON.stringify(id)})})})()`);
+  let n=0,s;while(n++<200&&(s=tbox.step(L0))!="done"&&s!="stuck"&&s!="idle");steps+=n;const st=tbox.x(`rpSt(${JSON.stringify(id)})`),sum=tbox.x("L&&L.sum");
+  const bun=tbox.x(`LETG.includes(${JSON.stringify(id)})`);if(s!="done")fails.push(`${id}: stopped (${s}) after ${n} steps`);else if(st<3&&!(sum&&sum.skip)&&!bun)fails.push(`${id}: finished but state ${st}`);else if(st<3&&bun)weak.push(`${id} (state ${st})`);await sleep(0)}
+ return fails.length?bad(`${fails.length} of ${ids.length} lessons could not be finished by an always-right learner: `+fails.join("; ")):(weak.length?warn:ok)(`All ${ids.length} skill lessons were finished by an always-right learner (${steps} steps in total).`+(weak.length?` Letter lessons are shared between ${tbox.x("LETG.length")} letter skills, so after one lesson these named skills were still low: ${weak.join(", ")}. The lesson's title skill may get only one or two questions.`:` Each ended at least at "Developing independence".`))});
+
+T.add("A wrong answer gives gentle, spoken feedback and a retry",async()=>{await fresh("ace");tbox.x(`__dev.creditPre("s2_rhy");rpStart("s2_rhy",{});`);let g=0;while(tbox.x("L.ph")=="teach"&&g++<20){const sl=tbox.x("L.slides[L.ti]");if(sl&&sl.disc){tbox.x(`rpDiscAns(${sl.c})`)}tbox.x("L.ti++;rpTeach()")}
+ if(tbox.x("L.ph")=="pre"){/* answer the quick check wrongly so it teaches */for(let i=0;i<8&&tbox.x("L.ph")=="pre";i++){const q=tbox.x("L.q");tbox.x(`ans(${q.c==0?1:0})`);tbox.x("adv()")}while(tbox.x("L.ph")=="teach")tbox.x("L.ti++;rpTeach()")}
+ tbox.said();const q=tbox.x("L.q"),w=q.c==0?1:0;tbox.x(`ans(${w})`);const fb=tbox.x("document.querySelector('#fb').innerHTML.replace(/<[^>]+>/g,' ').trim()"),said=tbox.said().join(" "),dis=tbox.x(`document.querySelectorAll('.opt')[${w}].disabled`),open=!tbox.x("L.done");
+ const w2=[0,1,2].find(j=>j!=q.c&&j!=w&&j<q.a.length);let hl=null;if(w2!=null){tbox.x(`ans(${w2})`);hl=tbox.x(`document.querySelectorAll('.opt')[${q.c}].classList.contains('hl')`)}
+ tbox.x(`ans(${q.c})`);const fixed=tbox.x("L.done"),rec=tbox.x("rpRec('s2_rhy').h");
+ const p=[fb?"shows a message":"NO message",said?"says it aloud":"says NOTHING",dis?"greys out the wrong choice":"wrong choice still active",open?"lets the child try again":"does NOT allow a retry",hl===null?"":hl?"after 2 misses highlights the right one":"after 2 misses does NOT highlight",fixed?"accepts the right answer after":"right answer NOT accepted"];
+ return fb&&said&&dis&&open&&fixed&&hl!==false&&/h$/.test(rec)?ok(`Feedback “${fb.slice(0,80)}”: `+p.join(", ")+`. The answer was saved as 'with help' (h), not independent.`):bad(p.join(", ")+" · saved as: "+rec)});
+
+T.add("Mastery needs two different days",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");`);
+ for(let i=0;i<4;i++){tbox.x(`rpStart("s2_syl",{})`);let n=0,s;while(n++<200&&(s=tbox.step(lr))!="done");}const s1=tbox.x(`rpSt("s2_syl")`),h1=tbox.x(`rpRec("s2_syl").h`);
+ tbox.setClock(1);tbox.x(`rpStart("s2_syl",{mode:"review"})`);let n=0,s;while(n++<200&&(s=tbox.step(lr))!="done");const s2=tbox.x(`rpSt("s2_syl")`);tbox.setClock(0);
+ return s1<=3&&s2==4?ok(`After 4 perfect lessons on one day the skill was state ${s1} (not Mastered, history ${h1}); after a right review the next day it became Mastered.`):bad(`Same day: state ${s1} (${h1}); next day: state ${s2}. Expected ≤3 then 4.`)});
+
+T.add("Prerequisites are enforced along the path",async()=>{const lr=mkLearner("p3",99);await tbox.open("autotest",{reset:true});tbox.x(`__dev.kid("Pre",7)`);tbox.placement(lr);const viol=[];
+ for(let i=0;i<30;i++){const nx=tbox.x("rpNext()");if(nx.mode!="story"&&nx.mode!="free"){const bad_=tbox.x(`SKI[${JSON.stringify(nx.id)}].pre.filter(p=>!rpReady(p))`);if(bad_.length&&nx.mode=="new")viol.push(`${nx.id} chosen with ${bad_.join(",")} not ready`)}tbox.lesson(lr);await sleep(0)}
+ return viol.length?bad(viol.join("; ")):ok("In 30 lessons chosen by the app for a simulated developing reader, no new skill was started before its prerequisites were ready.")});
+
+T.add("Each skill is shown before the child is asked about it alone",async()=>{const lr=mkLearner("p1",31);lr.P=Object.assign({},lr.P,{learn:.45});lr.demo=new Set();lr.undemo={};await tbox.open("autotest",{reset:true});tbox.x(`__dev.kid("Demo",5)`);
+ for(let i=0;i<45;i++){tbox.lesson(lr);if(i%6==5)tbox.setClock(Math.floor(i/6)+1);await sleep(0)}tbox.setClock(0);const u=Object.entries(lr.undemo),reached=tbox.x("SKILLS.filter(s=>rpSt(s.id)>=1).length");
+ const names=u.map(([k,v])=>`${tbox.x(`SKI["${k}"].n`)} (${k}, ${v} questions)`);
+ return u.length?bad(`A simulated beginner did 45 lessons and met ${reached} skills. ${u.length} skills were asked about (together or alone) before their own explanation slides were ever shown: ${names.join("; ")}. Letter lessons mix several letter skills; only the letter itself (name, big, small, sound) is shown first.`):ok(`A simulated beginner did 45 lessons and met ${reached} skills; every one was shown before it was practised.`)});
+
+T.add("Struggling sends the child back to a missing foundation",async()=>{await fresh("ace");tbox.x(`__dev.creditPre("s4_b3");rpStart("s4_b3",{});L.ph="solo";L.slides=[];L.n=0;rpAsk()`);let n=0;
+ while(n++<60&&tbox.x("scr")=="lesson"&&tbox.x("L&&L.rp")){const l=tbox.x("L");if(l.ph=="teach"){tbox.x("L.ti++;rpTeach()");continue}if(l.q&&!l.done){const q=l.q,nn=(q.a||[]).length||2;let w=[...Array(nn).keys()].find(j=>j!=q.c);if(q.t=="tile")w=1;tbox.x(`ans(${w})`);if(!tbox.x("L.done"))tbox.x(`ans(${q.c})`)}else tbox.x("adv()")}
+ const rem=tbox.x("rpInit().rem"),nx=tbox.x("rpNext()");return rem&&nx.mode=="remedial"?ok(`After repeated misses on 'Blend three letter sounds' the app sent the child to '${tbox.x(`SKI["${rem.to}"].n`)}' (${rem.to}) as a short mini-lesson, then planned to return to ${rem.back}.`):bad("No remediation was planned: rem="+JSON.stringify(rem)+", next="+JSON.stringify(nx))});
+
+T.add("Learned skills come back for review after 1 day, then longer",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");S.sk[rk("s2_syl")]&&delete S.sk[rk("s2_syl")]`);tbox.x(`rpStart("s2_syl",{})`);let n=0;while(n++<200&&tbox.step(lr)!="done");
+ const due=d=>{tbox.setClock(d);return tbox.x(`rpDueList().includes("s2_syl")`)};const box0=tbox.x(`rpRec("s2_syl").b`),d0=due(0),d1=due(1);
+ /* do the review on day 1 */tbox.setClock(1);tbox.x(`rpStart("s2_syl",{mode:"review"})`);n=0;while(n++<200&&tbox.step(lr)!="done");const st1=tbox.x(`rpSt("s2_syl")`),gap=2*(st1==4?1.5:1),d2=due(1+Math.ceil(gap)-1),d3=due(1+Math.ceil(gap));
+ const keys=[];for(let r=0;r<2;r++)keys.push(tbox.x(`(()=>{L={rp:1,id:"s2_syl",used:new Set(),ph:"solo",n:0,sf:[],tot:0,rv:1};const k=[];for(let i=0;i<6;i++){const q=rpGen("s2_syl",0);q&&k.push(q.k)}L=null;return k})()`));tbox.setClock(0);
+ const same=keys[0].filter(k=>keys[1].includes(k)).length,d=`After the first lesson: due the same day: ${d0}; due 1 day later: ${d1} (review box ${box0}). After a right review on day 1 (now ${["","","","Developing independence","Mastered"][st1]}, so the 2-day gap is ${st1==4?"stretched by half to 3 days, as the curriculum says for solid skills":"2 days"}): due on day ${Math.ceil(gap)}: ${d2}; on day ${1+Math.ceil(gap)}: ${d3}. Two review rounds shared ${same} of 6 questions.`;
+ return !d0&&d1&&!d2&&d3&&same<=2?ok(d+" This matches the planned 1, 2, 4, 7, 14 day spacing."):bad(d+" Planned spacing is 1, 2, 4, 7, 14 days.")});
+
+T.add("Progress survives a page refresh",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{})`);let n=0;while(n++<200&&tbox.step(lr)!="done");const a=JSON.stringify({sk:tbox.x("S.sk"),c:tbox.x("S.coins"),rp:tbox.x("S.rp.cnt")});await tbox.reload();const b=JSON.stringify({sk:tbox.x("S.sk"),c:tbox.x("S.coins"),rp:tbox.x("S.rp.cnt")});
+ return a==b?ok("After a refresh the skill records, mangoes and lesson count were identical."):bad("Different after refresh.")});
+
+T.add("Progress survives closing and reopening (backup copy)",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{})`);let n=0;while(n++<200&&tbox.step(lr)!="done");const before=tbox.x("JSON.stringify(S.sk)");await sleep(300);
+ /* closing the browser keeps both copies; the hard case is the main copy being lost: remove it and reopen */
+ localStorage.removeItem(keyOf("autotest"));await tbox.open("autotest");await sleep(900);const after=tbox.x("JSON.stringify(S.sk)"),name=tbox.x("S.name");
+ return after==before?ok(`With the main save removed, reopening restored '${name}' and all skill records from the backup database.`):bad("Reopening without the main save did not restore progress (backup copy not used).")});
+
+T.add("A damaged save does not break the app",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{})`);let n=0;while(n++<200&&tbox.step(lr)!="done");const before=tbox.x("JSON.stringify(S.sk)");await sleep(300);
+ localStorage.setItem(keyOf("autotest"),'{"cur":"k1","kids":{"k1":{"name":');await tbox.open("autotest");await sleep(900);const e=tbox.errs(),after=tbox.x("JSON.stringify(S.sk)"),h=tbox.x("document.querySelector('#app').innerHTML.length");
+ return e.length?bad("Errors: "+e.join(" | ")):after==before?ok("A half-written save was ignored, the app opened normally and restored progress from the backup."):h>200?warn("The app opened normally but did not restore progress after a damaged save."):bad("Blank screen after a damaged save.")});
+
+T.add("Two explorers keep separate progress",async()=>{const lr=await fresh("ace");const a=tbox.x("ALL.cur");tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{})`);let n=0;while(n++<200&&tbox.step(lr)!="done");const aSk=tbox.x("Object.keys(S.sk).length"),aC=tbox.x("S.coins");
+ tbox.x(`__dev.kid("Juma",6)`);const bSk=tbox.x("Object.keys(S.sk).length"),bC=tbox.x("S.coins");tbox.x(`choose("${a}")`);const a2=tbox.x("Object.keys(S.sk).length");await tbox.reload();tbox.x(`choose("${a}")`);const a3=tbox.x("Object.keys(S.sk).length");
+ return bSk==0&&bC==0&&a2==aSk&&a3==aSk?ok(`Explorer A: ${aSk} records and ${aC} mangoes. New explorer B started with 0 and 0. A was unchanged after switching back and after a refresh.`):bad(`A=${aSk}/${aC}, B=${bSk}/${bC}, A again=${a2}, after refresh=${a3}`)});
+
+T.add("Mangoes are given for right answers, more for first-try",async()=>{await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{});L.ph="solo";L.slides=[];L.n=0;rpAsk()`);const c0=tbox.x("S.coins");let q=tbox.x("L.q");tbox.x(`ans(${q.c})`);const c1=tbox.x("S.coins");tbox.x("adv()");q=tbox.x("L.q");tbox.x(`ans(${q.c==0?1:0})`);const c2=tbox.x("S.coins");tbox.x(`ans(${q.c})`);const c3=tbox.x("S.coins");
+ return c1-c0==2&&c2==c1&&c3-c2==1?ok("Right first time: +2. A wrong try: +0. Right after a wrong try: +1. Nothing is given for wrong answers."):bad(`first try +${c1-c0}, wrong +${c2-c1}, after miss +${c3-c2}`)});
+
+T.add("Every screen opens without breaking",async()=>{await fresh("ace");const keys=["home","map","shop","books","games","awards","quizzes","set","care","lgames","parentarea","cards","pmap"],bads=[];
+ for(const k of keys){try{tbox.x(`go("${k}")`);await sleep(30);const h=tbox.x("document.querySelector('#app').innerText.trim().length");if(h<20)bads.push(k+" (empty)")}catch(e){bads.push(k+": "+e.message)}}
+ tbox.x(`go("home")`);const e=tbox.errs();return bads.length||e.length?bad(bads.concat(e).join("; ")):ok(`Opened ${keys.length} screens (${keys.join(", ")}) and came back home with no errors.`)});
+
+T.add("Leaving a lesson by accident: the child can get back",async()=>{await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{})`);const id=tbox.x("L.id");tbox.x("leave()");const home=tbox.x("scr");tbox.x("rpGo()");const nx={id:tbox.x("L&&L.id"),mode:tbox.x("L&&L.mode")};
+ return home=="home"&&nx.id==id?ok("One tap on Home leaves the lesson; the next Play goes back to the same skill (the lesson restarts from its beginning; answers already given are kept)."):warn(`After leaving, the next lesson would be ${nx.id} (${nx.mode}) instead of ${id}.`)});
+
+T.add("Works with no speech voice on the device",async()=>{await tbox.open("noaudio",{reset:true,extra:"&noaudio=1"});const has=tbox.x("!!window.speechSynthesis"),note=tbox.x("/cannot speak/.test(document.body.innerText)");tbox.x(`__dev.kid("Mute",6)`);const lr=mkLearner("ace",3);tbox.x(`__dev.creditPre("s2_syl");rpStart("s2_syl",{})`);let n=0,s;while(n++<200&&(s=tbox.step(lr))!="done");const e=tbox.errs();
+ return !has&&s=="done"&&!e.length&&note?ok("With speech removed from the browser the lesson still ran to the end with no errors. The explorer screen shows a grown-up notice that this browser cannot speak."):bad(`speech present: ${has}; finished: ${s}; errors: ${e.join(" | ")}`)});
+
+T.add("Starting games place each simulated learner sensibly",async()=>{const exp={p1:[1,2],p2:[2,4],p3:[4,7],p4:[6,10],p5:[3,6]},out=[];let allOk=true;
+ for(const pid of Object.keys(exp)){const lr=mkLearner(pid,777);await tbox.open("place_"+pid,{reset:true});tbox.x(`__dev.kid("${pid}",${PROFILES[pid].age})`);const r=tbox.placement(lr);const st=tbox.x("S.rp.prof&&S.rp.prof.start"),stage0=st?tbox.x(`SKI["${st}"].st`):0,cred=tbox.x("SKILLS.filter(s=>rpSt(s.id)>=3).length");
+  /* the first lesson may be a quick check that skips a skill the child knows; find the first lesson that really teaches */
+  let first=null,skipped=0,qs=0;for(let i=0;i<10&&!first;i++){const res=tbox.lesson(lr);qs+=res.steps;if(res.sum&&res.sum.skip){skipped++;continue}if(res.id&&res.mode!="story"&&!/^st:/.test(res.id))first=res.id}
+  const stage=first?tbox.x(`SKI["${first}"].st`):0,good=r.ok&&stage>=exp[pid][0]&&stage<=exp[pid][1];allOk=allOk&&good;
+  out.push(`${PROFILES[pid].name}: ${r.ok?"":"DID NOT FINISH, "}~${Math.round(r.steps/2)} starting questions, ${cred} skills credited; first lesson ${st} (stage ${stage0}); ${skipped} skipped by quick check; first real teaching: ${first||"none in 10 lessons"} (stage ${stage}) ${good?"✓":"✗ expected stage "+exp[pid].join("–")}`);await sleep(0)}
+ return(allOk?ok:warn)(out.join(" · ")+". Expected ranges are this page's guesses about where such a child belongs, not facts.")});
+
+T.add("Lucky guessing: how much a random guesser is credited",async()=>{const runs=6,res=[];
+ for(let r=0;r<runs;r++){const lr=mkLearner("rnd",1000+r*17);await tbox.open("guess",{reset:true});tbox.x(`__dev.kid("Guess",6)`);tbox.placement(lr);const afterPl=tbox.x("SKILLS.filter(s=>rpSt(s.id)>=3).map(s=>s.id)");let lessons=0;
+  for(let i=0;i<20;i++){const x=tbox.lesson(lr,{max:200});lessons++;if(i%5==4)tbox.setClock(Math.floor(i/5)+1)}tbox.setClock(0);
+  const ready=tbox.x("SKILLS.filter(s=>rpSt(s.id)>=3).map(s=>s.id)"),mast=tbox.x("SKILLS.filter(s=>rpSt(s.id)==4).length"),letters=tbox.x("LTO.filter(c=>skSt('S:'+c)>=3).length");res.push({pl:afterPl.length,ready:ready.length,mast,letters,ids:ready});await sleep(0)}
+ const avg=k=>(res.reduce((a,x)=>a+x[k],0)/runs).toFixed(1),all=[...new Set(res.flatMap(x=>x.ids))];window.__GUESS=res;
+ const d=`Over ${runs} simulated random guessers (placement + 20 lessons over 4 simulated days): on average ${avg("pl")} skills credited by placement, ${avg("ready")} skills at "Developing independence" or better after the lessons, ${avg("mast")} "Mastered", ${avg("letters")} letter sounds counted as known. Skills credited by luck at least once: ${all.join(", ")||"none"}.`;
+ return +avg("ready")>=2?bad(d+" Lucky guesses are opening later skills."):+avg("ready")>0?warn(d):ok(d)});
+
+T.add("Mini Stories use only taught sounds and listed tricky words",async()=>{await fresh("ace");const r=tbox.x("STORIES.map(s=>({id:s.id,b:stBad(s),q:stBadQ(s)})).filter(x=>x.b.length||x.q.length)"),n=tbox.x("STORIES.length");return r.length?bad(r.map(x=>x.id+": "+x.b.concat(x.q).join(",")).join("; ")):ok(`All ${n} Mini Stories passed the app's own decodability check.`)});
+
+T.add("Recorded letter sounds play instead of “the start of sun”",async()=>{await fresh("ace");
+ /* a fake recording: a tiny silent sound; Audio.play is replaced so the test sees the order things are played in */
+ const W=tbox.w,ev=[];const wav="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=";
+ W.Audio=function(src){const a={src,onended:null,onerror:null,pause(){},play(){ev.push("sound:"+Object.keys(tbox.x("REC.u")).find(k=>tbox.x("REC.u")[k]==src));setTimeout(()=>a.onended&&a.onended(),5);return Promise.resolve()}};return a};
+ W.speechSynthesis.speak=u=>{ev.push("say:"+u.text);setTimeout(()=>u.onend&&u.onend(),5)};
+ tbox.x(`talk("S says sss, like sun.")`);await sleep(60);const before=ev.splice(0);
+ tbox.x(`REC.u={s:"${wav}",m:"${wav}"};REC.ok=2;talk("S says sss, like sun.")`);await sleep(200);const after=ev.splice(0);
+ tbox.x(`talk("Which picture starts with zzz?")`);await sleep(60);const other=ev.splice(0);
+ tbox.x("REC.u={};REC.ok=0");
+ const pa=tbox.x("parentArea();document.body.innerText.includes('Letter sounds in your voice')");tbox.x("go('recsnd')");const pg=tbox.x("document.querySelectorAll('.recc').length");tbox.x("go('home')");
+ const good=before.join("|")=="say:S says the sound at the start of sun."&&after.join("|")=="say:S says|sound:s|say:like sun."&&/the sound at the start of zebra/.test(other.join(""))&&pa&&pg>=26;
+ return(good?ok:bad)(`Without a recording: ${before.join(" → ")}. With a recording of s: ${after.join(" → ")}. A sound with no recording still uses the hint word: ${other.join(" → ")}. Parent area link: ${pa?"yes":"NO"}; recording screen shows ${pg} letters. (Recording itself needs a real microphone and was not tested here.)`)});
+
+T.add("Delete account really deletes",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");save()`);await sleep(300);tbox.x("window.confirm=()=>true");await tbox.x("wipeAll()");await sleep(300);await tbox.reload();await sleep(900);const kids=tbox.x("Object.keys(ALL.kids).length");
+ return kids==0?ok("After 'Delete account' and a refresh, no explorers came back."):bad(`After 'Delete account' and a refresh, ${kids} explorer(s) came back from the backup database: the delete does not clear the backup copy.`)});
+
+T.add("The tour box goes away when the child taps something else",async()=>{await tbox.open("autotest",{reset:true});tbox.x(`__dev.kid("Tour",6)`);tbox.x("tour(0)");await sleep(50);const had=tbox.x("!!document.getElementById('tour')");
+ const btn=tbox.x("document.querySelector('.go,.btn.go,button.big')||[...document.querySelectorAll('button')].find(b=>/Play|Let/.test(b.innerText))");if(!btn)return warn("No play button found");btn.dispatchEvent(new tbox.w.PointerEvent("pointerdown",{bubbles:true}));btn.click();await sleep(100);const still=tbox.x("!!document.getElementById('tour')");
+ return had&&!still?ok("A real tap outside the tour closes it before the next screen opens."):bad(`tour shown: ${had}; still shown after tapping Play: ${still}`)});
+</script>
+
+<script>
+/* ============================================================
+   Self-audit
+   ============================================================ */
+const HUMAN=[
+ ["sound","Turn the sound on and play the first three lessons as if you could not read. Is every instruction spoken? Could you do each one only by listening and looking?"],
+ ["phonemes","Listen to how letter sounds are spoken. The browser voice cannot say a pure sound, so it says 'the sound at the start of sun'. Is that clear enough for a child who has never heard the sound /s/ on its own? (See the audit's audio row.)"],
+ ["pictures","Look through the pictures used in sound and word questions. Does each picture clearly mean one word for a Kenyan child (for example, is 'jug' vs 'cup' clear)?"],
+ ["feedback","Answer wrongly on purpose. Would a 4-year-old understand what to do next from the voice and the bouncing button alone?"],
+ ["home","On the home screen for a 6-year-old, can a child who cannot read find the one button that continues learning? (There are many buttons.)"],
+ ["dog","Does the dog help (pointing, speaking) or distract (moving while the child listens)?"],
+ ["rewards","Do mangoes, shop and games pull the child away from lessons? Is learning still the main thing?"],
+ ["sizes","Try a small phone, a tablet and a laptop. Are buttons big enough and nothing cut off?"],
+ ["content","Are stories, names and foods right for the children who will use it?"],
+ ["children","Watch a real child use it for 10 minutes without helping. Note every moment they get stuck. (Nothing on this page replaces this.)"]];
+const HK="readtrail2_devaudit";
+function hLoad(){try{return JSON.parse(localStorage.getItem(HK)||"{}")}catch(e){return{}}}
+function hSave(o){localStorage.setItem(HK,JSON.stringify(o))}
+function hRender(){const o=hLoad();$("#human").innerHTML=`<table><tr><th style="width:90px">Reviewed</th><th>Check</th><th style="width:30%">Notes</th></tr>${HUMAN.map(([k,t])=>{const v=o[k]||{};return`<tr><td><label><input type="checkbox" ${v.ok?"checked":""} onchange="hSet('${k}','ok',this.checked)"> ${v.ok?"yes":"not yet"}</label>${v.when?`<br><small>${v.when}</small>`:""}</td><td>${t}</td><td><textarea style="width:100%" rows="2" onchange="hSet('${k}','note',this.value)">${(v.note||"").replace(/</g,"&lt;")}</textarea></td></tr>`}).join("")}</table>`}
+function hSet(k,f,v){const o=hLoad();o[k]=o[k]||{};o[k][f]=v;if(f=="ok")o[k].when=v?new Date().toLocaleDateString():"";hSave(o);hRender()}
+hRender();
+
+const A={async run(){$("#aprog").textContent="measuring…";const b=tbox;await b.open("audit",{reset:true});b.x(`__dev.kid("Audit",6)`);b.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')})");
+ const rows=b.x(`(()=>{const R=[];SKILLS.forEach(s=>{let n=0,opts=[],two=0,leak=0,echo=0,pics=0,why=0,hint=0,say=0,nov=0,keys=new Set();
+  for(const ph of["guided","solo"]){L={rp:1,id:s.id,used:new Set(),ph,n:0,sf:[],streak:0,tot:0};for(let i=0;i<16;i++){const q=rpGen(s.id,ph=="guided"?1:0);if(!q)continue;n++;keys.add(q.k);
+   if(ph=="solo"){const k=q.t=="tile"?6:q.t=="trace"?0:q.t=="tapw"?q.lines.flat().length:(q.a||[]).length;if(k)opts.push(k);if(k==2)two++}
+   if(q.why)why++;if(q.h)hint++;if(q.say)say++;if(q.nov)nov++;if(rpPics(q))pics++;
+   if(Array.isArray(q.a)&&q.a.length>1){SNDAV=new Set(q.a.map(o=>String(nameOf(o)).toLowerCase()).filter(Boolean));const raw=spk((q.preSay?q.preSay+" ":"")+(q.say||q.q)).toLowerCase();SNDAV=null;
+    const hints=[...raw.matchAll(/(?:start|end) of ([a-z]+)/g)].map(m=>m[1]),opt=q.a.map(o=>String(nameOf(o)).toLowerCase());if(hints.some(h=>opt.includes(h)))leak++;
+    if(ph=="solo"&&!q.shown){const sp=" "+raw.replace(/[^a-z ]/g," ")+" ",nm=o=>String(nameOf(o)).toLowerCase().replace(/[^a-z ]/g," ").replace(/ +/g," ").trim(),r=nm(q.a[q.c]);if(r.length>1&&sp.includes(" "+r+" ")&&!q.a.some((o,j)=>j!=q.c&&nm(o)&&sp.includes(" "+nm(o)+" ")))echo++}}}}
+  const avg=opts.length?opts.reduce((a,x)=>a+x,0)/opts.length:0;
+  R.push({id:s.id,n:s.n,st:s.st,strand:s.sd||"",pre:s.pre.length,teach:(s.t||[]).length+(DISC[s.id]?1:0),nr:!!s.nr,gens:s.g.split("+").length,q:n,uniq:keys.size,avg:+avg.toFixed(1),two,leak,echo,why,hint,say,nov,pics})});L=null;return R})()`);
+ const SDN={L:"Listening",P:"Sounds in words",A:"Letters",D:"Decoding",S:"Print & sentences",M:"Meaning",C:"Comprehension"};const strands0=b.x("SKILLS.reduce((a,s)=>{a[s.sd||'?']=(a[s.sd||'?']||0)+1;return a},{})"),strands=Object.fromEntries(Object.entries(strands0).map(([k,v])=>[SDN[k]||k,v]));const recN=b.x("REC.ok"),ph=b.x("LTO.filter(l=>PH[l]).length");this.rec=[recN,ph];
+ const persist=await(async()=>{b.x("save()");await sleep(300);const ls=!!localStorage.getItem(keyOf("audit"));const idb=await new Promise(ok=>{const r=indexedDB.open(keyOf("audit"));r.onsuccess=()=>{try{const g=r.result.transaction("kv").objectStore("kv").get("readtrail2");g.onsuccess=()=>{ok(!!g.result);r.result.close()};g.onerror=()=>ok(false)}catch(e){ok(false)}};r.onerror=()=>ok(false)});return{ls,idb}})();
+ const net=b.x("[...document.scripts].map(s=>s.src).filter(Boolean).concat([...document.querySelectorAll('link[href],img[src]')].map(e=>e.href||e.src)).filter(u=>!u.startsWith(location.origin)&&!u.startsWith('data:'))");
+ window.__AUD=rows;this.show(rows,strands,persist,net);$("#aprog").textContent="done "+new Date().toLocaleTimeString()},
+ show(rows,strands,persist,net){const c=(cond,good,badT,kind="auto")=>`<td class="${cond?"pass":"fail"}">${cond?good:badT}</td><td><span class="pill ${kind}">${kind=="auto"?"automatic":"needs a person"}</span></td>`;
+  const noTeach=rows.filter(r=>!r.teach),guess=rows.filter(r=>r.avg&&r.avg<3),leak=rows.filter(r=>r.leak),thin=rows.filter(r=>r.uniq<8),nofb=rows.filter(r=>!r.why&&!r.hint),early=rows.filter(r=>r.st<=3&&!r.nr);
+  const sum=`<div class="card"><h2>Platform health</h2><table><tr><th>Check</th><th>Result</th><th>Kind</th></tr>
+  <tr><td>Curriculum coverage: strands (skills)</td><td class="info">${Object.entries(strands).map(([k,v])=>k+": "+v).join(" · ")} · ${rows.length} skills in 10 stages</td><td><span class="pill auto">automatic</span></td></tr>
+  <tr><td>Lessons with missing prerequisites or broken links</td><td class="info">see Automated tests → "Prerequisite map"</td><td><span class="pill auto">automatic</span></td></tr>
+  <tr><td>Skills with no demonstration before practice</td>${c(!noTeach.length,"none",noTeach.length+": "+noTeach.map(r=>r.id).join(", "))}</tr>
+  <tr><td>Skills a child must read to use, in stages 1–3</td>${c(!early.length,"none: stages 1–3 are fully spoken",early.map(r=>r.id).join(", "))}</tr>
+  <tr><td>Solo questions with fewer than 3 choices (guess rate ≥ 50%)</td>${c(!guess.length,"none",guess.length+" skills: "+guess.map(r=>`${r.id} (${r.avg})`).join(", "))}</tr>
+  <tr><td>A spoken sound hint (“the start of sun”) is one of the answer pictures</td>${c(!leak.length,"none found",leak.length+" skills: "+leak.map(r=>`${r.id} ${r.leak}/${r.q}`).join(", "))}</tr>
+  <tr><td>Only the right answer's words are heard (fine for “listen and find”; a problem in comprehension and vocabulary)</td><td class="info">${rows.filter(r=>r.echo).length} skills, most in “tap the word you hear” tasks. Comprehension: ${rows.filter(r=>r.echo&&/^(s10_|l5_|s1_story|s9_)/.test(r.id)).map(r=>`${r.id} ${r.echo}/16`).join(", ")||"none"}</td><td><span class="pill human">needs a person</span></td></tr>
+  <tr><td>Few different questions (fewer than 8 seen in 32 tries: review may repeat)</td>${c(!thin.length,"none",thin.length+" skills: "+thin.map(r=>`${r.id} (${r.uniq})`).join(", "))}</tr>
+  <tr><td>Questions with no explanation or hint after a mistake</td>${c(!nofb.length,"none: every skill has an explanation or hint",nofb.length+" skills give only the general 'look again' message: "+nofb.map(r=>r.id).join(", "))}</tr>
+  <tr><td>Saved in both browser storage and backup database</td>${c(persist.ls&&persist.idb,"yes, both","browser storage: "+persist.ls+", backup database: "+persist.idb)}</tr>
+  <tr><td>Files loaded from the internet</td>${c(!net.length,"none: works offline (the optional word-of-the-day dictionary lookup is the only network call)",net.join(", "))}</tr>
+  <tr><td>Letter sounds heard as pure sounds</td><td class="${this.rec&&this.rec[0]>=this.rec[1]?"pass":"warn"}">${this.rec&&this.rec[0]?this.rec[0]+" of "+this.rec[1]+" sounds have a grown-up recording on this device (this audit's sandbox has none; see the real app's parent area).":"Only with recordings. Browser voices cannot say /s/ alone, so without a recording the app says “the sound at the start of sun”. Record them in the parent area: 🔤 Letter sounds in your voice."}</td><td><span class="pill auto">automatic</span></td></tr>
+  <tr><td>Whether children actually learn, find it clear, and stay interested</td><td class="warn">Cannot be measured here.</td><td><span class="pill human">needs a person</span></td></tr></table></div>`;
+  const tbl=`<div class="card"><h2>Every skill</h2><p style="color:var(--mut)">Measured from 32 generated questions per skill (16 guided, 16 solo) with all letters unlocked. “Different” = different questions seen. “Choices” = average number of answer choices in solo questions. “New words” = questions using a word the child has not met (tests transfer).</p><div class="tw"><table><tr><th>Skill</th><th>Stage</th><th>Needs</th><th>Shown first</th><th>Spoken only</th><th>Different</th><th>Choices</th><th>Hint = answer</th><th>Only answer heard</th><th>Explains</th><th>New words</th></tr>${rows.map(r=>`<tr><td>${r.n}<br><span class="mono">${r.id}</span></td><td>${r.st}</td><td>${r.pre}</td><td class="${r.teach?"":"fail"}">${r.teach} slides</td><td>${r.nr?"yes":"reads"}</td><td class="${r.uniq<8?"warn":""}">${r.uniq}</td><td class="${r.avg&&r.avg<3?"fail":""}">${r.avg||"–"}</td><td class="${r.leak?"fail":""}">${r.leak}</td><td>${r.echo}</td><td>${r.why||r.hint?"yes":"general only"}</td><td>${r.nov}</td></tr>`).join("")}</table></div></div>`;
+  $("#aout").innerHTML=sum+tbl}};
+
+/* tabs and start-up */
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on",x==b));document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.id=="t-"+b.dataset.t))});
+UI.load();
+if(/[?&]run=all/.test(location.search))addEventListener("load",()=>setTimeout(()=>{document.querySelector('[data-t=tests]').click();T.runAll()},800));
+if(/[?&]run=audit/.test(location.search))addEventListener("load",()=>setTimeout(()=>{document.querySelector('[data-t=audit]').click();A.run()},800));
+</script>
+</body>
+</html>
