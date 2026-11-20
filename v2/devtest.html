@@ -108,6 +108,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const DAY=864e5;
 const LOG=m=>{const e=$("#log");e.textContent=(new Date().toLocaleTimeString()+"  "+m+"\n"+e.textContent).slice(0,8000)};
 const keyOf=n=>"readtrail2__sandbox_"+n;
+/* in the repo this page is devtest.html next to index.html; in its own testing artifact it is the front page and the app is app.html */
+const APP=/devtest\.html$/.test(location.pathname)?"index.html":"app.html";
 
 /* the in-app helper: installed into the sandbox page so it can reach the app's own variables */
 const HELPER=`(()=>{if(window.__dev)return;
@@ -169,7 +171,7 @@ class Box{
  get w(){return this.fr.contentWindow}
  x(code){return this.w.eval(code)}
  async open(name,{reset=false,extra=""}={}){this.name=name;if(reset)await Box.wipe(name);
-  await new Promise(ok=>{this.fr.onload=ok;this.fr.src="index.html?sandbox="+encodeURIComponent(name)+extra+"&r="+Date.now()});
+  await new Promise(ok=>{this.fr.onload=ok;this.fr.src=APP+"?sandbox="+encodeURIComponent(name)+extra+"&r="+Date.now()});
   await sleep(250);this.w.eval(HELPER);return this}
  async reload(){await new Promise(ok=>{this.fr.onload=ok;this.fr.contentWindow.location.reload()});await sleep(700);this.w.eval(HELPER);return this}
  static async wipe(name){const k=keyOf(name);localStorage.removeItem(k);localStorage.removeItem(k+"__clock");
