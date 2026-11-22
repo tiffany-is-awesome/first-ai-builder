@@ -196,7 +196,7 @@ class Box{
   if(L.ph=="teach"){const sl=L.slides[L.ti];if(lr.demo&&sl){if(L.bun&&sl.cm)lr.demo.add("s3_nm").add("s3_uc").add("s3_lc").add(sl.cm.includes("S:")?"s3_snd":"s3_nm");else lr.demo.add(sl.sk||L.id)}if(sl&&sl.disc){const D=L.dsc;if(D&&D.done){this.x("L.ti++;rpTeach()");lr.learnFrom(L.id,.5);return"teach"}
     const kv=lr.K(L.id),j=lr.rnd()<kv+(1-kv)/sl.opts.length?sl.c:(sl.c?0:1);this.x(`rpDiscAns(${j})`);return"disc"}
    lr.learnFrom(L.id,.6,sl&&sl[2]?(sl.cm||["L:"]).flatMap(p=>sl[2].map(c=>p+c)):[]);this.x("L.ti++;rpTeach()");return"teach"}
-  if(L.q&&!L.done){const sid=L.cid||L.id,ph=L.ph,a=chooseAns(lr,L.q,sid);if(trace)trace.push({sid,ph,ok:a.ok,q:L.q.k,nov:!!L.q.nov,opts:(L.q.a||[]).length});if(lr.demo&&(ph=="guided"||ph=="solo")&&!L.rv&&!lr.demo.has(sid)&&!this.x(`(()=>{const r=rpRec(${JSON.stringify(sid)});return !!(r&&r.g.includes("place"))})()`))lr.undemo[sid]=(lr.undemo[sid]||0)+1;
+  if(L.q&&!L.done){const sid=L.cid||L.id,ph=L.ph,a=chooseAns(lr,L.q,sid);if(trace)trace.push({sid,ph,ok:a.ok,q:L.q.k,nov:!!L.q.nov,opts:(L.q.a||[]).length});if(lr.demo&&(ph=="guided"||ph=="solo")&&!L.rv&&!L.diag&&!lr.demo.has(sid)&&!this.x(`(()=>{const r=rpRec(${JSON.stringify(sid)});return !!(r&&r.g.includes("place"))})()`))lr.undemo[sid]=(lr.undemo[sid]||0)+1;
    this.x(`ans(${a.i})`);if(!a.ok&&ph!="pre"&&!L.diag){const a2=chooseAns(lr,L.q,sid);this.x(`ans(${a2.ok?L.q.c:a2.i})`);if(!this.x("L.done"))this.x(`ans(${L.q.c})`)}
    lr.learnFrom(sid,ph=="guided"?.35:.2,L.q.it?[L.q.it]:[]);return"answer"}
   if(L.done){this.x("adv()");return"adv"}
@@ -319,7 +319,7 @@ T.add("Prerequisites are enforced along the path",async()=>{const lr=mkLearner("
 T.add("Each skill is shown before the child is asked about it alone",async()=>{const lr=mkLearner("p1",31);lr.P=Object.assign({},lr.P,{learn:.45});lr.demo=new Set();lr.undemo={};await tbox.open("autotest",{reset:true});tbox.x(`__dev.kid("Demo",5)`);
  for(let i=0;i<45;i++){tbox.lesson(lr);if(i%6==5)tbox.setClock(Math.floor(i/6)+1);await sleep(0)}tbox.setClock(0);const u=Object.entries(lr.undemo),reached=tbox.x("SKILLS.filter(s=>rpSt(s.id)>=1).length");
  const names=u.map(([k,v])=>`${tbox.x(`SKI["${k}"].n`)} (${k}, ${v} questions)`);
- return u.length?bad(`A simulated beginner did 45 lessons and met ${reached} skills. ${u.length} skills were asked about (together or alone) before their own explanation slides were ever shown: ${names.join("; ")}. Letter lessons mix several letter skills; only the letter itself (name, big, small, sound) is shown first.`):ok(`A simulated beginner did 45 lessons and met ${reached} skills; every one was shown before it was practised.`)});
+ return u.length?bad(`A simulated beginner did 45 lessons and met ${reached} skills. ${u.length} skills were asked about (together or alone) before their own explanation slides were ever shown: ${names.join("; ")}. Letter lessons mix several letter skills; only the letter itself (name, big, small, sound) is shown first.`):ok(`A simulated beginner did 45 lessons and met ${reached} skills; every one was shown before it was practised. (Quick checks and the short diagnostic games after repeated mistakes are assessments and are not counted.)`)});
 
 T.add("Struggling sends the child back to a missing foundation",async()=>{await fresh("ace");tbox.x(`__dev.creditPre("s4_b3");rpStart("s4_b3",{});L.ph="solo";L.slides=[];L.n=0;rpAsk()`);let n=0;
  while(n++<60&&tbox.x("scr")=="lesson"&&tbox.x("L&&L.rp")){const l=tbox.x("L");if(l.ph=="teach"){tbox.x("L.ti++;rpTeach()");continue}if(l.q&&!l.done){const q=l.q,nn=(q.a||[]).length||2;let w=[...Array(nn).keys()].find(j=>j!=q.c);if(q.t=="tile")w=1;tbox.x(`ans(${w})`);if(!tbox.x("L.done"))tbox.x(`ans(${q.c})`)}else tbox.x("adv()")}
@@ -396,7 +396,7 @@ T.add("Delete account really deletes",async()=>{const lr=await fresh("ace");tbox
  return kids==0?ok("After 'Delete account' and a refresh, no explorers came back."):bad(`After 'Delete account' and a refresh, ${kids} explorer(s) came back from the backup database: the delete does not clear the backup copy.`)});
 
 T.add("The tour box goes away when the child taps something else",async()=>{await tbox.open("autotest",{reset:true});tbox.x(`__dev.kid("Tour",6)`);tbox.x("tour(0)");await sleep(50);const had=tbox.x("!!document.getElementById('tour')");
- const btn=tbox.x("document.querySelector('.go,.btn.go,button.big')||[...document.querySelectorAll('button')].find(b=>/Play|Let/.test(b.innerText))");if(!btn)return warn("No play button found");btn.dispatchEvent(new tbox.w.PointerEvent("pointerdown",{bubbles:true}));btn.click();await sleep(100);const still=tbox.x("!!document.getElementById('tour')");
+ const btn=tbox.x("document.querySelector('#t-play')||[...document.querySelectorAll('button')].find(b=>/Play|Let/.test(b.innerText))");if(!btn)return warn("No play button found");btn.dispatchEvent(new tbox.w.PointerEvent("pointerdown",{bubbles:true}));btn.click();await sleep(100);const still=tbox.x("!!document.getElementById('tour')");
  return had&&!still?ok("A real tap outside the tour closes it before the next screen opens."):bad(`tour shown: ${had}; still shown after tapping Play: ${still}`)});
 </script>
 

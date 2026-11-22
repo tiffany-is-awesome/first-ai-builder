@@ -592,6 +592,98 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 @keyframes dsGrab{0%,45%{transform:rotate(-5deg)}51%{transform:rotate(-8deg)}54%,56%{transform:translate(6px,5px) rotate(62deg)}63%{transform:rotate(-8deg)}72%{transform:rotate(1deg)}80%,100%{transform:none}}
 @keyframes dsGrabB{0%,50%{transform:none}54%,56%{transform:rotate(5deg)}64%,100%{transform:none}}
 
+
+/* ===================== DESIGN LAYER (Nov 2026) =====================
+   One calm, consistent finish over the older layers above. Goals: one clear focus per screen,
+   big pictures, even shapes, one icon style, fewer decorations during lessons. */
+:root{--r-lg:26px;--r-md:18px;--r-sm:14px}
+/* control icons */
+.uic{width:1.15em;height:1.15em;flex:none;vertical-align:-.18em}
+.ghost,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em}
+.top .ghost .uic{width:24px;height:24px}
+.dogf{width:34px;height:34px}
+/* even, quieter shapes everywhere (the old ones were deliberately lopsided) */
+.card,#tour{border-radius:var(--r-lg)}
+.ghost{border-radius:var(--r-sm);border-width:2.5px}
+.btn{border-radius:var(--r-md)}
+.opt,.tile{border-radius:var(--r-md)}
+.opt:nth-child(even),.opt:nth-child(odd),.nav .nb,.nav .nb:nth-child(n){transform:none;rotate:none}
+.nav .nb:hover{transform:translateY(-3px)}
+.opt:hover:not(:disabled){transform:translateY(-2px)}
+/* home: main buttons */
+.btn.play{width:100%;font-size:clamp(21px,2.6vw,27px);min-height:64px;padding:10px 22px;margin:10px 0 0;line-height:1.2;text-align:left}
+.btn.play .uic{width:26px;height:26px}
+.btn.play span{flex:1}
+.btn.play.alt{background:#fff;color:var(--ink);border:3px solid var(--uc,#ff7a1a);box-shadow:0 5px 0 var(--ucD,#c23d0c);text-shadow:none;min-height:56px;font-size:clamp(19px,2.2vw,23px)}
+.btn.play.alt small{font-weight:600;opacity:.7;font-size:.8em}
+/* home on wide screens: the campfire picture no longer pushes Play below the fold */
+#t-daily.alt{background:#fff;color:var(--ink);border:3px solid #a777ff;box-shadow:0 5px 0 #6b3ad6,0 10px 18px rgba(6,28,80,.18)}
+@media(min-width:860px){body[data-area=camp] #app{max-width:1180px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);column-gap:22px;align-items:start}
+ body[data-area=camp] #app>*,body[data-area=camp] #app::before{grid-column:1/-1}
+ body[data-area=camp] #app>.top{grid-row:2}
+ body[data-area=camp] #app{grid-template-rows:auto auto 1fr 1fr}
+ body[data-area=camp] #app>.scene{grid-column:1;grid-row:3/span 2;margin:0}
+ body[data-area=camp] #app>.btn.play,body[data-area=camp] #app>.chest,body[data-area=camp] #app>[onclick*="chest"]{grid-column:2;margin:0 0 14px}
+ body[data-area=camp] #app>#t-play{align-self:end;min-height:96px;font-size:28px;grid-row:3}
+ body[data-area=camp] #app>#t-daily{grid-row:4;align-self:start;margin-top:4px}
+ body[data-area=camp] #app>#t-chest{grid-row:5;grid-column:1/-1;margin-top:14px}
+ body[data-area=camp] .nav{grid-template-columns:repeat(7,minmax(0,1fr));margin-top:18px}}
+@media(max-width:859px){body[data-area=camp] .nav>.nb:last-child:nth-child(3n+1){grid-column:1/-1;flex-direction:row;justify-content:center;gap:12px}}
+
+/* ---------- lessons ---------- */
+/* no bunting or corner flourishes while learning: nothing competes with the question */
+body[data-area=learn] #app::before,body[data-area=test] #app::before,body[data-area=daily] #app::before{display:none}
+.card.lsn::before,.card.lsn::after{display:none}
+body[data-area=learn] #app,body[data-area=test] #app,body[data-area=daily] #app{padding-top:12px}
+body[data-area=learn] #app>.card,body[data-area=test] #app>.card,body[data-area=daily] #app>.card{border-width:3px;box-shadow:0 6px 0 var(--ucD),0 18px 40px rgba(6,28,80,.28);min-height:calc(100vh - 34px);padding:16px clamp(14px,3vw,36px) 22px}
+/* header: Home · progress · Help (same as the starting games) */
+.lh{display:flex;align-items:center;gap:clamp(10px,2vw,18px);margin:0 0 6px}
+.lh .exitb,.plh .exitb{margin:0;min-height:52px;min-width:52px;padding:0 14px;font-size:19px}
+.lh .exitb .uic{width:26px;height:26px}
+.lh .hlp{padding:0 12px 0 6px}
+.lbar{flex:1;height:14px;border-radius:8px;background:rgba(20,40,90,.10);overflow:hidden}
+.lbar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#ffb400,#ff7a1a);transition:width .6s ease}
+@media(max-width:560px){.lh .xl,.plh .xl{display:none}.lh .exitb,.plh .exitb{padding:0;width:52px}.lh .hlp{width:56px}}
+@media(prefers-reduced-motion:reduce){.lbar i{transition:none}}
+.card.lsn>small:first-of-type{align-self:center;margin:2px auto 6px}
+/* the prompt: Biscuit beside a large picture on a soft spotlight, with a speaker badge = tap to hear again */
+.lsn .stg{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:auto}
+.lsn .stg>.row{width:100%;max-width:820px}
+.lsn.nr .stg{flex-direction:row;justify-content:center;align-items:flex-end;gap:clamp(8px,3vw,34px)}
+.lsn.nr .stg>.row{width:auto;max-width:none;flex:none;margin:0}
+.lsn.nr .stg>.big{margin:4px 0}
+.lsn .big{position:relative;width:fit-content;min-width:clamp(120px,22vw,210px);min-height:clamp(120px,22vw,210px);margin:4px auto;padding:clamp(10px,1.6vw,18px) clamp(14px,2vw,24px);display:flex;align-items:center;justify-content:center;border-radius:999px;background:radial-gradient(closest-side,#fff 62%,var(--ucL,#fff3e0) 63%,var(--ucL,#fff3e0) 99%,transparent 100%);animation:none}
+.lsn .big.e{display:none}
+body[data-area] #app>.card.lsn .big{font-size:clamp(64px,min(10vw,13vh),112px)}
+.lsn .big svg.pv,.lsn .big .pe{width:clamp(96px,16vw,170px)!important;height:clamp(96px,16vw,170px)!important;font-size:clamp(80px,13vw,140px)}
+.lsn .big:has(.dws),.lsn .big:has(span),.lsn .big:has(.stw){border-radius:var(--r-lg);background:#fff;box-shadow:inset 0 0 0 3px var(--ucL,#ffe7c2)}
+.lsn.nr .big::after{content:"";position:absolute;right:2px;bottom:2px;width:46px;height:46px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6a1a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5h3.5L12 6v12l-4.5-3.5H4z' fill='%23ff6a1a'/%3E%3Cpath d='M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11'/%3E%3C/svg%3E") center/26px no-repeat;box-shadow:0 3px 0 var(--ucD,#c23d0c),0 6px 14px rgba(0,0,0,.15)}
+.lsn.nr .big{cursor:pointer}
+.lsn.nr .big:active{transform:scale(.97)}
+body[data-area] #app>.card.lsn .mini{width:clamp(78px,10vw,128px)}
+.lsn .qt{text-align:center;margin:8px auto 0}
+/* answers: centred, square picture cards with the picture filling them; word cards stay wide */
+body[data-area] #app>.card.lsn .opts{width:100%;max-width:880px;margin:clamp(14px,3vh,28px) auto auto;justify-content:center}
+.lsn .opts.pics{--ow:clamp(104px,min(17vw,24vh),200px);display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(10px,2vw,22px)}
+.lsn .opts.pics .opt{flex:none;width:var(--ow);height:var(--ow)}
+body[data-area] #app>.card.lsn .opts.pics .opt{min-height:0;padding:0;background:#fff;border:3px solid var(--uc);box-shadow:0 6px 0 var(--ucD)}
+.lsn .opts.pics .opt svg.pv,.lsn .opts.pics .opt .pe{width:calc(var(--ow)*.68)!important;height:calc(var(--ow)*.68)!important;font-size:calc(var(--ow)*.56)}
+.lsn .opts:not(.pics){grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.lsn .opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 2px 0 var(--ucD)}
+.lsn #fb{text-align:center;min-height:1.6em}
+/* phones: keep everything on one screen */
+@media(max-width:560px){body[data-area] #app>.card.lsn{padding:10px 10px 16px}
+ .lsn.nr .stg{gap:4px}.lsn .big{min-width:132px;min-height:132px}
+ body[data-area] #app>.card.lsn .opts.pics{gap:10px;--ow:min(calc((100vw - 92px)/3),150px)}}
+@media(max-height:620px){.lsn .big{min-width:110px;min-height:110px}.lsn .big svg.pv{width:88px!important;height:88px!important}}
+
+/* starting games: same header look as lessons */
+.lsn .plh{margin:0 0 6px;gap:clamp(10px,2vw,18px)}
+.lsn .plbar{height:14px;border:0;background:rgba(20,40,90,.10);border-radius:8px}
+.lsn .plbar i{background:linear-gradient(90deg,#ffb400,#ff7a1a)}
+.lsn .plbar b{top:-11px}
+/* teaching slides: Biscuit and the speech bubble centred over the slide */
+.card.lsn>.row{justify-content:center;max-width:820px;width:100%;margin-inline:auto}
 </style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <filter id="paint" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="2.6" result="g"/><feMorphology in="g" operator="dilate" radius="2" result="d"/><feFlood flood-color="#fffaf0" result="fl"/><feComposite in="fl" in2="d" operator="in" result="o"/><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .22 0 0 0 0 .12 0 0 0 0 .06 1.4 0 0 0 -1.0" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="8" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .85 1.2 0 0 0 -.9" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="o"/><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
 <filter id="grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="3" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="3" result="g"/><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .1 1.6 0 0 0 -.98" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="1" seed="6" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .86 1.5 0 0 0 -.98" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
@@ -1292,7 +1384,19 @@ try{const u=mkU(x||".");let d=0;const nx=()=>{if(d++)return;setTimeout(()=>go(k+
 
 
 
-const XB=()=>'<button class="ghost exitb" onclick="leave()" aria-label="Back to home">🏠 Home</button>';
+/* control icons: one style everywhere (24px grid, rounded 2.4 stroke, current colour) */
+const UI_=(d,f)=>`<svg class="uic" viewBox="0 0 24 24" aria-hidden="true" fill="${f?"currentColor":"none"}" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const UIC={home:UI_('<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5h3v5H18V9.5"/>'),back:UI_('<path d="M15 5l-7 7 7 7"/>'),
+ music:UI_('<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>'),mute:UI_('<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>'),
+ user:UI_('<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4-5.6 7.5-5.6s6.3 1.6 7.5 5.6"/>'),gear:UI_('<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M5.5 18.5l1.9-1.9M16.6 7.4l1.9-1.9"/>'),
+ play:UI_('<path d="M7 4.5v15l12.5-7.5z"/>',1),clock:UI_('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.8 2M9.5 2.8h5"/>'),family:UI_('<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M2.8 19.5c.8-3.4 2.8-5 5.2-5s4.4 1.6 5.2 5M13.6 19.5c.5-2.6 1.6-3.9 2.9-3.9 1.9 0 3.2 1.4 3.7 3.9"/>'),
+ compass:UI_('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')};
+/* Biscuit's face: the help button (tap = Biscuit helps) */
+const DOGF=()=>`<svg class="uic dogf" viewBox="-32 -112 64 64" aria-hidden="true">${dogG()}</svg>`;
+const XB=()=>`<button class="ghost exitb" onclick="leave()" aria-label="Back to home">${UIC.home}<span class="xl">Home</span></button>`;
+/* lesson header: Home · how far along · Help, like the starting games */
+const lessonP=()=>{if(!L)return 0;const n=L.n||0,ok=(L.sf||[]).filter(x=>x).length;return Math.round(100*(L.ph=="pre"?Math.min(1,n/6)*.25:L.ph=="teach"?.05:L.ph=="guided"?.1+.25*Math.min(1,n/(L.gl||3)):.35+.65*Math.min(1,ok/(L.need||5))))};
+const LHD=help=>`<div class="lh">${XB()}<div class="lbar" role="progressbar" aria-label="How far along this lesson is" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${lessonP()}"><i style="width:${lessonP()}%"></i></div>${help?`<button class="ghost exitb hlp" onclick="pupHelp()" aria-label="Help">${DOGF()}<span class="xl">Help</span></button>`:""}</div>`;
 function leave(){SNDAV=null;SQT++;recStop();try{if(L&&L.rp&&!L.daily&&!L.quiz&&L.id&&scr=="lesson"){const R_=rpInit();R_.resume={id:L.id,at:R_.cnt,bundle:!!L.bun};save()}}catch(e){}try{speechSynthesis.cancel()}catch(e){}try{sayReset()}catch(e){}SQ++;clearTimeout(HT);L=null;scr="home";render()}
 
 
@@ -1612,13 +1716,13 @@ function dmore(){L.brk=1;L.fin=1;let first=S.dchest!=todayKey();if(first){S.dche
  app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini dog-party" viewBox="-45 -110 90 125" style="width:130px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">🎉 ⭐ 🎉</div><p><button class="btn play" onclick="startDaily()">▶ Keep going (a few more minutes)</button></p><p><button class="ghost" style="font-size:22px;min-height:52px" onclick="L=null;go('books')">📖 Read a story</button> <button class="ghost" style="font-size:22px;min-height:52px" onclick="L=null;go('home')">🏠 Home</button></p></div>`);talk(m)}
 /* ---------- screens ---------- */
 function app(h){$("#app").innerHTML=h;try{const a=areaOf();document.body.dataset.area=a;document.body.style.setProperty("--uc",scr=="lesson"&&L&&!L.place&&L.u!=null&&UCOL[L.u]?UCOL[L.u]:"");MZ.play(a)}catch(e){}}
-const bar=(back)=>S.pre&&!PREFULL?`<div class="top">${back?`<button class="ghost l" onclick="go('home')" style="font-size:22px;min-height:52px">🏠 Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span>${back?"":'<button class="ghost" onclick="grownUp()" aria-label="Grown-ups">👪 Grown-ups</button>'}</div>`:`<div class="top">${S.pre?`<button class="ghost" onclick="PREFULL=0;go('home')" aria-label="Little reader home">🧸<span class="nm"> Little reader home</span></button>`:""}${back?`<button class="ghost l" onclick="go('home')">← Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span><button class="ghost" onclick="S.music=!S.music;music();save();render()" aria-label="Music">${S.music?"🎵":"🔇"}</button><button class="ghost" onclick="ALL.cur=null;save();scr='home';render()" aria-label="Switch explorer">👤<span class="nm"> ${S.name}</span></button><button class="ghost" onclick="go('set')" aria-label="Settings">⚙️</button></div>`;
+const bar=(back)=>S.pre&&!PREFULL?`<div class="top">${back?`<button class="ghost l" onclick="go('home')" style="font-size:22px;min-height:52px">${UIC.home} Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span>${back?"":'<button class="ghost" onclick="grownUp()" aria-label="Grown-ups">${UIC.family}<span class="nm"> Grown-ups</span></button>'}</div>`:`<div class="top">${S.pre?`<button class="ghost" onclick="PREFULL=0;go('home')" aria-label="Little reader home">🧸<span class="nm"> Little reader home</span></button>`:""}${back?`<button class="ghost l" onclick="go('home')">${UIC.back} Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span><button class="ghost" onclick="S.music=!S.music;music();save();render()" aria-label="${S.music?"Music on":"Music off"}">${S.music?UIC.music:UIC.mute}</button><button class="ghost" onclick="ALL.cur=null;save();scr='home';render()" aria-label="Switch explorer">${UIC.user}<span class="nm"> ${S.name}</span></button><button class="ghost" onclick="go('set')" aria-label="Settings">${UIC.gear}</button></div>`;
 async function wipeAll(){if(!confirm("Delete this account and ALL progress? This cannot be undone."))return;try{localStorage.removeItem(LSK)}catch(e){}ALL={cur:null,kids:{},ts:Date.now(),wiped:Date.now()};S=clone();IDB.set("readtrail2",JSON.stringify(ALL));try{if(DB)await DB.set({all:JSON.stringify(ALL)})}catch(e){}scr="home";render()}
 function go(s){lgLeave();sfx.click();scr=s;cgStop();if(BK)bkStop();selfOff();BK=null;render()}
 function render(){document.documentElement.dataset.theme=S.theme;document.body.classList.toggle("calm",!!S.calm);if(!ALL.cur||!ALL.kids[ALL.cur])return who();if(!S.placed&&!S.toured)return onboard();migShop();
 if(scr=="lesson"){return}
 ({home,map,shop,books,games,awards,quizzes,set,done,care,lgames,lgplay,parentarea:parentArea,cards,pmap,recsnd})[scr]()}
-function home(){if(S.pre&&!PREFULL)return preHome();DOGZ=pupSleepy();const sc=scene();DOGZ=0;app(bar(0)+sc+chestBtn()+`<button class="btn play" id="t-play" onclick="${S.placed?"rpGo()":"placeIntro()"}">▶ ${rpPlayLabel()}</button><button class="btn play" id="t-daily" onclick="startDaily()">⏱️ Daily adventure (about 8 minutes)</button><div class="nav"><button class="nb" id="n-map" onclick="go('map')">${ICO.map}Reading Trail</button><button class="nb" id="n-shop" onclick="go('shop')">${ICO.shop}Shop</button><button class="nb" id="n-books" onclick="go('books')">${ICO.books}Storybooks</button><button class="nb" id="n-games" onclick="go('games')">${ICO.games}Games</button><button class="nb" id="n-quiz" onclick="go('quizzes')">${ICO.quiz}Quizzes</button><button class="nb" id="n-awards" onclick="go('awards')">${ICO.awards}Awards</button><button class="nb" id="n-care" onclick="go('care')">${ICO.care}Pet care${pcLow().length?" ❗":""}</button></div><div class="card" id="wotd" style="text-align:center"></div><p style="text-align:center"><button class="ghost" onclick="tour(0)">🐶 Show me around</button></p>`);wotdCard();wotdFetch(wotdToday().w);pupSleepSay()}
+function home(){if(S.pre&&!PREFULL)return preHome();DOGZ=pupSleepy();const sc=scene();DOGZ=0;app(bar(0)+sc+chestBtn()+`<button class="btn play" id="t-play" onclick="${S.placed?"rpGo()":"placeIntro()"}">${UIC.play}<span>${rpPlayLabel()}</span></button><button class="btn play alt" id="t-daily" onclick="startDaily()">${UIC.clock}<span>Daily adventure <small>· 8 min</small></span></button><div class="nav"><button class="nb" id="n-map" onclick="go('map')">${ICO.map}Reading Trail</button><button class="nb" id="n-shop" onclick="go('shop')">${ICO.shop}Shop</button><button class="nb" id="n-books" onclick="go('books')">${ICO.books}Storybooks</button><button class="nb" id="n-games" onclick="go('games')">${ICO.games}Games</button><button class="nb" id="n-quiz" onclick="go('quizzes')">${ICO.quiz}Quizzes</button><button class="nb" id="n-awards" onclick="go('awards')">${ICO.awards}Awards</button><button class="nb" id="n-care" onclick="go('care')">${ICO.care}Pet care${pcLow().length?" ❗":""}</button></div><div class="card" id="wotd" style="text-align:center"></div><p style="text-align:center"><button class="ghost" onclick="tour(0)">${UIC.compass} Show me around</button></p>`);wotdCard();wotdFetch(wotdToday().w);pupSleepSay()}
 const nb=i=>125+i*.9+Math.sin(i/2)*22+(i>=60?(i-60)*(i-60)*.07:0),MH=500;
 const smooth=p=>{let d="M"+p[0][0]+" "+p[0][1].toFixed(1);for(let i=1;i<p.length-1;i++){const mx=(p[i][0]+p[i+1][0])/2,my=(p[i][1]+p[i+1][1])/2;d+=` Q${p[i][0].toFixed(1)} ${p[i][1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`}const l=p[p.length-1];return d+` L${l[0].toFixed(1)} ${l[1].toFixed(1)}`};
 const flw=(x,y)=>[0,1,2].map(i=>`<path d="M${x+i*7-7} ${y}v8" stroke="#3f8450" stroke-width="1.6"/><circle cx="${x+i*7-7}" cy="${y-i%2*5}" r="3.4" fill="${["#f08aa8","#f4d38a","#fbf0cf"][i]}"/>`).join("");
@@ -2724,7 +2828,7 @@ function parentArea(){const N=esc(S.name),grid=(p,l)=>l.map(c=>`<span class="skc
  so=!!(navigator.serviceWorker&&navigator.serviceWorker.controller),nk=learnNext(),nx=LGS.find(m=>m.k==nk),vo=!!(window.speechSynthesis&&window.SpeechSynthesisUtterance),
  two=(p,l)=>`${skCnt(p,l,3)} on their own, ${skCnt(p,l,2)-skCnt(p,l,3)} with help`;
  app(bar(1)+`<div class="par"><h2>👪 Parent area</h2><p class="lgsub">What ${N} is learning, and the settings for this device.</p>
- <div class="card"><h3>📊 Skills</h3><p class="skl"><span class="skc sk0">a</span> not met yet &nbsp; <span class="skc sk1">a</span> practising &nbsp; <span class="skc sk2">a</span> with help &nbsp; <span class="skc sk3">a</span> on their own &nbsp; <span class="skc sk4">a</span> got it. “Got it” means right the first time in at least 4 of the last 5 tries, on different days or in different games, not just once. A right answer after a mistake or a hint counts as “with help”.</p>
+ <div class="card"><h3>📊 Skills</h3><p class="skl"><span class="skc sk0">a</span> not met yet &nbsp; <span class="skc sk1">a</span> practising &nbsp; <span class="skc sk2">a</span> with help &nbsp; <span class="skc sk3">a</span> on their own &nbsp; <span class="skc sk4">a</span> got it. “Got it” means right the first time in at least 4 of the last 5 tries, on at least two different days, not just once. A right answer after a mistake or a hint counts as “with help”.</p>
  <h4>Letters: ${skAny("L:")} found, ${skCnt("L:",LTO,4)} got it</h4><div>${grid("L:",LTO.slice().sort())}</div>
  <h4>First sounds: ${skAny("S:")} of ${SND.length} found, ${skCnt("S:",SND,4)} got it</h4><div>${grid("S:",SND.slice().sort())}</div>
  <ul class="skl"><li>Rhymes: <b>${two("R:",RHW)}</b></li><li>Animal sounds: <b>${two("A:",ANN)}</b></li><li>Patterns: <b>${two("P:",PATK)}</b> (of 4 kinds)</li><li>First words: <b>${two("W:",WN)}</b></li><li>Counting up to: <b>${nmax||"–"}</b></li><li>Stories finished: <b>${S.read.length}</b> · Played today: <b>${td} min</b>${top&&LGS.find(m=>m.k==top[0])?` · Favourite game: <b>${LGS.find(m=>m.k==top[0]).t}</b>`:""}</li><li>${S.pet} brings old things back after 1, 2, 4, 7 and 14 days.</li></ul></div>
@@ -3083,7 +3187,7 @@ function rpPlan(o){o=o||{};const id=L.id,s=SKI[id],st=rpSt(id),pm=L.pm;L.slides=
  if(pm=="known"){L.need=Math.min(L.need,4);L.gl=0}
  if(L.slides.length){scr="lesson";rpTeach()}else{L.ph=(st>=3||pm=="known")?"solo":"guided";scr="lesson";rpAsk()}}
 function rpTeach(){sayReset();const sl=L.slides[L.ti];if(!sl){L.ph=((rpSt(L.id)>=3||L.pm=="known")&&!L.rem)?"solo":"guided";L.n=0;return rpAsk()}if(sl.disc)return rpDisc(sl);const s=SKI[L.id];L.vt=sl[1];S.sk=S.sk||{};const cs=sayLetters(sl);
- app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p>${sayHtml(cs)}<button class="btn" id="tnext" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
+ app(`<div class="card lsn${NR()?" nr":""}">${LHD(0)}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p>${sayHtml(cs)}<button class="btn" id="tnext" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
  if(sl[2])sl[2].forEach(c=>{const p=sl.cm||[SKI[L.id].it[0]];p.forEach(pp_=>{if(!S.sk[pp_+c])S.sk[pp_+c]={h:"",n:0,c:0,d:[],g:[],t:Date.now(),b:0}})});
  if(!L.bun||LCORE.includes(L.id))rpInit().taught[L.id]=1;if(sl.sk)rpInit().taught[sl.sk]=1;if(sl.cm)LCORE.forEach(x=>{if(x!="s3_snd"||sl.cm.includes("S:"))rpInit().taught[x]=1});save();if(cs.length)SAY={cs,i:0,tries:0,busy:0,l:L,ti:L.ti};talk(sl[1]+(cs.length?` Now you say it: ${PH[cs[0]][0]}!`:""))}
 /* "Now you say it!": after hearing a letter sound the child says it out loud. This is practice, never a test: any try is cheered, nothing is
@@ -3128,7 +3232,7 @@ function rpAsk(){const R_=rpInit();if(L.ph=="pre")return rpPreAsk();if(L.diag)re
 function rpShow(){const q=L.q,s=SKI[L.cid]||SKI[L.id],nr=NR(),ph=L.ph=="pre"||L.diag?"Let’s see what you know":L.quiz?`Quiz · Question ${L.n+1}/10`:L.daily?`Daily adventure · Part ${DYL?DYL.seg+1:1}`:`Stage ${s.st}: ${s.n} · ${L.ph=="guided"?"Together":L.ph=="solo"?"On my own":""}`;
  let body="";if(q.t=="trace")body=trArea();else if(q.t=="tile")body='<div id="tz"></div>';else if(q.t=="tapw")body=`<div class="pgw">${q.lines.map((l,li)=>`<div>${l.map((w,wi)=>{const ix=q.lines.slice(0,li).reduce((a,x)=>a+x.length,0)+wi;return`<button class="tw${ix==q.hl?" on":""}" onclick="ans(${ix})">${w}</button>`}).join(" ")}</div>`).join("")}</div>`;
  else body=(q.sb?padH(q):"")+`<div class="opts${q.ltr?" lt":""}${rpPics(q)?" pics":""}${q.a.every(o=>String(o).replace(/<[^>]+>/g,"").length<=5)?" s":""}">${q.a.map((o,i)=>`<button class="opt" onclick="ans(${i})" aria-label="${esc(nameOf(o))}">${o}</button>`).join("")}</div>`;
- app(`<div class="card${nr?" nr":""}">${XB()}${L.quiz?"":`<button class="ghost exitb" onclick="pupHelp()" aria-label="Help">🐶 Help</button>`}${nr?"":`<small>${ph}</small>`}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.msg}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);
+ app(`<div class="card lsn${nr?" nr":""}">${LHD(!L.quiz)}${nr?"":`<small>${ph}</small>`}<div class="stg"><div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.msg}</div></div>${q.pre||""}<div class="big${q.big?"":" e"}" onclick="replay()" role="button" aria-label="Hear it again">${q.big||""}</div></div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);
  if(q.t=="tile")tileInit();if(q.t=="trace")trBegin();
  if(L.ph=="guided"&&L.n==0&&q.a&&q.a.length){const b=document.querySelectorAll(".opt")[q.c];if(b)b.classList.add("hl")}
  L.t0=Date.now();sndAv(q);replay();}
@@ -3242,7 +3346,7 @@ function rpDisc(sl){const s=SKI[L.id],esc_=x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\
  if(!L.dsc||L.dsc.sl!==sl)L.dsc={sl,miss:0,done:0,show:0};const D=L.dsc;
  const words=`<div class="dws">${sl.words.map(w=>`<span class="dw">${sl.pics?pe(w)||"":""}${sl.nr?"":`<b>${hi(w)}</b>`}</span>`).join("")}</div>`;
  const opts=sl.opts.map((o,j)=>`<button class="opt${sl.nr?"":" lt"}" onclick="rpDiscAns(${j})">${sl.nr&&pe(o)?pe(o):o}</button>`).join("");
- L.vt=sl.say;app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${D.done?sl.rule:"Let’s find out something!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)">${words}</div>${sl.ask?`<p class="qt">${sl.ask}</p>`:""}${D.done?"":`<div class="opts${sl.nr?" pics":" s"}">${opts}</div>`}${D.done?`<button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":"Next ➜"}</button>`:""}<div id="fb"></div></div>`);
+ L.vt=sl.say;app(`<div class="card lsn${NR()?" nr":""}">${LHD(0)}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${D.done?sl.rule:"Let’s find out something!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)">${words}</div>${sl.ask?`<p class="qt">${sl.ask}</p>`:""}${D.done?"":`<div class="opts${sl.nr?" pics":" s"}">${opts}</div>`}${D.done?`<button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":"Next ➜"}</button>`:""}<div id="fb"></div></div>`);
  if(!D.done)talk(sl.say);else talk(sl.rule)}
 function rpDiscAns(j){const sl=L.slides[L.ti],D=L.dsc;if(!sl||!sl.disc||D.done)return;if(j==sl.c){D.done=1;D.show=1;sfx.ok();pupReact("yay");rpDisc(sl);return}
  D.miss++;D.show=1;sfx.no();const b=document.querySelectorAll(".opt")[j];if(b){b.classList.add("no");b.disabled=1}
@@ -3483,7 +3587,7 @@ function plAskQ(){const d=L.dom;if(L.i>=L.flat.length||L.stop||L.end)return plDo
  if(!q||(!q.a&&q.t!="tile")){L.i++;return plAskQ()}L.q=q;L.g=g;L.done=0;L.t0=Date.now();plShow()}
 function plShow(){const q=L.q,nr=L.nrm||S.pre;let body="";if(q.t=="tile")body='<div id="tz"></div>';else if(q.t=="tapw")body=`<div class="pgw">${q.lines.map((l,li)=>`<div>${l.map((w,wi)=>{const ix=q.lines.slice(0,li).reduce((a,x)=>a+x.length,0)+wi;return`<button class="tw${ix==q.hl?" on":""}" onclick="ans(${ix})">${w}</button>`}).join(" ")}</div>`).join("")}</div>`;
  else body=(q.sb?padH(q):"")+`<div class="opts${q.ltr?" lt":""}${rpPics(q)?" pics":""}${q.a.every(o=>String(o).replace(/<[^>]+>/g,"").length<=5)?" s":""}">${q.a.map((o,i)=>`<button class="opt" onclick="ans(${i})" aria-label="${esc(nameOf(o))}">${o}</button>`).join("")}</div>`;
- app(`<div class="card${nr?" nr":""}">${plBar()}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.dom.n}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);plBarGo();if(q.t=="tile")tileInit();sndAv(q);replay()}
+ app(`<div class="card lsn${nr?" nr":""}">${plBar()}<div class="stg"><div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.dom.n}</div></div>${q.pre||""}<div class="big${q.big?"":" e"}" onclick="replay()" role="button" aria-label="Hear it again">${q.big||""}</div></div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);plBarGo();if(q.t=="tile")tileInit();sndAv(q);replay()}
 function plAns(i){if(L.done)return;L.done=1;SQ++;const q=L.q,ok=i==q.c;L.n++;if(ok)L.c++;const s=L.subs[L.g]=L.subs[L.g]||{n:0,c:0};s.n++;if(ok)s.c++;
  const pl=S.rp.plc;if(ok&&q.it){const k=q.it;if(k.startsWith("S:"))(pl.ok.S=pl.ok.S||[]).includes(k.slice(2))||pl.ok.S.push(k.slice(2));if(k.startsWith("L:"))(pl.ok.L=pl.ok.L||[]).includes(k.slice(2))||pl.ok.L.push(k.slice(2));(pl.ok.I=pl.ok.I||[]).push(k)}
  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=1;if(j==q.c&&ok)b.classList.add("ok");else if(j==i)b.classList.add("no")});
@@ -3600,7 +3704,7 @@ function rpReportCard(){const P=rpInit(),N=esc(S.name),pf=P.prof,weak=rpWeak(),d
  <p class="skl"><small>In each stage, the number shows how many skills ${N} can do on their own. The bar keeps filling until they are all “Mastered” (right first time on different days).</small></p>
  ${STAGES.map(([n,nm])=>{const ids=stIds(n),pc=Math.round(rpPct(ids)*100);return `<details class="rps"><summary><b>Stage ${n}: ${esc(nm)}</b> <span class="rpb"><u style="width:${pc}%;background:${STAGES[n-1][3]}"></u></span> <small>${ids.filter(i=>rpSt(i)>=3).length}/${ids.length}</small></summary><ul class="rpl">${ids.map(row).join("")}</ul></details>`}).join("")}</div>`}
 /* the old level number is now only a place on the path (used by a few games) */
-function rpPlayLabel(){if(!S.placed)return`Play games with ${S.pet} to find where to start`;const n=rpNext(),s=SKI[n.id];return(n.mode=="remedial"?"Let’s practise: ":n.mode=="review"?"Remember: ":S.fin?"Keep reading: ":`Stage ${s.st}: `)+s.n}
+function rpPlayLabel(){if(!S.placed)return`Find where to start`;const n=rpNext(),s=SKI[n.id];return(n.mode=="remedial"?"Let’s practise: ":n.mode=="review"?"Remember: ":S.fin?"Keep reading: ":`Stage ${s.st}: `)+s.n}
 
 render();IDB.get("readtrail2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
 </script></body></html>
