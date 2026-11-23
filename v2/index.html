@@ -684,6 +684,39 @@ body[data-area] #app>.card.lsn .opts.pics .opt{min-height:0;padding:0;background
 .lsn .plbar b{top:-11px}
 /* teaching slides: Biscuit and the speech bubble centred over the slide */
 .card.lsn>.row{justify-content:center;max-width:820px;width:100%;margin-inline:auto}
+
+/* ---------- Mini Stories: a full reading screen ---------- */
+#app:has(>.card.lsn)::before{display:none}
+.card.stc.lsn{min-height:calc(100vh - 34px);display:flex;flex-direction:column;align-items:center;gap:clamp(10px,2vh,18px);padding:16px clamp(14px,3vw,36px) 22px;border-width:3px}
+.card.stc.lsn>.lh{align-self:stretch}
+.sttl{margin:0;padding:3px 14px;border-radius:999px;background:var(--ucL,#ffe7c2);color:var(--ucD,#8a3d00);font-weight:700;font-size:15px}
+.stc.lsn .stpic{margin-top:auto;width:min(88vw,520px);max-width:100%;aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:inset 0 0 0 3px var(--ucL,#ffe7c2);font-size:clamp(90px,20vw,180px)}
+.stc.lsn .stpic>svg{width:100%;height:100%}
+.stc.lsn .stp{font-size:clamp(32px,5.5vw,52px);line-height:1.35;text-align:center;max-width:22ch;font-weight:700}
+.stc.lsn .stbt{display:flex;gap:14px;align-items:center;margin-bottom:auto}
+.stc.lsn .stsay{width:64px;height:64px;padding:0;border-radius:50%}
+.stc.lsn .stsay .uic{width:30px;height:30px}
+.btn.stgo{min-height:64px;padding:0 30px;font-size:clamp(22px,3vw,26px)}
+.btn.stgo .uic{width:26px;height:26px}
+.stc.lsn .stnw{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:auto}
+.stc.lsn .stnw .stw.big{display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:var(--r-md);font-size:clamp(34px,6vw,52px)}
+.stc.lsn .sts{display:inline-flex;width:40px;height:40px;border-radius:50%;background:var(--ucL,#ffe7c2);color:var(--ucD,#b84a00);align-items:center;justify-content:center}
+.stc.lsn .sts .uic{width:22px;height:22px}
+.stc.lsn>.stgo{margin-bottom:auto}
+.stc.lsn>.row{justify-content:center;max-width:720px;width:100%}
+.stc.lsn .opts{width:100%;max-width:880px;margin:auto;justify-content:center}
+.stc.lsn .opts.pics{--ow:clamp(104px,min(17vw,24vh),200px);display:flex;flex-wrap:wrap;gap:clamp(10px,2vw,22px)}
+.stc.lsn .opts.pics .opt{flex:none;width:var(--ow);height:var(--ow);padding:0}
+.stc.lsn .opts.pics .stem{font-size:calc(var(--ow)*.55)}
+@media(max-width:560px){.card.stc.lsn{padding:10px 10px 16px}.stc.lsn .opts.pics{--ow:min(calc((100vw - 92px)/3),150px);gap:10px}}
+
+/* trail map: the stage name stays readable at the left edge while its part of the trail is on screen */
+.track>.ul{will-change:transform;transition:none}
+/* shop: prices on one line; no corner curls on the item cards */
+.btn[onclick^="buy("]{white-space:nowrap}
+#app:has(.btn[onclick^="buy("]) .card::before,#app:has(.btn[onclick^="buy("]) .card::after{display:none}
+.card:has(>.btn[onclick^="buy("]),.card:has(>.btn[onclick^="wear("]),.card:has(>.btn[onclick^="equip("]){display:flex;flex-direction:column;align-items:center;text-align:center}
+.card>.btn[onclick^="buy("],.card>.btn[onclick^="wear("],.card>.btn[onclick^="equip("]{margin-top:auto}
 </style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <filter id="paint" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="2.6" result="g"/><feMorphology in="g" operator="dilate" radius="2" result="d"/><feFlood flood-color="#fffaf0" result="fl"/><feComposite in="fl" in2="d" operator="in" result="o"/><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .22 0 0 0 0 .12 0 0 0 0 .06 1.4 0 0 0 -1.0" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="8" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .85 1.2 0 0 0 -.9" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="o"/><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
 <filter id="grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="3" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="3" result="g"/><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .1 1.6 0 0 0 -.98" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="1" seed="6" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .86 1.5 0 0 0 -.98" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
@@ -969,6 +1002,11 @@ async function recOne(l){if(RECB)return;const m=()=>$("#recmsg");try{const st=aw
 function recDel(l){delete REC.u[l];recSave();recsnd()}
 function recDl(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({readtrail2_letter_sounds:1,u:REC.u})],{type:"application/json"}));a.download="readtrail2-letter-sounds.json";a.click()}
 function recUp(inp){const f=inp.files&&inp.files[0];if(!f)return;f.text().then(t=>{const o=JSON.parse(t);if(!o||!o.readtrail2_letter_sounds||typeof o.u!="object")throw 0;const ok={};for(const l in o.u)if(PH[l]&&/^data:audio\//.test(String(o.u[l])))ok[l]=o.u[l];REC.u=Object.assign(REC.u,ok);recSave();recsnd();const x=$("#recmsg");if(x)x.textContent=`Loaded ${Object.keys(ok).length} sounds.`}).catch(()=>{const x=$("#recmsg");if(x)x.textContent="That file is not a ReadTrail letter-sounds file."})}
+
+/* trail map: keep each stage name in view while its stretch of the trail is on screen (like a sticky label, inside a sideways scroller) */
+document.addEventListener("scroll",e=>{const sc=e.target;if(!sc||!sc.querySelector)return;const tr=sc.querySelector(":scope>.track");if(!tr)return;
+ const ls=[...tr.querySelectorAll(":scope>.ul")],x=sc.scrollLeft+12;ls.forEach((l,i)=>{const at=parseFloat(l.style.left)||0,nx=ls[i+1]?parseFloat(ls[i+1].style.left):Infinity,w=l.offsetWidth+16;
+  const d=Math.max(0,Math.min(x-at,nx-at-w));l.style.transform=d?`translateX(${d}px)`:""})},true);
 const NR=()=>{if(!L)return false;if(L.pl)return !!(L.nrm||S.pre);if(L.rp){const s=SKI[L.cid||L.id];return !!(s&&s.nr)}return false};
 const U={},pu=(k,a)=>{const u=U[k]=U[k]||[];let ix=a.map((_,i)=>i).filter(i=>!u.includes(i));if(!ix.length){u.length=0;ix=a.map((_,i)=>i)}const i=ix[R(ix.length)];u.push(i);return a[i].replace(/{n}/g,S.name).replace(/{p}/g,esc(S.pet))};
 /* ---------- art ---------- */
@@ -1390,7 +1428,11 @@ const UIC={home:UI_('<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5h3v5
  music:UI_('<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>'),mute:UI_('<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>'),
  user:UI_('<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4-5.6 7.5-5.6s6.3 1.6 7.5 5.6"/>'),gear:UI_('<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M5.5 18.5l1.9-1.9M16.6 7.4l1.9-1.9"/>'),
  play:UI_('<path d="M7 4.5v15l12.5-7.5z"/>',1),clock:UI_('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.8 2M9.5 2.8h5"/>'),family:UI_('<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M2.8 19.5c.8-3.4 2.8-5 5.2-5s4.4 1.6 5.2 5M13.6 19.5c.5-2.6 1.6-3.9 2.9-3.9 1.9 0 3.2 1.4 3.7 3.9"/>'),
- compass:UI_('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')};
+ compass:UI_('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
+ spk:UI_('<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>'),next:UI_('<path d="M5 12h13M13 6l6 6-6 6"/>')};
+/* story header: Home and how far through the story */
+const STH=p=>`<div class="lh">${XB()}<div class="lbar" role="progressbar" aria-label="How far through the story" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}"><i style="width:${p}%"></i></div></div>`;
+const stP=()=>{const s=ST_&&ST_.s;if(!s)return 0;const n=s.pages.length+(ST_.qs?ST_.qs.length:3);return Math.round(100*(ST_.inQ?s.pages.length+(ST_.qi||0):(ST_.pi||0)+1)/n)};
 /* Biscuit's face: the help button (tap = Biscuit helps) */
 const DOGF=()=>`<svg class="uic dogf" viewBox="-32 -112 64 64" aria-hidden="true">${dogG()}</svg>`;
 const XB=()=>`<button class="ghost exitb" onclick="leave()" aria-label="Back to home">${UIC.home}<span class="xl">Home</span></button>`;
@@ -3510,21 +3552,21 @@ function stOpen(id){const s=STORIES.find(x=>x.id==id);if(!s)return rpGo();L=null
 function stQs(s){const q=shuf(s.q.slice()).slice(0,3).map(x=>({t:"q",q:x[0],c:x[1],o:shuf(x.slice(1))}));const f=stFindQ(s);if(f)q.push(f);return q}
 function stFindQ(s){const ws=[...new Set(stWords(stText(s)).filter(w=>w.length>=3&&w.length<=5&&!(s.H||[]).includes(w)&&!(s.N||[]).includes(w)))];if(ws.length<4)return null;
  const t=pp(ws),near=ws.filter(w=>w!=t&&w.length==t.length&&(w[0]==t[0]||w.slice(-1)==t.slice(-1))),rest=ws.filter(w=>w!=t&&!near.includes(w)),d=shuf([...shuf(near),...shuf(rest)]).slice(0,2);return d.length<2?null:{t:"w",q:`Tap the word ${t}.`,c:t,o:shuf([t,...d]),w:t}}
-function stIntro(){const s=ST_.s,w=ST_.nw;app(`<div class="card stc">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${w.length>1?"Here are some new words!":"Here is a new word!"}</div></div><div class="stnw">${w.map(x=>`<button class="stw big" onclick="talk('${x}')">${esc(x)} 🔊</button>`).join("")}</div><p class="qt">${esc(s.t)}</p><button class="btn" onclick="stRead()">${NR()?"▶":"Read ➜"}</button></div>`);talk(w.length>1?"Here are some new words. Tap each one to hear it.":"Here is a new word. Tap it to hear it.")}
+function stIntro(){const s=ST_.s,w=ST_.nw;app(`<div class="card stc lsn">${STH(0)}<p class="sttl">${esc(s.t)}</p><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${w.length>1?"Here are some new words!":"Here is a new word!"}</div></div><div class="stnw">${w.map(x=>`<button class="stw big" onclick="talk('${x}')" aria-label="Hear ${esc(x)}">${esc(x)}<span class="sts">${UIC.spk}</span></button>`).join("")}</div><button class="btn stgo" onclick="stRead()">${NR()?UIC.play:`Read ${UIC.next}`}</button></div>`);talk(w.length>1?"Here are some new words. Tap each one to hear it.":"Here is a new word. Tap it to hear it.")}
 const stTok=t=>esc(t).replace(/[A-Za-z]+/g,w=>`<span class="stw" onclick="stTapW(this)">${w}</span>`);
 function stRead(){const s=ST_.s,p=s.pages[ST_.pi],last=ST_.pi==s.pages.length-1;
- app(`<div class="card stc">${XB()}<small>${esc(s.t)} · ${ST_.pi+1}/${s.pages.length}</small><div class="stpic" role="img" aria-label="A picture for this page">${p[1]}</div><div class="stp">${stTok(p[0])}</div><div class="stbt"><button class="ghost" aria-label="Read this page to me" onclick="stSay()">🔊</button><button class="btn" onclick="stFwd()">${last?"Questions ➜":"Next ➜"}</button></div></div>`)}
+ ST_.inQ=0;app(`<div class="card stc lsn">${STH(stP())}<p class="sttl">${esc(s.t)} · page ${ST_.pi+1} of ${s.pages.length}</p><div class="stpic" role="img" aria-label="A picture for this page">${p[1]}</div><div class="stp">${stTok(p[0])}</div><div class="stbt"><button class="ghost stsay" aria-label="Read this page to me" onclick="stSay()">${UIC.spk}</button><button class="btn stgo" onclick="stFwd()">${last?"Questions":"Next"} ${UIC.next}</button></div></div>`)}
 function stTapW(e){const w=e.textContent;ST_.pt[ST_.pi]=1;ST_.tw[w.toLowerCase()]=1;e.classList.add("tapped");talk(w)}
 function stSay(){ST_.pt[ST_.pi]=1;ST_.m++;talk(ST_.s.pages[ST_.pi][0])}
 function stFwd(){const s=ST_.s;if(ST_.pi<s.pages.length-1){ST_.pi++;return stRead()}stAsk()}
 /* ---- questions: first try right counts as independent ---- */
 function stAsk(){const Q=ST_.qs[ST_.qi];if(!Q)return stEnd();ST_.t1=1;ST_.done=0;const pic=o=>/^[^A-Za-z]+$/.test(o);
- app(`<div class="card stc">${XB()}<small>${esc(ST_.s.t)}</small><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${esc(Q.q)}</div></div><div class="opts${Q.o.every(pic)?" pics":""}" id="sto">${Q.o.map((o,j)=>`<button class="opt${pic(o)?"":" lt"}" onclick="stAns(${j})">${pic(o)?`<span class="stem">${o}</span>`:esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`);talk(Q.q)}
+ ST_.inQ=1;app(`<div class="card stc lsn">${STH(stP())}<p class="sttl">${esc(ST_.s.t)}</p><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${esc(Q.q)}</div></div><div class="opts${Q.o.every(pic)?" pics":""}" id="sto">${Q.o.map((o,j)=>`<button class="opt${pic(o)?"":" lt"}" onclick="stAns(${j})">${pic(o)?`<span class="stem">${o}</span>`:esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`);talk(Q.q)}
 function stAns(j){const Q=ST_.qs[ST_.qi];if(ST_.done)return;const ok=Q.o[j]==Q.c,bs=[...document.querySelectorAll("#sto .opt")],fb=$("#fb");
  if(ok){ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;if(ST_.t1){ST_.qc++;if(Q.t=="w")ST_.fw[0]++}
-  bs.forEach((b,i)=>{b.disabled=1;if(i==j)b.classList.add("ok")});sfx.ok();pupReact("yay");const m=ST_.t1?"Yes!":"Yes, that is it!";fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="ST_.qi++;stAsk()">${NR()?"▶":"Next ➜"}</button>`;talk(m);return}
+  bs.forEach((b,i)=>{b.disabled=1;if(i==j)b.classList.add("ok")});sfx.ok();pupReact("yay");const m=ST_.t1?"Yes!":"Yes, that is it!";fb.innerHTML=`<p><b>${m}</b></p><button class="btn stgo" onclick="ST_.qi++;stAsk()">${NR()?UIC.play:`Next ${UIC.next}`}</button>`;talk(m);return}
  sfx.no();bs[j].disabled=1;bs[j].classList.add("no");if(ST_.t1){ST_.t1=0;const h=Q.t=="w"?"Not that one. Look at the letters and try again.":"Not that one. Think about the story and try again.";fb.innerHTML=`<p><b>${h}</b></p>`;talk(h);return}
- ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;bs.forEach((b,i)=>{b.disabled=1;if(Q.o[i]==Q.c)b.classList.add("hl")});const m="That’s okay! It is this one.";fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="ST_.qi++;stAsk()">${NR()?"▶":"Next ➜"}</button>`;talk(m)}
+ ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;bs.forEach((b,i)=>{b.disabled=1;if(Q.o[i]==Q.c)b.classList.add("hl")});const m="That’s okay! It is this one.";fb.innerHTML=`<p><b>${m}</b></p><button class="btn stgo" onclick="ST_.qi++;stAsk()">${NR()?UIC.play:`Next ${UIC.next}`}</button>`;talk(m)}
 function stEnd(){const R_=rpInit(),s=ST_.s,M=stI(),pg=s.pages.length,help=Object.keys(ST_.pt).length,ind=pg-help,taps=Object.keys(ST_.tw).length,ok=ind/pg>=.75&&ST_.qn&&ST_.qc*3>=ST_.qn*2,prev=M[s.id]||{};
  M[s.id]={d:ymd(),n:(prev.n||0)+1,pg,ind,taps,qc:ST_.qc,qn:ST_.qn,fw:ST_.fw,st:ok?"ind":"help",again:!ok&&(prev.n||0)<2,at:R_.cnt};
  const m=R_.m.story=R_.m.story||{n:0,pg:0,ind:0,q:0,qc:0,fn:0,fc:0};m.n++;m.pg+=pg;m.ind+=ind;m.q+=ST_.qn;m.qc+=ST_.qc;m.fn+=ST_.fw[1];m.fc+=ST_.fw[0];
