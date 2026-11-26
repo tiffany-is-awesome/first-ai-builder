@@ -85,6 +85,7 @@ table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{border-bottom:1
  <div class="card"><div class="row"><button class="b p" onclick="A.run()">Run self-audit</button> <span id="aprog" class="mono"></span></div></div>
  <div id="aout"></div>
  <div class="card"><h2>Checks that need a person <span class="pill human">needs a person</span></h2><div id="human"></div></div>
+ <div class="card"><h2>Mini Story pictures <span class="pill human">needs a person</span></h2><p>Every page's picture next to its sentence. Check that each picture shows what the sentence says.</p><button class="b" onclick="A.sheet()">Show all story pages</button><div id="sheet" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px"></div></div>
 </section>
 
 <!-- ======================= ABOUT ======================= -->
@@ -392,6 +393,9 @@ T.add("Recorded letter sounds play instead of “the start of sun”",async()=>{
  const good=before.join("|")=="say:S says the sound at the start of sun."&&after.join("|")=="say:S says|sound:s|say:like sun."&&/the sound at the start of zebra/.test(other.join(""))&&pa&&pg>=26;
  return(good?ok:bad)(`Without a recording: ${before.join(" → ")}. With a recording of s: ${after.join(" → ")}. A sound with no recording still uses the hint word: ${other.join(" → ")}. Parent area link: ${pa?"yes":"NO"}; recording screen shows ${pg} letters. (Recording itself needs a real microphone and was not tested here.)`)});
 
+T.add("Every Mini Story page has a drawn picture",async()=>{await fresh("ace");const r=tbox.x(`(()=>{const miss=[],bad=[];let n=0;STORIES.forEach(s=>s.pages.forEach((pg,i)=>{n++;if(!(STA[s.id]&&STA[s.id][i]))miss.push(s.id+"."+(i+1));else{const h=stArt(s,i);if(!/^<svg/.test(h)||h.length<800)bad.push(s.id+"."+(i+1))}}));return{n,miss,bad}})()`),e=tbox.errs();
+ return r.miss.length||r.bad.length||e.length?bad(`Missing scenes: ${r.miss.join(", ")||"none"}; scenes that did not draw: ${r.bad.join(", ")||"none"}${e.length?"; errors: "+e.join(" | "):""}`):ok(`All ${r.n} Mini Story pages have a drawn scene and every one renders. (Whether each picture matches its sentence well is for a person to judge: see the contact sheet in the Self-audit tab.)`)});
+
 T.add("Delete account really deletes",async()=>{const lr=await fresh("ace");tbox.x(`__dev.creditPre("s2_syl");save()`);await sleep(300);tbox.x("window.confirm=()=>true");await tbox.x("wipeAll()");await sleep(300);await tbox.reload();await sleep(900);const kids=tbox.x("Object.keys(ALL.kids).length");
  return kids==0?ok("After 'Delete account' and a refresh, no explorers came back."):bad(`After 'Delete account' and a refresh, ${kids} explorer(s) came back from the backup database: the delete does not clear the backup copy.`)});
 
@@ -422,7 +426,8 @@ function hRender(){const o=hLoad();$("#human").innerHTML=`<table><tr><th style="
 function hSet(k,f,v){const o=hLoad();o[k]=o[k]||{};o[k][f]=v;if(f=="ok")o[k].when=v?new Date().toLocaleDateString():"";hSave(o);hRender()}
 hRender();
 
-const A={async run(){$("#aprog").textContent="measuring…";const b=tbox;await b.open("audit",{reset:true});b.x(`__dev.kid("Audit",6)`);b.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')})");
+const A={async sheet(){await tbox.open("sheet",{reset:true});tbox.x(`__dev.kid("Sheet",6)`);$("#sheet").innerHTML=tbox.x("STORIES.flatMap(s=>s.pages.map((pg,i)=>`<figure style='margin:0'><div style='aspect-ratio:4/3;border:1px solid #ddd;border-radius:8px;overflow:hidden'>${stArt(s,i).replace('<svg ','<svg style=\"width:100%;height:100%\" ')}</div><figcaption style='font-size:12px;margin-top:4px'><b>${s.t} ${i+1}</b> · ${pg[0]}</figcaption></figure>`)).join('')")},
+ async run(){$("#aprog").textContent="measuring…";const b=tbox;await b.open("audit",{reset:true});b.x(`__dev.kid("Audit",6)`);b.x("__dev.credit(SKILLS.map(s=>s.id));LTO.forEach(c=>{plCredit('L:'+c,'dev');plCredit('S:'+c,'dev')})");
  const rows=b.x(`(()=>{const R=[];SKILLS.forEach(s=>{let n=0,opts=[],two=0,leak=0,echo=0,pics=0,why=0,hint=0,say=0,nov=0,keys=new Set();
   for(const ph of["guided","solo"]){L={rp:1,id:s.id,used:new Set(),ph,n:0,sf:[],streak:0,tot:0};for(let i=0;i<16;i++){const q=rpGen(s.id,ph=="guided"?1:0);if(!q)continue;n++;keys.add(q.k);
    if(ph=="solo"){const k=q.t=="tile"?6:q.t=="trace"?0:q.t=="tapw"?q.lines.flat().length:(q.a||[]).length;if(k)opts.push(k);if(k==2)two++}
