@@ -479,7 +479,7 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 .pm h2,.lgh h2,.par h2{margin:6px 0}.pms{display:flex;align-items:center;gap:14px;width:92%;padding:14px 16px;text-align:left;border-radius:26px;border:4px solid var(--c);background:var(--grain),linear-gradient(#fffaf0,#f7e4b0);color:var(--ink);box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .pms:nth-of-type(even){margin-left:auto}.pmi{font-size:54px;line-height:1;flex:none}.pmt{flex:1;display:block}.pmt b{display:block;font-size:26px}.pmt small{display:block;font-size:18px;font-weight:600}.pmt em{font-style:normal;font-size:16px;font-weight:700}
 .pmb{display:block;height:12px;border-radius:8px;background:#0002;margin:6px 0 2px;overflow:hidden}.pmb i{display:block;height:100%;background:var(--c)}.pmd{font-size:26px;letter-spacing:4px;color:#fff9;line-height:1;margin:4px 0}
-.par{text-align:left}.par .card{margin:12px 0}.par h3{margin:2px 0 6px}.par h4{margin:12px 0 4px}.skl{font-size:18px;line-height:1.6}.skl li{margin-left:20px}
+.recg{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}.recc{border:2px solid #ddd;border-radius:12px;padding:6px;text-align:center;background:#fff}.recc.on{border-color:#4f9a3a;background:#f1faee}.recc b{font-size:28px;display:block}.recc small{display:block;font-size:13px;color:#666}.recc .ghost{padding:2px 8px;margin:2px;font-size:18px}.par{text-align:left}.par .card{margin:12px 0}.par h3{margin:2px 0 6px}.par h4{margin:12px 0 4px}.skl{font-size:18px;line-height:1.6}.skl li{margin-left:20px}
 .skc{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;font-weight:800;margin:2px;background:#d9d3c3;color:#6a6350;text-transform:uppercase}
 .pch{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:4px}.pcc{display:flex;flex-direction:column;align-items:center;font-size:26px;line-height:1.1;min-height:54px;min-width:58px;padding:2px 8px}.pcc small{font-size:13px;font-weight:700}
 /* say-the-sound step */
@@ -593,6 +593,131 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
 @keyframes dsGrab{0%,45%{transform:rotate(-5deg)}51%{transform:rotate(-8deg)}54%,56%{transform:translate(6px,5px) rotate(62deg)}63%{transform:rotate(-8deg)}72%{transform:rotate(1deg)}80%,100%{transform:none}}
 @keyframes dsGrabB{0%,50%{transform:none}54%,56%{transform:rotate(5deg)}64%,100%{transform:none}}
 
+
+/* ===================== DESIGN LAYER (Nov 2026) =====================
+   One calm, consistent finish over the older layers above. Goals: one clear focus per screen,
+   big pictures, even shapes, one icon style, fewer decorations during lessons. */
+:root{--r-lg:26px;--r-md:18px;--r-sm:14px}
+/* control icons */
+.uic{width:1.15em;height:1.15em;flex:none;vertical-align:-.18em}
+.ghost,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em}
+.top .ghost .uic{width:24px;height:24px}
+.dogf{width:34px;height:34px}
+/* even, quieter shapes everywhere (the old ones were deliberately lopsided) */
+.card,#tour{border-radius:var(--r-lg)}
+.ghost{border-radius:var(--r-sm);border-width:2.5px}
+.btn{border-radius:var(--r-md)}
+.opt,.tile{border-radius:var(--r-md)}
+.opt:nth-child(even),.opt:nth-child(odd),.nav .nb,.nav .nb:nth-child(n){transform:none;rotate:none}
+.nav .nb:hover{transform:translateY(-3px)}
+.opt:hover:not(:disabled){transform:translateY(-2px)}
+/* home: main buttons */
+.btn.play{width:100%;font-size:clamp(21px,2.6vw,27px);min-height:64px;padding:10px 22px;margin:10px 0 0;line-height:1.2;text-align:left}
+.btn.play .uic{width:26px;height:26px}
+.btn.play span{flex:1}
+.btn.play.alt{background:#fff;color:var(--ink);border:3px solid var(--uc,#ff7a1a);box-shadow:0 5px 0 var(--ucD,#c23d0c);text-shadow:none;min-height:56px;font-size:clamp(19px,2.2vw,23px)}
+.btn.play.alt small{font-weight:600;opacity:.7;font-size:.8em}
+/* home on wide screens: the campfire picture no longer pushes Play below the fold */
+#t-daily.alt{background:#fff;color:var(--ink);border:3px solid #a777ff;box-shadow:0 5px 0 #6b3ad6,0 10px 18px rgba(6,28,80,.18)}
+@media(min-width:860px){body[data-area=camp] #app{max-width:1180px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);column-gap:22px;align-items:start}
+ body[data-area=camp] #app>*,body[data-area=camp] #app::before{grid-column:1/-1}
+ body[data-area=camp] #app>.top{grid-row:2}
+ body[data-area=camp] #app{grid-template-rows:auto auto 1fr 1fr}
+ body[data-area=camp] #app>.scene{grid-column:1;grid-row:3/span 2;margin:0}
+ body[data-area=camp] #app>.btn.play,body[data-area=camp] #app>.chest,body[data-area=camp] #app>[onclick*="chest"]{grid-column:2;margin:0 0 14px}
+ body[data-area=camp] #app>#t-play{align-self:end;min-height:96px;font-size:28px;grid-row:3}
+ body[data-area=camp] #app>#t-daily{grid-row:4;align-self:start;margin-top:4px}
+ body[data-area=camp] #app>#t-chest{grid-row:5;grid-column:1/-1;margin-top:14px}
+ body[data-area=camp] .nav{grid-template-columns:repeat(7,minmax(0,1fr));margin-top:18px}}
+@media(max-width:859px){body[data-area=camp] .nav>.nb:last-child:nth-child(3n+1){grid-column:1/-1;flex-direction:row;justify-content:center;gap:12px}}
+
+/* ---------- lessons ---------- */
+/* no bunting or corner flourishes while learning: nothing competes with the question */
+body[data-area=learn] #app::before,body[data-area=test] #app::before,body[data-area=daily] #app::before{display:none}
+.card.lsn::before,.card.lsn::after{display:none}
+body[data-area=learn] #app,body[data-area=test] #app,body[data-area=daily] #app{padding-top:12px}
+body[data-area=learn] #app>.card,body[data-area=test] #app>.card,body[data-area=daily] #app>.card{border-width:3px;box-shadow:0 6px 0 var(--ucD),0 18px 40px rgba(6,28,80,.28);min-height:calc(100vh - 34px);padding:16px clamp(14px,3vw,36px) 22px}
+/* header: Home · progress · Help (same as the starting games) */
+.lh{display:flex;align-items:center;gap:clamp(10px,2vw,18px);margin:0 0 6px}
+.lh .exitb,.plh .exitb{margin:0;min-height:52px;min-width:52px;padding:0 14px;font-size:19px}
+.lh .exitb .uic{width:26px;height:26px}
+.lh .hlp{padding:0 12px 0 6px}
+.lbar{flex:1;height:14px;border-radius:8px;background:rgba(20,40,90,.10);overflow:hidden}
+.lbar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#ffb400,#ff7a1a);transition:width .6s ease}
+@media(max-width:560px){.lh .xl,.plh .xl{display:none}.lh .exitb,.plh .exitb{padding:0;width:52px}.lh .hlp{width:56px}}
+@media(prefers-reduced-motion:reduce){.lbar i{transition:none}}
+.card.lsn>small:first-of-type{align-self:center;margin:2px auto 6px}
+/* the prompt: Biscuit beside a large picture on a soft spotlight, with a speaker badge = tap to hear again */
+.lsn .stg{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:auto}
+.lsn .stg>.row{width:100%;max-width:820px}
+.lsn.nr .stg{flex-direction:row;justify-content:center;align-items:flex-end;gap:clamp(8px,3vw,34px)}
+.lsn.nr .stg>.row{width:auto;max-width:none;flex:none;margin:0}
+.lsn.nr .stg>.big{margin:4px 0}
+.lsn .big{position:relative;width:fit-content;min-width:clamp(120px,22vw,210px);min-height:clamp(120px,22vw,210px);margin:4px auto;padding:clamp(10px,1.6vw,18px) clamp(14px,2vw,24px);display:flex;align-items:center;justify-content:center;border-radius:999px;background:radial-gradient(closest-side,#fff 62%,var(--ucL,#fff3e0) 63%,var(--ucL,#fff3e0) 99%,transparent 100%);animation:none}
+.lsn .big.e{display:none}
+body[data-area] #app>.card.lsn .big{font-size:clamp(64px,min(10vw,13vh),112px)}
+.lsn .big svg.pv,.lsn .big .pe{width:clamp(96px,16vw,170px)!important;height:clamp(96px,16vw,170px)!important;font-size:clamp(80px,13vw,140px)}
+.lsn .big:has(.dws),.lsn .big:has(span),.lsn .big:has(.stw){border-radius:var(--r-lg);background:#fff;box-shadow:inset 0 0 0 3px var(--ucL,#ffe7c2)}
+.lsn.nr .big::after{content:"";position:absolute;right:2px;bottom:2px;width:46px;height:46px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6a1a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5h3.5L12 6v12l-4.5-3.5H4z' fill='%23ff6a1a'/%3E%3Cpath d='M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11'/%3E%3C/svg%3E") center/26px no-repeat;box-shadow:0 3px 0 var(--ucD,#c23d0c),0 6px 14px rgba(0,0,0,.15)}
+.lsn.nr .big{cursor:pointer}
+.lsn.nr .big:active{transform:scale(.97)}
+body[data-area] #app>.card.lsn .mini{width:clamp(78px,10vw,128px)}
+.lsn .qt{text-align:center;margin:8px auto 0}
+/* answers: centred, square picture cards with the picture filling them; word cards stay wide */
+body[data-area] #app>.card.lsn .opts{width:100%;max-width:880px;margin:clamp(14px,3vh,28px) auto auto;justify-content:center}
+.lsn .opts.pics{--ow:clamp(104px,min(17vw,24vh),200px);display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(10px,2vw,22px)}
+.lsn .opts.pics .opt{flex:none;width:var(--ow);height:var(--ow)}
+body[data-area] #app>.card.lsn .opts.pics .opt{min-height:0;padding:0;background:#fff;border:3px solid var(--uc);box-shadow:0 6px 0 var(--ucD)}
+.lsn .opts.pics .opt svg.pv,.lsn .opts.pics .opt .pe{width:calc(var(--ow)*.68)!important;height:calc(var(--ow)*.68)!important;font-size:calc(var(--ow)*.56)}
+.lsn .opts:not(.pics){grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.lsn .opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 2px 0 var(--ucD)}
+.lsn #fb{text-align:center;min-height:1.6em}
+/* phones: keep everything on one screen */
+@media(max-width:560px){body[data-area] #app>.card.lsn{padding:10px 10px 16px}
+ .lsn.nr .stg{gap:4px}.lsn .big{min-width:132px;min-height:132px}
+ body[data-area] #app>.card.lsn .opts.pics{gap:10px;--ow:min(calc((100vw - 92px)/3),150px)}}
+@media(max-height:620px){.lsn .big{min-width:110px;min-height:110px}.lsn .big svg.pv{width:88px!important;height:88px!important}}
+
+/* starting games: same header look as lessons */
+.lsn .plh{margin:0 0 6px;gap:clamp(10px,2vw,18px)}
+.lsn .plbar{height:14px;border:0;background:rgba(20,40,90,.10);border-radius:8px}
+.lsn .plbar i{background:linear-gradient(90deg,#ffb400,#ff7a1a)}
+.lsn .plbar b{top:-11px}
+/* teaching slides: Biscuit and the speech bubble centred over the slide */
+.card.lsn>.row{justify-content:center;max-width:820px;width:100%;margin-inline:auto}
+
+/* ---------- Mini Stories: a full reading screen ---------- */
+#app:has(>.card.lsn)::before{display:none}
+.card.stc.lsn{min-height:calc(100vh - 34px);display:flex;flex-direction:column;align-items:center;gap:clamp(10px,2vh,18px);padding:16px clamp(14px,3vw,36px) 22px;border-width:3px}
+.card.stc.lsn>.lh{align-self:stretch}
+.sttl{margin:0;padding:3px 14px;border-radius:999px;background:var(--ucL,#ffe7c2);color:var(--ucD,#8a3d00);font-weight:700;font-size:15px}
+.stc.lsn .stpic{margin-top:auto;width:min(88vw,520px);max-width:100%;aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:inset 0 0 0 3px var(--ucL,#ffe7c2);font-size:clamp(90px,20vw,180px)}
+.stc.lsn .stpic>svg{width:100%;height:100%}
+.stc.lsn .stp{font-size:clamp(32px,5.5vw,52px);line-height:1.35;text-align:center;max-width:22ch;font-weight:700}
+.stc.lsn .stbt{display:flex;gap:14px;align-items:center;margin-bottom:auto}
+.stc.lsn .stsay{width:64px;height:64px;padding:0;border-radius:50%}
+.stc.lsn .stsay .uic{width:30px;height:30px}
+.btn.stgo{min-height:64px;padding:0 30px;font-size:clamp(22px,3vw,26px)}
+.btn.stgo .uic{width:26px;height:26px}
+.stc.lsn .stnw{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:auto}
+.stc.lsn .stnw .stw.big{display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:var(--r-md);font-size:clamp(34px,6vw,52px)}
+.stc.lsn .sts{display:inline-flex;width:40px;height:40px;border-radius:50%;background:var(--ucL,#ffe7c2);color:var(--ucD,#b84a00);align-items:center;justify-content:center}
+.stc.lsn .sts .uic{width:22px;height:22px}
+.stc.lsn>.stgo{margin-bottom:auto}
+.stc.lsn>.row{justify-content:center;max-width:720px;width:100%}
+.stc.lsn .opts{width:100%;max-width:880px;margin:auto;justify-content:center}
+.stc.lsn .opts.pics{--ow:clamp(104px,min(17vw,24vh),200px);display:flex;flex-wrap:wrap;gap:clamp(10px,2vw,22px)}
+.stc.lsn .opts.pics .opt{flex:none;width:var(--ow);height:var(--ow);padding:0}
+.stc.lsn .opts.pics .stem{font-size:calc(var(--ow)*.55)}
+@media(max-width:560px){.card.stc.lsn{padding:10px 10px 16px}.stc.lsn .opts.pics{--ow:min(calc((100vw - 92px)/3),150px);gap:10px}}
+
+/* trail map: the stage name stays readable at the left edge while its part of the trail is on screen */
+.track>.ul{will-change:transform;transition:none}
+/* shop: prices on one line; no corner curls on the item cards */
+.btn[onclick^="buy("]{white-space:nowrap}
+#app:has(.btn[onclick^="buy("]) .card::before,#app:has(.btn[onclick^="buy("]) .card::after{display:none}
+.card:has(>.btn[onclick^="buy("]),.card:has(>.btn[onclick^="wear("]),.card:has(>.btn[onclick^="equip("]){display:flex;flex-direction:column;align-items:center;text-align:center}
+.card>.btn[onclick^="buy("],.card>.btn[onclick^="wear("],.card>.btn[onclick^="equip("]{margin-top:auto}
 </style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <filter id="paint" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="2.6" result="g"/><feMorphology in="g" operator="dilate" radius="2" result="d"/><feFlood flood-color="#fffaf0" result="fl"/><feComposite in="fl" in2="d" operator="in" result="o"/><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .22 0 0 0 0 .12 0 0 0 0 .06 1.4 0 0 0 -1.0" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="8" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .85 1.2 0 0 0 -.9" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="o"/><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
 <filter id="grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="3" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="3" result="g"/><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .1 1.6 0 0 0 -.98" result="sp"/><feComposite in="sp" in2="g" operator="in" result="s2"/><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="1" seed="6" result="n2"/><feColorMatrix in="n2" type="matrix" values="0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .86 1.5 0 0 0 -.98" result="hl"/><feComposite in="hl" in2="g" operator="in" result="h2"/><feMerge><feMergeNode in="g"/><feMergeNode in="s2"/><feMergeNode in="h2"/></feMerge></filter>
@@ -609,6 +734,13 @@ body[data-area=learn] #app>.card #fb,body[data-area=test] #app>.card #fb,body[da
    Ten stages. Each stage is a list of skills; every skill has prerequisites, so a child is never pushed into something
    before the skills underneath it are learned. Strands: L listening and language, P sounds in spoken words, A letters,
    D decoding (sounding words out), S sentences and print, M meaning (vocabulary, grammar), C comprehension. */
+/* ===== Testing sandbox: only when the address ends in ?sandbox=NAME (used by devtest.html).
+   A sandbox saves under its own name, never touches a real child's progress, never syncs, and can move its clock forward to test reviews. */
+const SBX=(()=>{try{const m=/[?&]sandbox=([a-z0-9_-]{1,24})/i.exec(location.search);return m?m[1].toLowerCase():null}catch(e){return null}})(),LSK=SBX?"readtrail2__sandbox_"+SBX:"readtrail2";
+if(SBX){window.__sbxErr=[];addEventListener("error",e=>__sbxErr.push(String(e.message||e)));addEventListener("unhandledrejection",e=>__sbxErr.push("promise: "+String(e.reason&&e.reason.message||e.reason)));
+ if(/[?&]noaudio=1/.test(location.search)){try{delete window.speechSynthesis}catch(e){}try{Object.defineProperty(window,"speechSynthesis",{value:undefined,configurable:true})}catch(e){}}
+ try{const off=+localStorage.getItem(LSK+"__clock")||0;if(off){const D0=Date;window.Date=class extends D0{constructor(...a){a.length?super(...a):super(D0.now()+off)}static now(){return D0.now()+off}}}}catch(e){}
+ addEventListener("DOMContentLoaded",()=>{const d=document.createElement("div");d.id="sbxtag";d.textContent="🧪 TEST SANDBOX · "+SBX;d.style.cssText="position:fixed;left:0;bottom:0;z-index:99999;background:#7b1fa2;color:#fff;font:600 11px system-ui;padding:3px 8px;border-top-right-radius:8px;opacity:.85;pointer-events:none";document.body.appendChild(d)})}
 const STAGES=[
  [1,"Listening, language and books","Get ready to read: listen, talk about pictures, find out how a book works.","#7ed957"],
  [2,"Sounds in spoken words","Hear and play with the sounds inside words. No letters needed yet.","#2f9c95"],
@@ -739,12 +871,12 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const D={name:"",age:6,pet:"Biscuit",level:1,coins:0,earned:0,own:[],eq:{kid:[],dog:[]},skin:"#8d5a3a",shirt:"#2f9c95",fur:"#d9a066",theme:"night",music:true,voice:true,books:0,correct:0,lessons:0,treats:0,likes:"",placed:false,read:[],fin:false,girl:false,hair:"#1d1a22",m:{},sk:{},lgc:{},tm:{},tx:{},lim:0,nosfx:false,calm:false,lgd:0,seen:{},lgl:[]};
 const clone=()=>JSON.parse(JSON.stringify(D));let S=clone(),ALL={cur:null,kids:{},ts:0},DB=null,UID=null,tmr;
 /* device saving: localStorage plus a backup copy in IndexedDB, and ask the browser to keep it */
-const IDB=(()=>{let p=null;const op=()=>p=p||new Promise((ok,no)=>{try{const r=indexedDB.open("readtrail2",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}});
+const IDB=(()=>{let p=null;const op=()=>p=p||new Promise((ok,no)=>{try{const r=indexedDB.open(SBX?LSK:"readtrail2",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}});
 return{get:k=>op().then(d=>new Promise(ok=>{const q=d.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>ok(null)})).catch(()=>null),set:(k,v)=>op().then(d=>{d.transaction("kv","readwrite").objectStore("kv").put(v,k)}).catch(()=>{})}})();
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
-try{const o=JSON.parse(localStorage.getItem("readtrail2")||"null");if(o)ALL=o;else{const old=JSON.parse(localStorage.getItem("readtrail2_legacy")||"null");if(old&&old.name)ALL.kids.k1=Object.assign(clone(),old,{placed:true})}}catch(e){}
+try{const o=JSON.parse(localStorage.getItem(LSK)||"null");if(o)ALL=o;else{const old=JSON.parse((SBX?null:localStorage.getItem("readtrail2_legacy"))||"null");if(old&&old.name)ALL.kids.k1=Object.assign(clone(),old,{placed:true})}}catch(e){}
 function adopt(){if(ALL.cur&&ALL.kids[ALL.cur]){S=ALL.kids[ALL.cur]=Object.assign(clone(),ALL.kids[ALL.cur]);S.m=S.m||{};if(S.placed&&!(S.rp&&S.rp.v==2)){S.placed=false;S.rp={v:2,taught:{},cnt:0,lf:[],rem:null,prof:null,qz:{},sn:[],mig:1};S.qz={};S.level=1;S.fin=false}else if(!S.rp)S.rp={v:2,taught:{},cnt:0,lf:[],rem:null,prof:null,qz:{},sn:[]};if(S.pre===undefined)S.pre=(S.age||6)<=5;if(["#f7d9e6","#fff1c9","#d9e6f7","#e7dccd","#d9f0e4","#e6d9f5"].includes(S.fur))S.fur="#d9a066";if(!S.mz2){S.mz2=1;S.music=true}}else S=clone()}adopt();
-function save(){ALL.ts=Date.now();IDB.set("readtrail2",JSON.stringify(ALL));try{localStorage.setItem("readtrail2",JSON.stringify(ALL))}catch(e){}awSch(400);clearTimeout(tmr);tmr=setTimeout(()=>{if(DB)DB.set({all:JSON.stringify(ALL)}).catch(()=>{})},1500)}
+function save(){ALL.ts=Date.now();IDB.set("readtrail2",JSON.stringify(ALL));try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}awSch(400);clearTimeout(tmr);tmr=setTimeout(()=>{if(DB)DB.set({all:JSON.stringify(ALL)}).catch(()=>{})},1500)}
 let AC,mt;const tone=(f,d=.12,ty="sine",v=.06,at=0)=>{try{if(S.nosfx)return;AC=AC||new AudioContext();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}};
 const sfx={ok:()=>{tone(660);tone(880,.15,"sine",.06,.1)},no:()=>tone(200,.25,"triangle"),click:()=>tone(520,.05),win:()=>MZ.sting("yay")};
 /* ---------- music: a small in-browser band (no files to download) ---------- */
@@ -839,9 +971,45 @@ try{if(window.speechSynthesis){pickV();speechSynthesis.onvoiceschanged=pickV}}ca
 const spk=t=>spk0(sfix(String(t).replace(/<[^>]+>/g,"")));
 /* Computer voices cannot say a letter sound on its own ("lll" comes out as L-L-L, "ks" as K-S),
    so a sound is spoken as a hint word instead: "the sound at the start of lion", "the sound at the end of box". */
-let SNDF=null;function sfix(t){try{if(!SNDF){const m={};Object.entries(PH).forEach(([l,[k]])=>{if(!m[k])m[k]=l});const e=Object.keys(m).sort((a,b)=>b.length-a.length).join("|");SNDF={m,T:"(?:"+e+")"}}const{m,T}=SNDF,hw=k=>m[k]=="x"?"box":PH[m[k]][1],one=(k,w)=>m[k]=="x"?"the sound at the end of box":`the sound at the start of ${w||hw(k)}`;t=t.replace(new RegExp(`(?<![A-Za-z’'])${T}(?:, ${T})+(?![A-Za-z])`,"g"),q=>q.split(", ").map(k=>m[k]=="x"?"the end of box":`the start of ${hw(k)}`).join(", "));t=t.replace(new RegExp(`(?<![A-Za-z’'])(${T}), like (?:in )?([A-Za-z-]+)`,"g"),(q,k,w)=>{w=w.toLowerCase();return one(k,m[k]=="x"?"box":w[0]==m[k]||(m[k]=="c"&&w[0]=="k")?w:hw(k))});t=t.replace(new RegExp(`(?<![A-Za-z’'])(${T})(?![A-Za-z’'])`,"g"),(q,k)=>one(k));return t.replace(/the sound the sound/g,"the sound").replace(/(^|[.!?]\s+)(the (?:sound|start|end))/g,(q,a,b)=>a+b[0].toUpperCase()+b.slice(1))}catch(e){return t}}
+/* SNDAV: the answer words on screen. A spoken sound hint ("the start of sun") must never be one of them, or the hint gives the answer away */
+let SNDF=null,SNDAV=null;const HINTW={s:["sock","six","seal"],a:["ant","axe","apple"],t:["top","ten","tap"],p:["pen","pot","pig"],i:["insect","ink","itch"],n:["net","nut","nose"],m:["mop","map","moon"],d:["desk","duck","dog"],g:["gate","gum","goat"],o:["ox","otter","octopus"],c:["cup","cot","cow"],k:["kid","king","kite"],e:["egg","elbow","elephant"],u:["up","under","umbrella"],r:["red","rock","rabbit"],h:["hen","hill","hat"],b:["bed","bus","bag"],f:["fan","fox","fish"],l:["leg","lamp","lion"],j:["jam","jet","jug"],v:["vest","vet","volcano"],w:["web","wig","window"],x:["fox","six","box"],y:["yak","yell","yellow"],z:["zip","zoo","zebra"],q:["quilt","quick","queen"]};const sndAv=q=>{SNDAV=q&&Array.isArray(q.a)?new Set(q.a.map(o=>String(nameOf(o)||"").toLowerCase()).filter(Boolean)):null};function sfix(t){try{if(!SNDF){const m={};Object.entries(PH).forEach(([l,[k]])=>{if(!m[k])m[k]=l});const e=Object.keys(m).sort((a,b)=>b.length-a.length).join("|");SNDF={m,T:"(?:"+e+")"}}const{m,T}=SNDF,hw=k=>{const l=m[k];const d=l=="x"?"box":PH[l][1];if(!SNDAV||!SNDAV.has(d))return d;return[...(HINTW[l]||[])].find(w=>!SNDAV.has(w))||d},one=(k,w)=>m[k]=="x"?`the sound at the end of ${hw(k)}`:`the sound at the start of ${w&&!(SNDAV&&SNDAV.has(w))?w:hw(k)}`;t=t.replace(new RegExp(`(?<![A-Za-z’'])${T}(?:, ${T})+(?![A-Za-z])`,"g"),q=>q.split(", ").map(k=>m[k]=="x"?`the end of ${hw(k)}`:`the start of ${hw(k)}`).join(", "));t=t.replace(new RegExp(`(?<![A-Za-z’'])(${T}), like (?:in )?([A-Za-z-]+)`,"g"),(q,k,w)=>{w=w.toLowerCase();return one(k,m[k]=="x"?"box":w[0]==m[k]||(m[k]=="c"&&w[0]=="k")?w:hw(k))});t=t.replace(new RegExp(`(?<![A-Za-z’'])(${T})(?![A-Za-z’'])`,"g"),(q,k)=>one(k));return t.replace(/the sound the sound/g,"the sound").replace(/(^|[.!?]\s+)(the (?:sound|start|end))/g,(q,a,b)=>a+b[0].toUpperCase()+b.slice(1))}catch(e){return t}}
 const spk0=t=>t.replace(/&nbsp;/g," ").replace(/[\u{1F000}-\u{1FFFF}☀-➿️‍]/gu,"").replace(/\+\d+/g,"").replace(/_{2,}|___/g,", blank, ").replace(/\s*[·•]\s*/g,", ").replace(/→/g," makes ").replace(/\+/g," plus ").replace(/\s*[…]+/g,".").replace(/“|”/g,"").replace(/\s{2,}/g," ").trim();
-let SQT=0;const talk=t=>{SQT++;if(!S.voice||!window.speechSynthesis)return;try{speechSynthesis.cancel();const x=spk(t);if(!x)return;const u=new SpeechSynthesisUtterance(x);if(VOX){u.voice=VOX;u.lang=VOX.lang}else u.lang="en-US";u.rate=.88;u.pitch=1;speechSynthesis.speak(u)}catch(e){}};
+let SQT=0;const talk=t=>{SQT++;recStop();if(!S.voice||!window.speechSynthesis)return;try{speechSynthesis.cancel();if(REC.ok){const ps=recSplit(t);if(ps.some(p=>typeof p!="string"))return recSay(ps,SQT)}const x=spk(t);if(!x)return;const u=new SpeechSynthesisUtterance(x);if(VOX){u.voice=VOX;u.lang=VOX.lang}else u.lang="en-US";u.rate=.88;u.pitch=1;speechSynthesis.speak(u)}catch(e){}};
+/* ===== Letter sounds in a grown-up's voice =====
+   Browser voices cannot say a sound on its own (/s/, /t/), so without recordings the app says "the sound at the start of sun".
+   A grown-up can record each sound once in the parent area. Recordings stay on this device (in the backup database), are shared by all
+   explorers here, and can be downloaded and loaded on another device. Wherever a sound like "sss" is spoken, the recording plays instead. */
+const REC={u:{},ok:0};let CURA=null;
+function recLoad(){return IDB.get("lsrec").then(v=>{try{REC.u=v?JSON.parse(v):{}}catch(e){REC.u={}}REC.ok=Object.keys(REC.u).length}).catch(()=>{})}
+function recSave(){REC.ok=Object.keys(REC.u).length;IDB.set("lsrec",JSON.stringify(REC.u))}
+function recStop(){try{if(CURA){CURA.onended=CURA.onerror=null;CURA.pause();CURA=null}}catch(e){}}
+function recTokL(tok){sfix("");return SNDF.m[tok]}
+/* split a sentence into spoken text and {l} pieces for the sounds that have a recording */
+function recSplit(t){t=String(t).replace(/<[^>]+>/g,"");sfix("");const re=new RegExp(`(?<![A-Za-z’'])(${SNDF.T})(?![A-Za-z’'])`,"g"),out=[];let last=0,m;
+ while((m=re.exec(t))){const l=SNDF.m[m[1]];if(!REC.u[l])continue;out.push(t.slice(last,m.index));out.push({l});last=m.index+m[0].length}out.push(t.slice(last));return out.filter(p=>typeof p!="string"||/[A-Za-z0-9]/.test(p))}
+function recPlay(l,cb){let d=0;const done=()=>{if(d++)return;CURA=null;cb&&cb()};try{const a=new Audio(REC.u[l]);CURA=a;a.onended=done;a.onerror=done;setTimeout(done,4000);const p=a.play();if(p&&p.catch)p.catch(done)}catch(e){done()}}
+function recSay(parts,id,fin){let i=0;const next=()=>{if(id!=SQT)return;if(i>=parts.length)return fin&&fin();const p=parts[i++];
+  if(typeof p!="string")return recPlay(p.l,()=>{if(id==SQT)setTimeout(next,150)});
+  const x=spk(p).replace(/^[\s,.;:!?]+/,"");if(!x||!/[A-Za-z0-9]/.test(x))return next();try{const u=mkU(x);let d=0;const nx=()=>{if(d++)return;next()};u.onend=nx;u.onerror=nx;setTimeout(nx,Math.max(2500,x.length*110));speechSynthesis.speak(u)}catch(e){next()}};next()}
+recLoad();
+/* the grown-up screen: record, play, delete, download, load */
+let RECB=null;
+function recsnd(){const ls=LTO.filter(l=>PH[l]),can=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
+ app(bar(1)+`<div class="par"><h2>🔤 Letter sounds in your voice</h2><p class="lgsub">The computer voice cannot say a letter sound on its own, so it says “the sound at the start of sun”. Children learn sounds much more easily when they hear the pure sound. Record each one once (about 5 minutes). Say only the sound, short and clear: /s/ not “suh”, /m/ not “muh”.</p>
+ ${can?"":`<p class="skl">ℹ️ This browser cannot record. You can still load recordings made on another device.</p>`}
+ <div class="card"><p><b>${REC.ok} of ${ls.length}</b> sounds recorded on this device.</p><div class="recg">${ls.map(l=>`<div class="recc${REC.u[l]?" on":""}"><b>${l}</b><small>${PH[l][0]} · ${PH[l][1]}</small><div>${can?`<button class="ghost" onclick="recOne('${l}')" aria-label="Record ${l}">${RECB==l?"⏺":"🎙"}</button>`:""}${REC.u[l]?`<button class="ghost" onclick="recPlay('${l}')" aria-label="Play ${l}">▶</button><button class="ghost" onclick="recDel('${l}')" aria-label="Delete ${l}">🗑</button>`:""}</div></div>`).join("")}</div>
+ <p class="skl" id="recmsg"></p><div class="chips"><button class="ghost" onclick="recDl()">⬇️ Download recordings</button><label class="ghost" style="cursor:pointer">⬆️ Load recordings<input type="file" accept="application/json,.json" style="display:none" onchange="recUp(this)"></label><button class="ghost" onclick="go('parentarea')">⬅ Back</button></div></div></div>`)}
+async function recOne(l){if(RECB)return;const m=()=>$("#recmsg");try{const st=await navigator.mediaDevices.getUserMedia({audio:true}),mr=new MediaRecorder(st),ch=[];RECB=l;recsnd();m().textContent=`Say the sound now: ${PH[l][0]} (as in ${PH[l][1]})`;
+  mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data)};mr.onstop=()=>{st.getTracks().forEach(t=>t.stop());RECB=null;const b=new Blob(ch,{type:mr.mimeType||"audio/webm"});if(!b.size){recsnd();return}const fr=new FileReader();fr.onload=()=>{REC.u[l]=fr.result;recSave();recsnd();recPlay(l)};fr.readAsDataURL(b)};
+  mr.start();setTimeout(()=>{try{mr.stop()}catch(e){}},1700)}catch(e){RECB=null;recsnd();const x=m();if(x)x.textContent="The microphone could not be used. Check that this site may use the microphone."}}
+function recDel(l){delete REC.u[l];recSave();recsnd()}
+function recDl(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({readtrail2_letter_sounds:1,u:REC.u})],{type:"application/json"}));a.download="readtrail2-letter-sounds.json";a.click()}
+function recUp(inp){const f=inp.files&&inp.files[0];if(!f)return;f.text().then(t=>{const o=JSON.parse(t);if(!o||!o.readtrail2_letter_sounds||typeof o.u!="object")throw 0;const ok={};for(const l in o.u)if(PH[l]&&/^data:audio\//.test(String(o.u[l])))ok[l]=o.u[l];REC.u=Object.assign(REC.u,ok);recSave();recsnd();const x=$("#recmsg");if(x)x.textContent=`Loaded ${Object.keys(ok).length} sounds.`}).catch(()=>{const x=$("#recmsg");if(x)x.textContent="That file is not a ReadTrail letter-sounds file."})}
+
+/* trail map: keep each stage name in view while its stretch of the trail is on screen (like a sticky label, inside a sideways scroller) */
+document.addEventListener("scroll",e=>{const sc=e.target;if(!sc||!sc.querySelector)return;const tr=sc.querySelector(":scope>.track");if(!tr)return;
+ const ls=[...tr.querySelectorAll(":scope>.ul")],x=sc.scrollLeft+12;ls.forEach((l,i)=>{const at=parseFloat(l.style.left)||0,nx=ls[i+1]?parseFloat(ls[i+1].style.left):Infinity,w=l.offsetWidth+16;
+  const d=Math.max(0,Math.min(x-at,nx-at-w));l.style.transform=d?`translateX(${d}px)`:""})},true);
 const NR=()=>{if(!L)return false;if(L.pl)return !!(L.nrm||S.pre);if(L.rp){const s=SKI[L.cid||L.id];return !!(s&&s.nr)}return false};
 const U={},pu=(k,a)=>{const u=U[k]=U[k]||[];let ix=a.map((_,i)=>i).filter(i=>!u.includes(i));if(!ix.length){u.length=0;ix=a.map((_,i)=>i)}const i=ix[R(ix.length)];u.push(i);return a[i].replace(/{n}/g,S.name).replace(/{p}/g,esc(S.pet))};
 /* ---------- art ---------- */
@@ -1098,9 +1266,14 @@ const agr=f=>{const s=R(2),sub=pp(s?SG:PLR),[p,g]=pp(VB),e=pp(EN),c=s?g:p;return
 const PL=[["cat","cats"],["box","boxes"],["dish","dishes"],["bus","buses"],["baby","babies"],["leaf","leaves"],["child","children"],["mouse","mice"],["foot","feet"],["man","men"],["fox","foxes"],["city","cities"],["dog","dogs"],["watch","watches"]],PT=[["go","went","to school"],["run","ran","fast"],["eat","ate","lunch"],["see","saw","a bird"],["come","came","home"],["give","gave","me a gift"],["take","took","a bus"],["make","made","a cake"],["sit","sat","down"],["swim","swam","far"],["write","wrote","a note"],["drink","drank","water"]];
 const pt=f=>{if(R(2)){const[s,p]=pp(PL);return{k:"P"+s,q:"Choose the best word:",big:`<span style="font-size:28px">One ${s}, two ___</span>`,say:`One ${s}, two blank`,...mk(p,[p,s+"s",s+"es",s+"ies"]),h:"Many of something.",why:`Two ${p}.`}}const[b,p,t]=pp(PT),sub=pp(["I","we","she","he","they"]);return{k:"T"+b+sub,q:"Choose the best word:",big:`<span style="font-size:28px">Yesterday, ${sub} ___ ${t}.</span>`,say:`Yesterday, ${sub} blank ${t}`,...mk(p,[p,b,b+"ed"]),h:"It already happened.",why:`Yesterday: ${p}.`}};
 const NMS=W("Wanjiru Otieno Akinyi Kamau Achieng Kiprop Njeri Baraka Amani Zawadi Juma Neema"),PLC=["the park","the beach","the market","the farm","the library","the river","the game park","the forest","the shop","the hill"],WTH=["her mum","his dad","a friend","her grandma","the dog","his sister","their teacher","a cousin"],ACT=["played games","picked flowers","built a sandcastle","fed the goats","read books","drew pictures","flew a kite","sang songs"],FEL=["happy","tired","proud","excited","calm"],SPN=t=>`<span style="font-size:24px;display:block;text-align:left">${t}</span>`;
-const tA=t=>f=>{const n=pp(NMS),pl=pp(PLC),w=pp(WTH),ac=pp(ACT),fe=pp(FEL),tx=`${n} went to ${pl} with ${w}. They ${ac}. At the end, ${n} felt ${fe}.`,[q,c,po]=[[`Who went with ${n}?`,w,WTH],[`Where did ${n} go?`,pl,PLC],["What did they do?",ac,ACT],[`How did ${n} feel?`,fe,FEL]][t],o=mk(c,po);return{k:"A"+t+tx+srt(o.a),q,big:SPN(tx),say:tx+" "+q,...o,h:"Look back at the story.",why:`The story says: ${c}.`}};
+/* every story question has a wrong answer that is also in the story (the place they passed, the person they waved to, what they did first,
+   how they felt at the start): the child has to understand the story, not just pick the word they heard */
+const tA=t=>f=>{const n=pp(NMS),[pl,pl2]=shuf(PLC).slice(0,2),[w,w2]=shuf(WTH).slice(0,2),[ac,ac2]=shuf(ACT).slice(0,2),[fe,fe2]=shuf(FEL).slice(0,2),
+ tx=`${n} went to ${pl} with ${w}. On the way, they waved to ${w2} near ${pl2}. First they ${ac2}. Then they ${ac}. ${n} felt ${fe2} at the start and ${fe} at the end.`,
+ [q,c,d,po,why]=[[`Who went with ${n}?`,w,w2,WTH,`${n} went to ${pl} with ${w}.`],[`Where did ${n} go?`,pl,pl2,PLC,`${n} went to ${pl}. They only passed ${pl2}.`],["What did they do last?",ac,ac2,ACT,`First they ${ac2}. Then they ${ac}.`],[`How did ${n} feel at the end?`,fe,fe2,FEL,`${n} felt ${fe} at the end.`]][t],
+ a=shuf((RPX.n||3)<=2?[c,d]:[c,d,...shuf(po.filter(x=>x!=c&&x!=d)).slice(0,1)]);return{k:"A"+t+tx+srt(a),q,big:SPN(tx),say:tx+" "+q,a,c:a.indexOf(c),h:"Look back at the story. Read each sentence again.",why}};
 const CE=[["forgot to water the plant","the plant drooped"],["left the ice cream in the sun","the ice cream melted"],["stayed up very late","{n} felt sleepy in the morning"],["practiced every day","{n} got better at football"],["dropped the glass","the glass broke"],["did not take an umbrella in the rain","{n} got very wet"],["ate too much cake","{n} got a tummy ache"],["saved coins for a month","{n} could buy a gift"],["studied for the test","{n} did well on the test"],["fed the birds every day","the birds came to the garden"],["ran as fast as possible","{n} got to school on time"],["left the door open","the cat ran outside"]];
-const tB=f=>{const n=pp(NMS),i=R(12),[ca,ef0]=CE[i],ef=ef0.replace("{n}",n),tx=`${n} ${ca}. Because of that, ${ef}.`;if(R(2)){const o=mk(ef,CE.map(x=>x[1].replace("{n}",n)));return{k:"B"+tx+srt(o.a),q:"What happened because of that?",big:SPN(tx),say:tx+" What happened because of that?",...o,h:"Look for the word because.",why:`${ef}.`}}const c=`${n} ${ca}`,o=mk(c,CE.map(x=>`${n} ${x[0]}`));return{k:"b"+tx+srt(o.a),q:"What was the cause?",big:SPN(tx),say:tx+" What was the cause?",...o,h:"The cause is why it happened.",why:`${c}.`}};
+const tB=f=>{const n=pp(NMS),i=R(12),[ca,ef0]=CE[i],ef=ef0.replace("{n}",n),tx=`${n} ${ca}. Because of that, ${ef}.`;if(R(2)){const cs=`${n} ${ca}`,a=shuf([ef,cs,...shuf(CE.map(x=>x[1].replace("{n}",n)).filter(x=>x!=ef)).slice(0,(RPX.n||3)<=2?0:1)]),o={a,c:a.indexOf(ef)};return{k:"B"+tx+srt(o.a),q:"What happened because of that?",big:SPN(tx),say:tx+" What happened because of that?",...o,h:"Look for the word because.",why:`${ef}.`}}const c=`${n} ${ca}`,a=shuf([c,ef,...shuf(CE.map(x=>`${n} ${x[0]}`).filter(x=>x!=c)).slice(0,(RPX.n||3)<=2?0:1)]),o={a,c:a.indexOf(c)};return{k:"b"+tx+srt(o.a),q:"What was the cause?",big:SPN(tx),say:tx+" What was the cause?",...o,h:"The cause is why it happened.",why:`${c}.`}};
 const CF=[["jumped up and down and clapped","excited"],["hid under the blanket when thunder crashed","scared"],["cried when the kitten ran away","sad"],["smiled and hugged everyone","happy"],["stamped and slammed the door","angry"],["yawned and rubbed their eyes","sleepy"],["gasped on finding a gift on the table","surprised"],["stood alone and looked at the floor","lonely"],["grinned after finishing the hard puzzle","proud"]],tC=f=>{const n=pp(NMS),[cl,fe]=pp(CF),tx=`${n} ${cl}.`,o=mk(fe,CF.map(x=>x[1]));return{k:"C"+tx+srt(o.a),q:`How does ${n} probably feel?`,big:SPN(tx),say:tx+` How does ${n} probably feel?`,...o,h:"Think about how you would feel.",why:`${fe}.`}};
 const NX=[["Dark clouds covered the sky and thunder rumbled.","It will rain."],["{n} put on a swimsuit and grabbed a towel.","{n} will go swimming."],["The cake was in the oven and smelled sweet.","We will eat cake soon."],["{n} packed a bag and put on boots for a hike.","{n} will walk outside."],["The alarm rang and {n} jumped out of bed.","{n} will get ready for school."],["The mandazi seller called out down the street.","Children will run to buy mandazi."],["Dad wheeled his bicycle out of the gate.","Dad will ride somewhere."],["{n} opened the book and began to read.","{n} will read the story."]],nx=f=>{const n=pp(NMS),[s,c0]=pp(NX),tx=s.replace("{n}",n),c=c0.replace("{n}",n),o=mk(c,NX.map(x=>x[1].replace("{n}",n)));return{k:"X"+tx+srt(o.a),q:"What will probably happen next?",big:SPN(tx),say:tx+" What will probably happen next?",...o,h:"Use the clues.",why:`${c}`}};
 const MI=[["Bees make honey. They store it in wax hives. A hive holds thousands of bees.","Bees and their hives"],["Frogs lay eggs in ponds. Tadpoles hatch and swim. Later they grow legs and hop.","How frogs grow up"],["Plants need sunlight, water and air. Without them, they cannot grow.","What plants need"],["Dogs bark to say hello. They wag their tails when happy. Some howl at the moon.","How dogs talk"],["In the dry season, the grass turns brown. Animals walk far to find water. Rivers get small.","The dry season"],["Elephants live in big family groups. They use their trunks to drink and to eat. They flap their ears to keep cool.","How elephants live"],["Rain fills rivers. Rivers flow to the sea. Water rises again as clouds.","The water cycle"]],mi=f=>{const[t,m]=pp(MI),o=mk(m,MI.map(x=>x[1]));return{k:"M"+m+srt(o.a),q:"What is the main idea?",big:SPN(t),say:t+" What is the main idea?",...o,h:"What is it mostly about?",why:`It is mostly about: ${m}.`}};
@@ -1234,11 +1407,12 @@ let L=null,scr="home",ob=0,tab="kid",bk=null,GW=null;
 
 let SQ=0,HT=0;const startIdle=()=>{};const clearHl=()=>document.querySelectorAll(".opt.hl").forEach(b=>b.classList.remove("hl"));
 const mkU=x=>{const u=new SpeechSynthesisUtterance(x);if(VOX){u.voice=VOX;u.lang=VOX.lang}else u.lang="en-US";u.rate=.88;u.pitch=1;return u};
-const replay=()=>{if(!L||!L.q)return;const q=L.q,t=q.say||q.q;if((L.rp||L.pl)&&rpReplay())return;const pics=!(L.rp||L.pl)||rpPics(q);if(!NR()||q.t=="tile"||q.t=="trace"||q.t=="tapw"||!pics){talk(t);return}
+const replay=()=>{if(!L||!L.q)return;const q=L.q,t=q.say||q.q;if((L.rp||L.pl)&&rpReplay())return;const pics=!(L.rp||L.pl)||rpPics(q)||q.spkO;if(!NR()||q.t=="tile"||q.t=="trace"||q.t=="tapw"||!pics){talk(t);return}
 if(!S.voice||!window.speechSynthesis)return;const id=++SQ;try{speechSynthesis.cancel()}catch(e){}
-const seq=[[spk(t.replace(/\bpictures?\b/g,"one")),-1],...q.a.map((o,i)=>[spk(nameOf(o)),i])];
+const seq=[[spk(t.replace(/\bpictures?\b/g,"one")),-1,t.replace(/\bpictures?\b/g,"one")],...q.a.map((o,i)=>[spk(nameOf(o)),i,String(nameOf(o))])];
 const nudge=()=>{};
-const go=k=>{if(id!=SQ)return;clearHl();if(k>=seq.length){nudge();return}const[x,i]=seq[k];if(i>=0){const b=document.querySelectorAll(".opt")[i];if(b)b.classList.add("hl")}
+const go=k=>{if(id!=SQ)return;clearHl();if(k>=seq.length){nudge();return}const[x,i,raw]=seq[k];
+if(REC.ok&&raw){const ps=recSplit(raw);if(ps.some(p=>typeof p!="string")){if(i>=0){const b=document.querySelectorAll(".opt")[i];if(b)b.classList.add("hl")}const t0=SQT;return recSay(ps,t0,()=>{if(id==SQ)setTimeout(()=>go(k+1),200)})}}if(i>=0){const b=document.querySelectorAll(".opt")[i];if(b)b.classList.add("hl")}
 try{const u=mkU(x||".");let d=0;const nx=()=>{if(d++)return;setTimeout(()=>go(k+1),200)};u.onend=nx;u.onerror=nx;setTimeout(nx,9000);speechSynthesis.speak(u)}catch(e){}};go(0)};
 
 
@@ -1251,8 +1425,24 @@ try{const u=mkU(x||".");let d=0;const nx=()=>{if(d++)return;setTimeout(()=>go(k+
 
 
 
-const XB=()=>'<button class="ghost exitb" onclick="leave()" aria-label="Back to home">🏠 Home</button>';
-function leave(){try{speechSynthesis.cancel()}catch(e){}try{sayReset()}catch(e){}SQ++;clearTimeout(HT);L=null;scr="home";render()}
+/* control icons: one style everywhere (24px grid, rounded 2.4 stroke, current colour) */
+const UI_=(d,f)=>`<svg class="uic" viewBox="0 0 24 24" aria-hidden="true" fill="${f?"currentColor":"none"}" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const UIC={home:UI_('<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5h3v5H18V9.5"/>'),back:UI_('<path d="M15 5l-7 7 7 7"/>'),
+ music:UI_('<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>'),mute:UI_('<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>'),
+ user:UI_('<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4-5.6 7.5-5.6s6.3 1.6 7.5 5.6"/>'),gear:UI_('<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M5.5 18.5l1.9-1.9M16.6 7.4l1.9-1.9"/>'),
+ play:UI_('<path d="M7 4.5v15l12.5-7.5z"/>',1),clock:UI_('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.8 2M9.5 2.8h5"/>'),family:UI_('<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M2.8 19.5c.8-3.4 2.8-5 5.2-5s4.4 1.6 5.2 5M13.6 19.5c.5-2.6 1.6-3.9 2.9-3.9 1.9 0 3.2 1.4 3.7 3.9"/>'),
+ compass:UI_('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
+ spk:UI_('<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>'),next:UI_('<path d="M5 12h13M13 6l6 6-6 6"/>')};
+/* story header: Home and how far through the story */
+const STH=p=>`<div class="lh">${XB()}<div class="lbar" role="progressbar" aria-label="How far through the story" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}"><i style="width:${p}%"></i></div></div>`;
+const stP=()=>{const s=ST_&&ST_.s;if(!s)return 0;const n=s.pages.length+(ST_.qs?ST_.qs.length:3);return Math.round(100*(ST_.inQ?s.pages.length+(ST_.qi||0):(ST_.pi||0)+1)/n)};
+/* Biscuit's face: the help button (tap = Biscuit helps) */
+const DOGF=()=>`<svg class="uic dogf" viewBox="-32 -112 64 64" aria-hidden="true">${dogG()}</svg>`;
+const XB=()=>`<button class="ghost exitb" onclick="leave()" aria-label="Back to home">${UIC.home}<span class="xl">Home</span></button>`;
+/* lesson header: Home · how far along · Help, like the starting games */
+const lessonP=()=>{if(!L)return 0;const n=L.n||0,ok=(L.sf||[]).filter(x=>x).length;return Math.round(100*(L.ph=="pre"?Math.min(1,n/6)*.25:L.ph=="teach"?.05:L.ph=="guided"?.1+.25*Math.min(1,n/(L.gl||3)):.35+.65*Math.min(1,ok/(L.need||5))))};
+const LHD=help=>`<div class="lh">${XB()}<div class="lbar" role="progressbar" aria-label="How far along this lesson is" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${lessonP()}"><i style="width:${lessonP()}%"></i></div>${help?`<button class="ghost exitb hlp" onclick="pupHelp()" aria-label="Help">${DOGF()}<span class="xl">Help</span></button>`:""}</div>`;
+function leave(){SNDAV=null;SQT++;recStop();try{if(L&&L.rp&&!L.daily&&!L.quiz&&L.id&&scr=="lesson"){const R_=rpInit();R_.resume={id:L.id,at:R_.cnt,bundle:!!L.bun};save()}}catch(e){}try{speechSynthesis.cancel()}catch(e){}try{sayReset()}catch(e){}SQ++;clearTimeout(HT);L=null;scr="home";render()}
 
 
 
@@ -1571,13 +1761,13 @@ function dmore(){L.brk=1;L.fin=1;let first=S.dchest!=todayKey();if(first){S.dche
  app(`<div class="card" style="text-align:center">${XB()}<div class="row"><svg class="mini dog-party" viewBox="-45 -110 90 125" style="width:130px">${dogG()}</svg><div class="say">${m}</div></div><div class="big">🎉 ⭐ 🎉</div><p><button class="btn play" onclick="startDaily()">▶ Keep going (a few more minutes)</button></p><p><button class="ghost" style="font-size:22px;min-height:52px" onclick="L=null;go('books')">📖 Read a story</button> <button class="ghost" style="font-size:22px;min-height:52px" onclick="L=null;go('home')">🏠 Home</button></p></div>`);talk(m)}
 /* ---------- screens ---------- */
 function app(h){$("#app").innerHTML=h;try{const a=areaOf();document.body.dataset.area=a;document.body.style.setProperty("--uc",scr=="lesson"&&L&&!L.place&&L.u!=null&&UCOL[L.u]?UCOL[L.u]:"");MZ.play(a)}catch(e){}}
-const bar=(back)=>S.pre&&!PREFULL?`<div class="top">${back?`<button class="ghost l" onclick="go('home')" style="font-size:22px;min-height:52px">🏠 Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span>${back?"":'<button class="ghost" onclick="grownUp()" aria-label="Grown-ups">👪 Grown-ups</button>'}</div>`:`<div class="top">${S.pre?`<button class="ghost" onclick="PREFULL=0;go('home')" aria-label="Little reader home">🧸<span class="nm"> Little reader home</span></button>`:""}${back?`<button class="ghost l" onclick="go('home')">← Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span><button class="ghost" onclick="S.music=!S.music;music();save();render()" aria-label="Music">${S.music?"🎵":"🔇"}</button><button class="ghost" onclick="ALL.cur=null;save();scr='home';render()" aria-label="Switch explorer">👤<span class="nm"> ${S.name}</span></button><button class="ghost" onclick="go('set')" aria-label="Settings">⚙️</button></div>`;
-async function wipeAll(){if(!confirm("Delete this account and ALL progress? This cannot be undone."))return;try{localStorage.removeItem("readtrail2")}catch(e){}ALL={cur:null,kids:{},ts:Date.now(),wiped:Date.now()};S=clone();try{if(DB)await DB.set({all:JSON.stringify(ALL)})}catch(e){}scr="home";render()}
+const bar=(back)=>S.pre&&!PREFULL?`<div class="top">${back?`<button class="ghost l" onclick="go('home')" style="font-size:22px;min-height:52px">${UIC.home} Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span>${back?"":'<button class="ghost" onclick="grownUp()" aria-label="Grown-ups">${UIC.family}<span class="nm"> Grown-ups</span></button>'}</div>`:`<div class="top">${S.pre?`<button class="ghost" onclick="PREFULL=0;go('home')" aria-label="Little reader home">🧸<span class="nm"> Little reader home</span></button>`:""}${back?`<button class="ghost l" onclick="go('home')">${UIC.back} Home</button>`:'<span class="l"></span>'}<span class="coin" aria-label="Mangoes">${ACN} ${S.coins}</span><button class="ghost" onclick="S.music=!S.music;music();save();render()" aria-label="${S.music?"Music on":"Music off"}">${S.music?UIC.music:UIC.mute}</button><button class="ghost" onclick="ALL.cur=null;save();scr='home';render()" aria-label="Switch explorer">${UIC.user}<span class="nm"> ${S.name}</span></button><button class="ghost" onclick="go('set')" aria-label="Settings">${UIC.gear}</button></div>`;
+async function wipeAll(){if(!confirm("Delete this account and ALL progress? This cannot be undone."))return;try{localStorage.removeItem(LSK)}catch(e){}ALL={cur:null,kids:{},ts:Date.now(),wiped:Date.now()};S=clone();IDB.set("readtrail2",JSON.stringify(ALL));try{if(DB)await DB.set({all:JSON.stringify(ALL)})}catch(e){}scr="home";render()}
 function go(s){lgLeave();sfx.click();scr=s;cgStop();if(BK)bkStop();selfOff();BK=null;render()}
 function render(){document.documentElement.dataset.theme=S.theme;document.body.classList.toggle("calm",!!S.calm);if(!ALL.cur||!ALL.kids[ALL.cur])return who();if(!S.placed&&!S.toured)return onboard();migShop();
 if(scr=="lesson"){return}
-({home,map,shop,books,games,awards,quizzes,set,done,care,lgames,lgplay,parentarea:parentArea,cards,pmap})[scr]()}
-function home(){if(S.pre&&!PREFULL)return preHome();DOGZ=pupSleepy();const sc=scene();DOGZ=0;app(bar(0)+sc+chestBtn()+`<button class="btn play" id="t-play" onclick="${S.placed?"rpGo()":"placeIntro()"}">▶ ${rpPlayLabel()}</button><button class="btn play" id="t-daily" onclick="startDaily()">⏱️ Daily adventure (about 8 minutes)</button><div class="nav"><button class="nb" id="n-map" onclick="go('map')">${ICO.map}Reading Trail</button><button class="nb" id="n-shop" onclick="go('shop')">${ICO.shop}Shop</button><button class="nb" id="n-books" onclick="go('books')">${ICO.books}Storybooks</button><button class="nb" id="n-games" onclick="go('games')">${ICO.games}Games</button><button class="nb" id="n-quiz" onclick="go('quizzes')">${ICO.quiz}Quizzes</button><button class="nb" id="n-awards" onclick="go('awards')">${ICO.awards}Awards</button><button class="nb" id="n-care" onclick="go('care')">${ICO.care}Pet care${pcLow().length?" ❗":""}</button></div><div class="card" id="wotd" style="text-align:center"></div><p style="text-align:center"><button class="ghost" onclick="tour(0)">🐶 Show me around</button></p>`);wotdCard();wotdFetch(wotdToday().w);pupSleepSay()}
+({home,map,shop,books,games,awards,quizzes,set,done,care,lgames,lgplay,parentarea:parentArea,cards,pmap,recsnd})[scr]()}
+function home(){if(S.pre&&!PREFULL)return preHome();DOGZ=pupSleepy();const sc=scene();DOGZ=0;app(bar(0)+sc+chestBtn()+`<button class="btn play" id="t-play" onclick="${S.placed?"rpGo()":"placeIntro()"}">${UIC.play}<span>${rpPlayLabel()}</span></button><button class="btn play alt" id="t-daily" onclick="startDaily()">${UIC.clock}<span>Daily adventure <small>· 8 min</small></span></button><div class="nav"><button class="nb" id="n-map" onclick="go('map')">${ICO.map}Reading Trail</button><button class="nb" id="n-shop" onclick="go('shop')">${ICO.shop}Shop</button><button class="nb" id="n-books" onclick="go('books')">${ICO.books}Storybooks</button><button class="nb" id="n-games" onclick="go('games')">${ICO.games}Games</button><button class="nb" id="n-quiz" onclick="go('quizzes')">${ICO.quiz}Quizzes</button><button class="nb" id="n-awards" onclick="go('awards')">${ICO.awards}Awards</button><button class="nb" id="n-care" onclick="go('care')">${ICO.care}Pet care${pcLow().length?" ❗":""}</button></div><div class="card" id="wotd" style="text-align:center"></div><p style="text-align:center"><button class="ghost" onclick="tour(0)">${UIC.compass} Show me around</button></p>`);wotdCard();wotdFetch(wotdToday().w);pupSleepSay()}
 const nb=i=>125+i*.9+Math.sin(i/2)*22+(i>=60?(i-60)*(i-60)*.07:0),MH=500;
 const smooth=p=>{let d="M"+p[0][0]+" "+p[0][1].toFixed(1);for(let i=1;i<p.length-1;i++){const mx=(p[i][0]+p[i+1][0])/2,my=(p[i][1]+p[i+1][1])/2;d+=` Q${p[i][0].toFixed(1)} ${p[i][1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`}const l=p[p.length-1];return d+` L${l[0].toFixed(1)} ${l[1].toFixed(1)}`};
 const flw=(x,y)=>[0,1,2].map(i=>`<path d="M${x+i*7-7} ${y}v8" stroke="#3f8450" stroke-width="1.6"/><circle cx="${x+i*7-7}" cy="${y-i%2*5}" r="3.4" fill="${["#f08aa8","#f4d38a","#fbf0cf"][i]}"/>`).join("");
@@ -2057,7 +2247,7 @@ app(bar(1)+`<h2>Settings</h2><div class="card"><div class="chips"><button class=
 
 function onboard(){if(ob<3){app(`<div class="card"><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">Woof! Hi ${S.name}! I’m your new friend. What will you name me?</div></div><input class="t" id="pn" maxlength="14" placeholder="Biscuit"><button class="btn" onclick="S.pet=$('#pn').value.trim()||'Biscuit';save();ob=3;onboard()">That’s my name!</button></div>`);talk("Woof! What will you name me?")}else{S.toured=1;save();scr="home";home();setTimeout(()=>tour(0,()=>{ob=0;placeIntro()}),300)}}
 const as=(k,f)=>{const o=S;S=k;const r=f();S=o;return r};
-function who(){const ks=Object.entries(ALL.kids);if(!CLD&&!ks.length)return app(`<div class="card" style="text-align:center;margin-top:40px"><div class="banner"><h1>ReadTrail 2</h1></div><p style="font-size:22px">☁️ Looking for your explorers…</p></div>`);app(`<div class="top"><span class="l"></span><span class="coin">${UID?"☁️ Saved to your account":"💾 Saved on this device"}</span></div><div class="card" style="text-align:center"><div class="banner"><h1>ReadTrail 2</h1></div><p>${ks.length?"Who’s exploring today?":"Welcome! Make your first explorer."}</p><div class="grid">${ks.map(([id,k])=>`<button class="nb" onclick="choose('${id}')"><svg viewBox="-32 -54 64 100" style="width:72px;height:105px">${as(k,()=>kidG(0))}</svg><br>${k.name}<br><small>Level ${k.level}</small></button>`).join("")}</div></div><div class="card"><h2>New explorer</h2><label>Name<input class="t" id="nm" maxlength="14" autocomplete="off"></label><label>Age<select class="t" id="ag">${[4,5,6,7,8,9,10].map(a=>`<option value="${a}" ${a==6?"selected":""}>${a}</option>`).join("")}</select></label><label>My explorer is a<select class="t" id="gd"><option value="0">Boy 👦</option><option value="1">Girl 👧</option></select></label><button class="btn" onclick="newKid()">Start ➜</button></div>${ks.length?'<p style="text-align:center"><button class="ghost" onclick="wipeAll()">Delete account</button></p>':""}`)}
+function who(){const ks=Object.entries(ALL.kids);if(!CLD&&!ks.length)return app(`<div class="card" style="text-align:center;margin-top:40px"><div class="banner"><h1>ReadTrail 2</h1></div><p style="font-size:22px">☁️ Looking for your explorers…</p></div>`);app(`<div class="top"><span class="l"></span><span class="coin">${UID?"☁️ Saved to your account":"💾 Saved on this device"}</span></div><div class="card" style="text-align:center"><div class="banner"><h1>ReadTrail 2</h1></div><p>${ks.length?"Who’s exploring today?":"Welcome! Make your first explorer."}</p>${window.speechSynthesis&&window.SpeechSynthesisUtterance?"":`<p style="background:#fff3cd;border:2px solid #e0a800;border-radius:12px;padding:10px;font-size:16px;text-align:left">🔇 <b>For grown-ups:</b> this browser cannot speak. ReadTrail talks to children who cannot read yet, so it needs a voice. Please open it in Chrome, Edge or Safari, or on another device.</p>`}<div class="grid">${ks.map(([id,k])=>`<button class="nb" onclick="choose('${id}')"><svg viewBox="-32 -54 64 100" style="width:72px;height:105px">${as(k,()=>kidG(0))}</svg><br>${k.name}<br><small>Level ${k.level}</small></button>`).join("")}</div></div><div class="card"><h2>New explorer</h2><label>Name<input class="t" id="nm" maxlength="14" autocomplete="off"></label><label>Age<select class="t" id="ag">${[4,5,6,7,8,9,10].map(a=>`<option value="${a}" ${a==6?"selected":""}>${a}</option>`).join("")}</select></label><label>My explorer is a<select class="t" id="gd"><option value="0">Boy 👦</option><option value="1">Girl 👧</option></select></label><button class="btn" onclick="newKid()">Start ➜</button></div>${ks.length?'<p style="text-align:center"><button class="ghost" onclick="wipeAll()">Delete account</button></p>':""}`)}
 function choose(id){ALL.cur=id;adopt();save();scr="home";render()}
 function newKid(){const n=$("#nm").value.trim();if(!n){$("#nm").focus();return}const id="k"+Date.now().toString(36);ALL.kids[id]=Object.assign(clone(),{name:esc(n),age:+$("#ag").value||6,girl:$("#gd").value=="1",placed:false,pre:(+$("#ag").value||6)<=5});ob=1;choose(id)}
 /* account sync: wait for saved explorers before offering sign-up, and merge saves instead of overwriting */
@@ -2066,7 +2256,7 @@ function mergeAll(a,b){const base=(a.ts||0)>=(b.ts||0)?a:b,oth=base===a?b:a,del=
  if(!(base.wiped&&base.wiped>=(oth.ts||0)))for(const[k,v]of Object.entries(oth.kids||{}))if(!base.kids[k]&&!del.has(k))base.kids[k]=v;
  for(const k of del)delete base.kids[k];for(const k in base.kids)base.kids[k]=Object.assign(clone(),base.kids[k]);base.del=[...del].slice(-200);if(!base.pin&&oth.pin)base.pin=oth.pin;if(!base.cur||!base.kids[base.cur])base.cur=oth.cur&&base.kids[oth.cur]?oth.cur:null;return base}
 async function cloud(){const done=()=>{if(CLD)return;CLD=1;if(scr!="lesson")render()},to=setTimeout(done,10000);
- try{if(typeof claude=="undefined"||!claude.use)return;const c=await claude.use("db"),u=await claude.use("user");if(!c||!u)return;UID=await u.id();if(!UID)return;DB=c.doc("data/users/"+UID+"/camp2");const g=await DB.get();
+ try{if(SBX||typeof claude=="undefined"||!claude.use)return;const c=await claude.use("db"),u=await claude.use("user");if(!c||!u)return;UID=await u.id();if(!UID)return;DB=c.doc("data/users/"+UID+"/camp2");const g=await DB.get();
   if(g.exists){const o=JSON.parse(g.data().all);ALL=mergeAll(ALL,o);adopt()}save()}catch(e){}finally{clearTimeout(to);done()}}
 /* ---------- badges ---------- */
 const lkd=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
@@ -2347,7 +2537,7 @@ app(bar(1)+`<h2>Awards</h2><div class="card" style="text-align:center"><b style=
 function bmodal(b,fresh){const o=!!(S.bd&&S.bd[b.id]);const m=document.createElement("div");m.id="bm";m.className="bm";m.innerHTML=`<div class="bmc" role="dialog" aria-label="${esc(b.n)}">${o?'<div class="rays"></div>':""}<div class="bpop">${bsv(b,!o,o?190:150)}</div>${fresh?"<h2 style='margin:6px 0 0'>🎉 New badge! 🎉</h2>":""}<h2 style="margin:6px 0">${esc(b.n)}</h2><p style="margin:4px 0 12px;font-size:22px">${o?esc(b.d):"To earn this: "+esc(b.h)+"."}</p>${fresh?`<div class="row" style="justify-content:center"><svg class="mini" viewBox="-45 -110 90 125" style="width:80px">${dogG()}</svg><div class="say">${esc(S.pet)}: Woof! You did it, ${esc(S.name)}!</div></div>`:""}<button class="btn" onclick="bclose()">${fresh?"Awesome! 🎉":"OK"}</button>${fresh?'<span class="sp s1">✨</span><span class="sp s2">⭐</span><span class="sp s3">✨</span><span class="sp s4">⭐</span><span class="sp s5">✨</span>':""}</div>`;document.body.appendChild(m);m.onclick=e=>{if(e.target==m)bclose()}}
 function bdetail(id){const b=BG.find(x=>x.id==id);if(b){bclose(1);bmodal(b,false);if(S.bd&&S.bd[id])talk(`${b.n}. ${b.d}`)}}
 function bclose(quiet){const m=$("#bm");if(m)m.remove();if(!quiet)awSch(500)}
-function awardCheck(){if(!S||!S.name)return;S.bd=S.bd||{};const silent=!S.bdInit&&(S.lessons>0||S.correct>0);let any=0;BG.forEach(b=>{if(!S.bd[b.id]){let ok=0;try{ok=b.t()}catch(e){}if(ok){S.bd[b.id]=Date.now();any=1;if(!silent){AWQ.push([S.name,b.id])}}}});if(!S.bdInit){S.bdInit=1;any=1}if(any){ALL.ts=Date.now();try{localStorage.setItem("readtrail2",JSON.stringify(ALL))}catch(e){}if(DB)DB.set({all:JSON.stringify(ALL)}).catch(()=>{})}}
+function awardCheck(){if(!S||!S.name)return;S.bd=S.bd||{};const silent=!S.bdInit&&(S.lessons>0||S.correct>0);let any=0;BG.forEach(b=>{if(!S.bd[b.id]){let ok=0;try{ok=b.t()}catch(e){}if(ok){S.bd[b.id]=Date.now();any=1;if(!silent){AWQ.push([S.name,b.id])}}}});if(!S.bdInit){S.bdInit=1;any=1}if(any){ALL.ts=Date.now();try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}if(DB)DB.set({all:JSON.stringify(ALL)}).catch(()=>{})}}
 const awSch=ms=>{if(AWT)return;AWT=1;setTimeout(()=>{AWT=0;awardTick()},ms)};
 function awardTick(){try{awardCheck();if(!AWQ.length||$("#bm"))return;const safe=(scr!="lesson"||(L&&(L.brk||L.fin)))&&!(CG&&CG.keys&&!CG.done)&&!(typeof PCB!="undefined"&&Date.now()<PCB);if(!safe)return void awSch(1500);const[nm,id]=AWQ.shift(),b=BG.find(x=>x.id==id);if(!b||nm!=S.name)return awardTick();S.coins+=2;S.earned+=2;save();bmodal(b,true);MZ.sting("badge");confetti();talk(`Wow ${S.name}! You earned the ${b.n} badge! ${b.d}`)}catch(e){}}
 function markDay(){const t=lkd(new Date());if(S.last==t)return;S.str=S.last==lkd(new Date(Date.now()-864e5))?(S.str||0)+1:1;S.last=t;S.days=(S.days||0)+1}
@@ -2416,10 +2606,10 @@ const lgp=a=>a[R(a.length)],LGN=["zero","one","two","three","four","five","six",
 /* Each answer is kept as 1 (right the first time), h (right after a mistake or a hint) or 0 (left before finding it).
    A skill is only "got it" after many answers over different days or games, never after one. */
 function skAdd(k,o,g){S.sk=S.sk||{};const r=S.sk[k]=S.sk[k]||{h:"",n:0,c:0,d:[],g:[],t:0,b:0},first=r.c==0&&o!="0";r.n++;if(o!="0")r.c++;r.h=(r.h+o).slice(-6);const d=ymd();if(!r.d.includes(d)){r.d.push(d);r.d=r.d.slice(-6)}if(g&&!r.g.includes(g))r.g.push(g);r.t=Date.now();
- r.b=o=="1"?Math.min(5,r.b+1):o=="h"?Math.max(1,r.b-1):0;return first}
+ if(o=="1"){if(r.bd!=d){r.b=Math.min(5,r.b+1);r.bd=d}else r.b=Math.max(r.b,1)}else r.b=o=="h"?Math.max(1,r.b-1):0;return first}
 /* 0 new, 1 practising, 2 can do it with help, 3 can do it on their own, 4 got it (4 of the last 5 on their own, on 2 or more days or games) */
 function skSt(k){const r=(S.sk||{})[k];if(!r)return 0;const l=r.h.slice(-5),n1=(l.match(/1/g)||[]).length;
- if(l.length>=4&&n1>=4&&l.slice(-1)=="1"&&(r.d.length>=2||r.g.length>=2))return 4;if(l.slice(-2)=="11")return 3;if(r.c>0&&/h/.test(l.slice(-3)))return 2;return 1}
+ if(l.length>=4&&n1>=4&&l.slice(-1)=="1"&&(r.d.length>=2||r.g.length>=2))return 4;if(l.slice(-3)=="111")return 3;if(r.c>0&&/h/.test(l.slice(-3)))return 2;return 1}
 const skDue=k=>{const r=(S.sk||{})[k];if(!r)return true;const f=/[0h]/.test(r.h.slice(-4))?.5:skSt(k)==4?1.5:1;return Date.now()>=r.t+INTV[r.b]*DAYMS*f},
  skKeys=p=>Object.keys(S.sk||{}).filter(k=>k.startsWith(p)),
  skHas=k=>!!(S.sk&&S.sk[k]&&S.sk[k].c>0);
@@ -2709,13 +2899,14 @@ function parentArea(){const N=esc(S.name),grid=(p,l)=>l.map(c=>`<span class="skc
  so=!!(navigator.serviceWorker&&navigator.serviceWorker.controller),nk=learnNext(),nx=LGS.find(m=>m.k==nk),vo=!!(window.speechSynthesis&&window.SpeechSynthesisUtterance),
  two=(p,l)=>`${skCnt(p,l,3)} on their own, ${skCnt(p,l,2)-skCnt(p,l,3)} with help`;
  app(bar(1)+`<div class="par"><h2>👪 Parent area</h2><p class="lgsub">What ${N} is learning, and the settings for this device.</p>
- <div class="card"><h3>📊 Skills</h3><p class="skl"><span class="skc sk0">a</span> not met yet &nbsp; <span class="skc sk1">a</span> practising &nbsp; <span class="skc sk2">a</span> with help &nbsp; <span class="skc sk3">a</span> on their own &nbsp; <span class="skc sk4">a</span> got it. “Got it” means right the first time in at least 4 of the last 5 tries, on different days or in different games, not just once. A right answer after a mistake or a hint counts as “with help”.</p>
+ <div class="card"><h3>📊 Skills</h3><p class="skl"><span class="skc sk0">a</span> not met yet &nbsp; <span class="skc sk1">a</span> practising &nbsp; <span class="skc sk2">a</span> with help &nbsp; <span class="skc sk3">a</span> on their own &nbsp; <span class="skc sk4">a</span> got it. “Got it” means right the first time in at least 4 of the last 5 tries, on at least two different days, not just once. A right answer after a mistake or a hint counts as “with help”.</p>
  <h4>Letters: ${skAny("L:")} found, ${skCnt("L:",LTO,4)} got it</h4><div>${grid("L:",LTO.slice().sort())}</div>
  <h4>First sounds: ${skAny("S:")} of ${SND.length} found, ${skCnt("S:",SND,4)} got it</h4><div>${grid("S:",SND.slice().sort())}</div>
  <ul class="skl"><li>Rhymes: <b>${two("R:",RHW)}</b></li><li>Animal sounds: <b>${two("A:",ANN)}</b></li><li>Patterns: <b>${two("P:",PATK)}</b> (of 4 kinds)</li><li>First words: <b>${two("W:",WN)}</b></li><li>Counting up to: <b>${nmax||"–"}</b></li><li>Stories finished: <b>${S.read.length}</b> · Played today: <b>${td} min</b>${top&&LGS.find(m=>m.k==top[0])?` · Favourite game: <b>${LGS.find(m=>m.k==top[0]).t}</b>`:""}</li><li>${S.pet} brings old things back after 1, 2, 4, 7 and 14 days.</li></ul></div>
  ${rpReportCard()}<div class="card"><h3>⚙️ Settings</h3><p>Daily time limit <select class="t" id="plim" style="width:auto;display:inline-block" onchange="parLim(this.value)">${[0,10,15,20,30,45,60].map(v=>`<option value="${v}" ${(S.lim||0)==v?"selected":""}>${v?v+" minutes":"No limit"}</option>`).join("")}</select></p>
  <p><button class="ghost" onclick="parTour()">🐶 Show the tour again</button> <button class="ghost" onclick="pinChange()">🔑 Change PIN</button></p><div class="chips">${sw("music","🎵 Music: on","🔇 Music: off")}${sw("voice","🗣️ Voice: on","🤐 Voice: off")}<button class="ghost" onclick="parTog('nosfx')">${S.nosfx?"🔕 Sound effects: off":"🔔 Sound effects: on"}</button>${sw("calm","🧘 Calm mode: on (less movement)","🧘 Calm mode: off")}${sw("pre","🧸 Little reader mode: on","🧸 Little reader mode: off")}</div>
  ${vo?"":`<p class="skl">ℹ️ This device has no talking voice. Pictures, captions and animal sounds still work.</p>`}
+ <p><button class="ghost" onclick="go('recsnd')">🔤 Letter sounds in your voice (${REC.ok?REC.ok+" recorded":"recommended"})</button></p>
  <p><button class="ghost" onclick="placeIntro()">🎲 Play the starting games again</button></p></div>
  <div class="card"><h3>💾 This device</h3><p>${so?"✅ Works without internet on this device.":"ℹ️ After one visit with internet, the website also works without it."} ${navigator.onLine?"":"(You are offline right now.)"}</p><p>Progress is saved on this device only. Download a backup to move it to another device or keep it safe.</p><div class="chips"><button class="btn" onclick="bkDl()">⬇️ Download backup</button><label class="ghost" style="cursor:pointer">⬆️ Restore backup<input type="file" accept="application/json,.json" style="display:none" onchange="bkUp(this)"></label></div></div></div>`)}
 
@@ -2766,7 +2957,7 @@ const CHP=[["😂","Tell me a joke","Joke",1],["😊","I'm happy","Happy",1],["�
 function chatUI(){const t=S.pre&&!PREFULL;return `<div class="pch">${CHP.map((c,i)=>t&&!c[3]?"":`<button class="ghost cb pcc" onclick="pickC(${i})" aria-label="${c[1]}">${c[0]}<small>${c[2]}</small></button>`).join("")}<button class="ghost cb pcc" id="mb" onclick="mic()" aria-label="Speak">🎤<small>Talk</small></button></div>`}
 function pickC(i){const e=$("#ci");if(e){e.value=CHP[i][1];sendC()}}
 /* offline: on the website (not inside Claude), keep a copy so it opens without internet */
-try{if("serviceWorker" in navigator&&(location.protocol=="https:"||location.hostname=="localhost")&&window.top===window)navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}
+try{if(!SBX&&"serviceWorker" in navigator&&(location.protocol=="https:"||location.hostname=="localhost")&&window.top===window)navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}
 /* ===== Reading Path: question makers, stages 1 to 3 ===== */
 const RPX={n:3,f:.5};                                  /* n = how many answers to show (2 when we are helping) */
 const OBJA=Object.keys(ART).filter(k=>!/^[gp]_/.test(k)),pa=n=>ART[n]||"";
@@ -2814,7 +3005,7 @@ G.wc=f=>{const s=pp(SENT1),n=s.split(" ").length;return{k:"wc"+s,q:"How many wor
 const CPD=[["sun","flower"],["rain","bow"],["foot","ball"],["cup","cake"],["star","fish"],["door","bell"],["bed","room"],["sand","box"],["tooth","brush"],["butter","fly"],["air","plane"],["pop","corn"]];
 G.pt=f=>{const[a,b]=pp(CPD),w=a+b,o=nA(w,CPD.filter(x=>x[0]!=a).map(x=>x[0]+b).concat(CPD.filter(x=>x[1]!=b).map(x=>a+x[1])));return{k:"pt"+w+srt(o.a),q:"Which big word do the parts make?",say:`Listen to the parts. ${a}, ${b}. Push them together. Which word is it?`,big:`${a} + ${b}`,...o,h:`${a}, ${b}. Say it fast: ${w}.`,why:`${a} and ${b} make ${w}.`}};
 const STO=[["A little frog sat on a log. Then a big fish swam by.",[["What sat on the log?","frog"],["What swam by?","fish"]]],["The hen found a seed. She gave the seed to a bee.",[["Who found the seed?","hen"],["Who got the seed?","bee"]]],["A cow ate green grass. A duck swam in the river.",[["What ate the grass?","cow"],["What swam in the river?","duck"]]],["The lion roared. A little mouse hid under a leaf.",[["Who roared?","lion"],["Who hid?","mouse"]]],["A rabbit ate a carrot. Then it hopped into the hole.",[["Who ate a carrot?","rabbit"]]],["The sun came up. A bee flew to a flower.",[["What came up?","sun"],["What flew to a flower?","bee"]]],["Baba put on his hat. Then he got in the car.",[["What did he put on?","hat"],["What did he get in?","car"]]],["A pig rolled in the mud. A goat ate the leaves.",[["Who rolled in the mud?","pig"],["Who ate the leaves?","goat"]]],["The owl woke up at night. The cat went to sleep.",[["Who woke up at night?","owl"]]],["A zebra drank from the river. A hippo splashed in the water.",[["Who drank?","zebra"],["Who splashed?","hippo"]]]];
-G.sto=f=>{const[t,qs]=pp(STO),[q,c]=pp(qs),pool=OBJA.filter(x=>x!=c);return Qm("sto"+t.slice(0,18)+q,q,`Listen to the story. ${t} ${q}`,"📖👂",ART[c],pool.map(x=>ART[x]),{rep:t,h:`Listen again. ${t}`,why:`${c}.`})};
+G.sto=f=>{const[t,qs]=pp(STO),[q,c]=pp(qs),oth=[...qs.map(x=>x[1]),...(t.toLowerCase().match(/[a-z]+/g)||[])].filter((x,i,a)=>x!=c&&a.indexOf(x)==i&&OBJA.includes(x)),pool=[...shuf(oth).slice(0,1),...shuf(OBJA.filter(x=>x!=c&&!oth.includes(x)))];return Qo("sto"+t.slice(0,18)+q,q,`Listen to the story. ${t} ${q}`,"📖👂",ART[c],pool.map(x=>ART[x]),{rep:t,h:`Listen again. ${t}`,why:`${c}.`})};
 /* ---- stage 2 ---- */
 G.rhy=f=>{const gi=R(RHF.length),g=shuf(RHF[gi].filter(w=>RHE[w])),t=g[0],c=g[1],o=shuf(RHW.filter(x=>RHE[x]&&!RHF[gi].includes(x)));return Qm("rhy"+t+c,`Which picture rhymes with ${t}?`,`Which picture rhymes with ${t}?`,RHE[t],RHE[c],o.map(x=>RHE[x]),{it:"R:"+t,h:`${t} and ${c} sound the same at the end.`,why:`${c} rhymes with ${t}.`})};
 G.nrhy=f=>{const gi=R(RHF.length),g=shuf(RHF[gi].filter(w=>RHE[w])).slice(0,2),o=pp(RHW.filter(x=>RHE[x]&&!RHF[gi].includes(x))),a=shuf([...g,o]);return{k:"nr"+srt(g)+o,q:"Which one does not rhyme?",say:`Listen. ${a.join(", ")}. Which one does not rhyme?`,big:"👂",a:a.map(x=>RHE[x]),c:a.indexOf(o),h:`${g.join(" and ")} rhyme.`,why:`${g.join(" and ")} rhyme. ${o} is different.`}};
@@ -2848,9 +3039,9 @@ G.lc=f=>{const l=letP("L:"),o=lopts(l);return Qm("lc"+l,`Find the small letter $
 G.ml=f=>{const l=letP("L:"),U=R(2),o=lopts(l);return Qm("ml"+l+U,U?"Find the small partner.":"Find the big partner.",U?`Here is the big ${NM[l]}. Find its small partner.`:`Here is the small ${NM[l]}. Find its big partner.`,U?l.toUpperCase():l,U?l:l.toUpperCase(),(U?o:o.map(x=>x.toUpperCase())),{it:"L:"+l,h:`${l.toUpperCase()} and ${l} are partners.`,why:`${l.toUpperCase()} and ${l} are the same letter.`,ltr:1})};
 G.snd=f=>{const l=pp(rpPick(SND,"S:",1,6,4)),sd=SND.filter(x=>x!=l&&PH[x][0]!=PH[l][0]).slice(0).sort(()=>R(3)-1);return Qm("sn"+l,`Which sound does ${l.toUpperCase()} make?`,`This is the letter ${NM[l]}. Which one is its sound?`,disp(l),PH[l][0],sd.map(x=>PH[x][0]),{it:"S:"+l,h:`${l.toUpperCase()} says ${PH[l][0]}, like ${LPIC[l][0]}.`,why:`${l.toUpperCase()} says ${PH[l][0]}.`,snd:l})};
 G.s2l=f=>{const l=pp(rpPick(SND,"S:",1,6,4)),pl=SND.slice(0,Math.max(6,SND.filter(c=>skSt("S:"+c)>0).length+3)).filter(x=>PH[x][0]!=PH[l][0]);return Qm("s2"+l,`Which letter says ${PH[l][0]}?`,`Which letter says ${PH[l][0]}?`,"👂",disp(l),pl.map(disp),{it:"S:"+l,h:`${l.toUpperCase()} says ${PH[l][0]}, like ${LPIC[l][0]}.`,why:`${l.toUpperCase()} says ${PH[l][0]}.`,ltr:1})};
-G.bgn=f=>{const l=pp(rpPick(SND,"S:",1,6,4)),c=LPIC[l][0],o=Object.keys(FSM).filter(w=>ART[w]&&FSM[w]!=l&&!(FSM[w]=="k"&&(l=="c"||l=="k"))&&FSM[w][0]!=l);const same=Object.keys(FSM).filter(w=>ART[w]&&(FSM[w]==l||(FSM[w]=="k"&&(l=="c"||l=="k"))||(l=="x"&&0)));const t=same.length?pp(same):c;return Qm("bg"+l+t,`Which picture starts with ${PH[l][0]}?`,`This letter says ${PH[l][0]}. Which picture starts with ${PH[l][0]}?`,disp(l),ART[t],o.map(x=>ART[x]),{it:"S:"+l,h:`${l.toUpperCase()} says ${PH[l][0]}. Say each picture slowly.`,why:`${t} starts with ${PH[l][0]}.`})};
+G.bgn=f=>{const l=pp(rpPick(SND,"S:",1,6,4)),c=LPIC[l][0],o=Object.keys(FSM).filter(w=>ART[w]&&FSM[w]!=l&&!(FSM[w]=="k"&&(l=="c"||l=="k"))&&FSM[w][0]!=l);const same=Object.keys(FSM).filter(w=>ART[w]&&(FSM[w]==l||(FSM[w]=="k"&&(l=="c"||l=="k"))||(l=="x"&&0)));const t=same.length?pp(same):c;const tog=RPX.n==2&&!RPX.pl;return Qm("bg"+l+t,tog?`Which picture starts with ${PH[l][0]}?`:"Which picture starts with this letter’s sound?",tog?`This letter says ${PH[l][0]}. Which picture starts with ${PH[l][0]}?`:"Look at this letter. Which picture starts with the sound this letter makes?",disp(l),ART[t],o.map(x=>ART[x]),{it:"S:"+l,h:`${l.toUpperCase()} says ${PH[l][0]}. Say each picture slowly.`,why:`${t} starts with ${PH[l][0]}.`})};
 const LNM=l=>NM[l];
-G.nvs=f=>{const l=pp(rpPick(SND.filter(x=>PH[x][0]!=NM[x]),"S:",1,6,4)),sound=R(2);return{k:"nv"+l+sound,q:sound?"Which one is the sound?":"Which one is the name?",say:sound?`This is the letter ${NM[l]}. Which one is its sound?`:`This is the letter ${NM[l]}. Which one is its name?`,big:disp(l),a:shuf([NM[l],PH[l][0]]),get c(){return this.a.indexOf(sound?PH[l][0]:NM[l])},it:"S:"+l,h:`The name is ${NM[l]}. The sound is ${PH[l][0]}.`,why:`The name is ${NM[l]}. The sound is ${PH[l][0]}.`}};
+G.nvs=f=>{const l=pp(rpPick(SND.filter(x=>PH[x][0]!=NM[x]),"S:",1,6,4)),sound=R(2);return{k:"nv"+l+sound,q:sound?"Which one is the sound?":"Which one is the name?",say:sound?"Look at this letter. Which one is its sound?":"Look at this letter. Which one is its name?",spkO:1,big:disp(l),a:shuf([NM[l],PH[l][0]]),get c(){return this.a.indexOf(sound?PH[l][0]:NM[l])},it:"S:"+l,h:`The name is ${NM[l]}. The sound is ${PH[l][0]}.`,why:`The name is ${NM[l]}. The sound is ${PH[l][0]}.`}};
 G.fnt=f=>{const l=letP("L:"),U=R(2),d=x=>U?x.toUpperCase():x,fa=pp(lFont),fb=lFont.filter(x=>x!=fa),fx=x=>`<span style="font-family:${pp(fb)};font-size:44px">${x}</span>`,o=lopts(l).map(d);const m=nA(d(l),o);return{k:"ft"+l+U+srt(m.a),q:"Which letter is the same?",say:"Look at this letter. Which one is the same letter?",big:`<span style="font-family:${fa};font-size:76px">${d(l)}</span>`,a:m.a.map(fx),c:m.c,it:"L:"+l,h:"Look at the shape. It looks a little different but it is the same letter.",why:`It is the letter ${NM[l]}.`}};
 
 /* ===== Reading Path: question makers, stages 4 to 6 ===== */
@@ -2906,7 +3097,7 @@ G.con=f=>{const[t,qs]=pp(CON),[q,c,o]=pp(qs);return Qo("cn"+t.slice(0,16)+q,q,`R
 const wordCard=(w,d,x)=>`<div class="vcard"><b>${w}</b><span>${d}</span><i>“${x}”</i></div>`;
 G.sw=f=>{const l=WOTD.map(x=>x[0]),w=pp(rpPick(l,"V:",1,4,3)),e=WOTD.find(x=>x[0]==w),isNew=!skHas("V:"+w),oth=WOTD.filter(x=>x[0]!=w);
  const base=R(2)?Qo("sw1"+w,`Which word fits the sentence?`,`Which word fits? ${e[2].replace(new RegExp(w,"i"),"blank")}`,`<span style="font-size:24px">${e[2].replace(new RegExp(w,"i"),"____")}</span>`,w,shuf(oth).slice(0,3).map(x=>x[0]),{it:"V:"+w,h:`${w} means ${e[1]}.`,why:`${w} means ${e[1]}.`}):Qo("sw2"+w,"Which word means this?",`Which word means ${e[1]}?`,`<span style="font-size:24px">${e[1]}</span>`,w,shuf(oth).slice(0,3).map(x=>x[0]),{it:"V:"+w,h:`Think: ${e[2]}`,why:`${w} means ${e[1]}.`});
- if(isNew){base.pre=wordCard(w,e[1],e[2]);base.preSay=`A new word: ${w}. ${w} means ${e[1]}. For example: ${e[2]}`}return base};
+ if(isNew){base.pre=wordCard(w,e[1],e[2]);base.preSay=`A new word: ${w}. ${w} means ${e[1]}. For example: ${e[2]}`;base.shown=1}return base};
 const ADJ=[["big",["elephant","hippo","giraffe"],["small","tiny"]],["small",["ant","mouse","bee"],["big","huge"]],["tall",["giraffe","tree"],["short"]],["long",["snake"],["short"]],["sweet",["mango","banana","cake"],["sour"]],["hot",["sun"],["cold"]],["round",["ball","moon","orange"],["flat"]],["fast",["jeep","car","hare"],["slow"]],["soft",["cat","rabbit","sheep"],["hard"]],["loud",["lion","bus","drum"],["quiet"]],["wet",["fish","frog","boat"],["dry"]],["fluffy",["sheep","rabbit"],["smooth"]]];
 G.dsc=f=>{const[a,ns,op]=pp(ADJ.filter(x=>x[1].some(n=>ART[n]))),n=pp(ns.filter(x=>ART[x])),other=ADJ.map(x=>x[0]).filter(x=>x!=a&&!op.includes(x));return Qo("ds"+a+n,`Which word tells about the ${n}?`,`Which word tells about the ${n}?`,ART[n],a,[...shuf(other).slice(0,2),...op.slice(0,1)],{it:"V:"+a,h:`Think about what a ${n} is like.`,why:`A ${n} can be ${a}.`})};
 G.sto2=f=>{const[t,q,c,x,y]=pp(C),o=shuf([c,x,y]);return{k:"st2"+t.slice(0,18)+q,q,say:`Listen to the story. ${t} ${q}`,big:"📖👂",a:o,c:o.indexOf(c),rep:t,h:`Listen again. ${t}`,why:`${c}.`}};
@@ -2998,7 +3189,9 @@ const rpCat=id=>/^(s2_bl|s4_b|s4_ls)/.test(id)?"bl":/^(s2_seg|s4_sg|s5_spl|s2_cx
 function rpInit(){if(!S.rp)S.rp={taught:{},cnt:0,lf:[],rem:null,prof:null,qz:{},sn:[]};const r=S.rp;if(!r.taught)r.taught={};if(!r.lf)r.lf=[];if(!r.sn)r.sn=[];if(!r.qz)r.qz={};
  if(!r.m)r.m={};if(!r.att)r.att=[];if(!r.err)r.err=[];if(!r.dg)r.dg={q:[],f:{},d:{}};if(!r.pc)r.pc={};if(!r.met)r.met={};if(!r.sty)r.sty={};return r}
 const rk=id=>"K:"+id,rpRec=id=>(S.sk||{})[rk(id)];
-function rpSt(id){const r=rpRec(id);if(!r)return(S.rp&&S.rp.taught&&S.rp.taught[id])?1:0;let s=skSt(rk(id));if(s==4&&r.d.length<2)s=3;return s>=3?s:(s==1&&r.n<3?1:2)}
+/* skills whose questions have only two choices: a lucky streak is easy, so "on their own" needs four right in a row */
+const BIN=new Set(["s1_book","s3_nvs","s7_lv"]);
+function rpSt(id){const r=rpRec(id);if(!r)return(S.rp&&S.rp.taught&&S.rp.taught[id])?1:0;let s=skSt(rk(id));if(s==4&&r.d.length<2)s=3;if(s>=3&&BIN.has(id)&&!/1111$/.test(r.h))s=2;return s>=3?s:(s==1&&r.n<3?1:2)}
 const rpIt=id=>{const s=SKI[id];if(!s||!s.it)return null;return{p:s.it[0],pool:s.it[1]=="LTO"?LTO:SND,min:s.it[2]||6}};
 const rpCov=id=>{const t=rpIt(id);return t?t.pool.filter(c=>skSt(t.p+c)>=3).length:0};
 const rpReady=id=>{if(!SKI[id])return true;const t=rpIt(id);return rpSt(id)>=3&&(!t||rpCov(id)>=t.min)};
@@ -3055,17 +3248,19 @@ function rpStart(id,o){o=o||{};const s=SKI[id],R_=rpInit();try{speechSynthesis.c
  rpPlan(o)}
 /* what to show before the questions: only what the child does not already know */
 function rpPlan(o){o=o||{};const id=L.id,s=SKI[id],st=rpSt(id),pm=L.pm;L.slides=[];
- if(L.bun){const tl=L.teach||(L.pm?[]:rpNewLetters(3).map(c=>({c,n:1,s:rpOpen("s3_snd")?1:0})));tl.forEach(x=>L.slides.push(rpLetterSlide(x)))}
+ if(L.bun){const tl=L.teach||(L.pm?[]:rpNewLetters(3).map(c=>({c,n:1,s:rpOpen("s3_snd")?1:0})));tl.forEach(x=>L.slides.push(rpLetterSlide(x)));
+  const TG=rpInit().taught,nw=[L.id,...L.bun.m].filter((x,i,a)=>a.indexOf(x)==i&&!LCORE.includes(x)&&!TG[x]&&(SKI[x].t||[]).length).slice(0,1);nw.forEach(x=>{const sl=SKI[x].t.map(t=>[t[0],t[1]]);sl.forEach(z=>{z.sk=x;L.slides.push(z)})})}
  else{const intro=rpIntro(id,L.teach);if(intro)L.slides.push([intro.big,intro.say,intro.items])}
  const noTeach=pm=="known"||pm=="part"&&!(s.t||[]).length;
  if(!L.bun&&!noTeach&&(st<=1||o.reteach||o.rem)&&pm!="part"){const dsc=DISC[id];if(dsc)L.slides.push(dsc);(s.t||[]).forEach(x=>L.slides.push([x[0],x[1]]))}
  else if(!L.bun&&!L.slides.length&&st==2&&(!o.mini||L.refresh)&&pm!="known"&&pm!="part")L.slides.push([s.t[0][0],"Let us remember. "+s.t[0][1]]);
+ else if(!L.bun&&!L.slides.length&&pm=="part"&&!rpInit().taught[id]&&(s.t||[]).length)L.slides.push(s.t[0]);   /* knew some of it: one short demonstration, never none */
  if(pm=="known"){L.need=Math.min(L.need,4);L.gl=0}
  if(L.slides.length){scr="lesson";rpTeach()}else{L.ph=(st>=3||pm=="known")?"solo":"guided";scr="lesson";rpAsk()}}
 function rpTeach(){sayReset();const sl=L.slides[L.ti];if(!sl){L.ph=((rpSt(L.id)>=3||L.pm=="known")&&!L.rem)?"solo":"guided";L.n=0;return rpAsk()}if(sl.disc)return rpDisc(sl);const s=SKI[L.id];L.vt=sl[1];S.sk=S.sk||{};const cs=sayLetters(sl);
- app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p>${sayHtml(cs)}<button class="btn" id="tnext" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
+ app(`<div class="card lsn${NR()?" nr":""}">${LHD(0)}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.rem?"Let’s practise something first, "+esc(S.name)+".":L.refresh?"Let’s remember this one, "+esc(S.name)+".":"Let’s learn something new, "+esc(S.name)+"!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)" style="font-size:${/<|&/.test(sl[0])?"52":"46"}px;margin-top:14px">${sl[0]}</div><span class="arrow">☝️</span><p class="qt">${sl[1]}</p>${sayHtml(cs)}<button class="btn" id="tnext" onclick="L.ti++;rpTeach()">${NR()?"▶":L.ti<L.slides.length-1?"Next ➜":"Practise ➜"}</button></div>`);
  if(sl[2])sl[2].forEach(c=>{const p=sl.cm||[SKI[L.id].it[0]];p.forEach(pp_=>{if(!S.sk[pp_+c])S.sk[pp_+c]={h:"",n:0,c:0,d:[],g:[],t:Date.now(),b:0}})});
- rpInit().taught[L.id]=1;save();if(cs.length)SAY={cs,i:0,tries:0,busy:0,l:L,ti:L.ti};talk(sl[1]+(cs.length?` Now you say it: ${PH[cs[0]][0]}!`:""))}
+ if(!L.bun||LCORE.includes(L.id))rpInit().taught[L.id]=1;if(sl.sk)rpInit().taught[sl.sk]=1;if(sl.cm)LCORE.forEach(x=>{if(x!="s3_snd"||sl.cm.includes("S:"))rpInit().taught[x]=1});save();if(cs.length)SAY={cs,i:0,tries:0,busy:0,l:L,ti:L.ti};talk(sl[1]+(cs.length?` Now you say it: ${PH[cs[0]][0]}!`:""))}
 /* "Now you say it!": after hearing a letter sound the child says it out loud. This is practice, never a test: any try is cheered, nothing is
    marked wrong and nothing is saved. A microphone helps (it can cheer "I heard sss!"), but without one the child is simply asked to say it aloud. */
 let SAY=null,SAYF=null;
@@ -3108,10 +3303,10 @@ function rpAsk(){const R_=rpInit();if(L.ph=="pre")return rpPreAsk();if(L.diag)re
 function rpShow(){const q=L.q,s=SKI[L.cid]||SKI[L.id],nr=NR(),ph=L.ph=="pre"||L.diag?"Let’s see what you know":L.quiz?`Quiz · Question ${L.n+1}/10`:L.daily?`Daily adventure · Part ${DYL?DYL.seg+1:1}`:`Stage ${s.st}: ${s.n} · ${L.ph=="guided"?"Together":L.ph=="solo"?"On my own":""}`;
  let body="";if(q.t=="trace")body=trArea();else if(q.t=="tile")body='<div id="tz"></div>';else if(q.t=="tapw")body=`<div class="pgw">${q.lines.map((l,li)=>`<div>${l.map((w,wi)=>{const ix=q.lines.slice(0,li).reduce((a,x)=>a+x.length,0)+wi;return`<button class="tw${ix==q.hl?" on":""}" onclick="ans(${ix})">${w}</button>`}).join(" ")}</div>`).join("")}</div>`;
  else body=(q.sb?padH(q):"")+`<div class="opts${q.ltr?" lt":""}${rpPics(q)?" pics":""}${q.a.every(o=>String(o).replace(/<[^>]+>/g,"").length<=5)?" s":""}">${q.a.map((o,i)=>`<button class="opt" onclick="ans(${i})" aria-label="${esc(nameOf(o))}">${o}</button>`).join("")}</div>`;
- app(`<div class="card${nr?" nr":""}">${XB()}${L.quiz?"":`<button class="ghost exitb" onclick="pupHelp()" aria-label="Help">🐶 Help</button>`}${nr?"":`<small>${ph}</small>`}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.msg}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);
+ app(`<div class="card lsn${nr?" nr":""}">${LHD(!L.quiz)}${nr?"":`<small>${ph}</small>`}<div class="stg"><div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.msg}</div></div>${q.pre||""}<div class="big${q.big?"":" e"}" onclick="replay()" role="button" aria-label="Hear it again">${q.big||""}</div></div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);
  if(q.t=="tile")tileInit();if(q.t=="trace")trBegin();
  if(L.ph=="guided"&&L.n==0&&q.a&&q.a.length){const b=document.querySelectorAll(".opt")[q.c];if(b)b.classList.add("hl")}
- L.t0=Date.now();replay();}
+ L.t0=Date.now();sndAv(q);replay();}
 function rpReplay(){if(!L||!L.rp||!L.q)return false;const q=L.q;if(!(q.snd||q.rep||q.preSay))return false;
  const t=(q.preSay?q.preSay+" ":"")+(q.say||q.q);talk(t);if(q.snd){const ms=1700+t.length*45;setTimeout(()=>{if(L&&L.q==q)(ESND[q.snd]||ASND[q.snd])&&snd1(q.snd);else if(L&&L.q==q&&PH[q.snd])talk(PH[q.snd][0])},Math.min(ms,3200))}return true}
 /* ---- answering: right first time and on their own is the only thing that counts as independent ---- */
@@ -3122,7 +3317,7 @@ function ans(i){if(!L||L.done)return;if(L.pl)return plAns(i);const q=L.q;if(L.rt
  if(L.ph=="pre"||L.diag)return rpOne(i,ok);
  if(!ok){if(!L.miss)rpErr(q,i);L.miss++;SQ++;clearHl();const bs=document.querySelectorAll(".opt");if(bs[i]){bs[i].classList.add("no");bs[i].disabled=1}else document.querySelectorAll(".tw").forEach((b,j)=>{if(j==i){b.classList.add("no");b.disabled=1}});sfx.no();pupReact("tilt");
   const hm=q.h&&L.miss==1?q.h+" Try again!":null,m=hm||(CORR[L.u>9?9:L.u<0?0:L.u]||"Look again.")+" Try again!";$("#fb").innerHTML=`<p><b>${L.miss>1?"Look at the bouncing one.":m}</b></p>`;talk(L.miss>1?"Look at the bouncing one.":m);if(L.miss>=2&&q.a&&q.a.length){const b=document.querySelectorAll(".opt")[q.c];if(b)b.classList.add("hl")}return}
- L.done=1;clearHl();SQ++;const selfOnly=!!(q.fl&&L.flAcc==null),first=!L.miss&&!L.hint&&!selfOnly&&!(q.fl&&L.flAcc!=null&&L.flAcc<80),solo=L.ph=="solo"||L.quiz,o=first&&solo?"1":"h",g=L.quiz?"quiz":L.rv?"review":L.daily?"daily":L.ph;
+ L.done=1;clearHl();SQ++;const selfOnly=!!(q.fl&&L.flAcc==null),first=!L.miss&&!L.hint&&!selfOnly&&!q.shown&&!(q.fl&&L.flAcc!=null&&L.flAcc<80),solo=L.ph=="solo"||L.quiz,o=first&&solo?"1":"h",g=L.quiz?"quiz":L.rv?"review":L.daily?"daily":L.ph;
  const sid=L.cid||L.id;rpRetention(sid,first&&solo);skAdd(rk(sid),o,g);if(q.it)skAdd(q.it,o,g);rpAtt(q,first&&solo,L.rt1);rpMetAns(sid);if(selfOnly)rpSelf();
  document.querySelectorAll(".opt,.tw").forEach((b,j)=>{b.disabled=1;if(j==q.c)b.classList.add("ok")});sfx.ok();
  const gain=first?2:1;S.coins+=gain;S.earned+=gain;S.correct++;L.ok++;L.tot++;if(L.ph=="solo"&&!L.rv)L.sf.push(first?1:0);if(L.rv&&!first)L.rvmiss=1;
@@ -3145,7 +3340,7 @@ function rpEnd(pass,o){o=o||{};const R_=rpInit(),id=L.id,was=L.rem,s=SKI[id];if(
  if(L.daily&&DYL)return dnext();
  MZ.sting(st>=3&&pass?"level":"yay");confetti();scr="done";L.sum={id,st,pass,right,solo,bonus};
  app(`<div class="card" style="text-align:center"><div class="banner"><h1>${pass?"Well done!":"Nice work!"}</h1></div><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">${m}</div></div><p class="qt">${s.n}${L.bun&&L.focus&&L.focus.length?"<br>"+L.focus.map(c=>c.toUpperCase()+c).join(" &nbsp; "):""}<br><b style="color:${RPC[st]}">${RPN[st]}</b></p><p>+${bonus} 🥭</p><button class="btn" style="font-size:30px;padding:6px 30px" onclick="rpGo()">▶ Next</button> <button class="ghost" onclick="go('home')">🏠 Home</button></div>`);talk(`${pass?"Well done":"Nice work"}, ${S.name}! ${m}`)}
-function rpGo(){const n=rpNext(),R_=rpInit();if(n.mode=="story"&&typeof stOpen=="function")return stOpen(n.sid);rpStart(n.id,{mode:n.mode,rem:n.mode=="remedial",mini:n.mode=="remedial"||n.mode=="refresh",bundle:n.bundle,dg:n.dg,force:n.mode=="remedial"&&R_.rem?R_.rem.force:null})}
+function rpGo(){const R_=rpInit(),rs=R_.resume;R_.resume=null;if(rs&&rs.at==R_.cnt&&SKI[rs.id]&&rpOpen(rs.id)&&!R_.rem)return rpStart(rs.id,{bundle:rs.bundle,mode:"new"});const n=rpNext();if(n.mode=="story"&&typeof stOpen=="function")return stOpen(n.sid);rpStart(n.id,{mode:n.mode,rem:n.mode=="remedial",mini:n.mode=="remedial"||n.mode=="refresh",bundle:n.bundle,dg:n.dg,force:n.mode=="remedial"&&R_.rem?R_.rem.force:null})}
 const rpGoTo=id=>{if(!SKI[id])return;if(!rpOpen(id)){const w=SKI[id].pre.filter(p=>!rpReady(p))[0];const m=`First learn: ${SKI[w].n}.`;talk(m);const e=$("#mpmsg");if(e)e.textContent=m;return}rpStart(id,{reteach:rpSt(id)<=1,bundle:LETG.includes(id)})};
 /* ---- the daily adventure: a few short parts, each from a different place on the path ---- */
 let DYL=null;
@@ -3166,7 +3361,8 @@ function rpFocusLetters(base){const inprog=LTO.filter(c=>(hasRec("L:"+c)&&skSt("
 function rpLetterSlide(x){const c=x.c,pic=LPIC[c]?ART[LPIC[c][0]]||"":"",nameT=`This is the letter ${NM[c]}. Big ${c.toUpperCase()}, small ${c}.`,sndT=PH[c]?`${c.toUpperCase()} says ${PH[c][0]}, like ${LPIC[c][0]}.`:"";
  const sl=[x.s?`${disp(c)} ${pic}`:disp(c),((x.n?nameT+" ":"")+(x.s?sndT:"")).trim()||nameT,[c]];sl.cm=[...(x.n?["L:"]:[]),...(x.s?["S:"]:[])];if(!sl.cm.length)sl.cm=["L:"];return sl}
 function rpBundle(id){const m=LETG.filter(x=>rpOpen(x)&&!rpDone(x));if(!m.includes(id))m.unshift(id);const d=DECG.find(x=>rpOpen(x)&&!rpDone(x));return{m,d:d||null,c:0}}
-function rpBunPick(){const B=L.bun;B.c++;if(B.d&&L.ph=="solo"&&B.c%4==0&&rpOpen(B.d)&&KLET().length>=7)return B.d;return B.m[B.c%B.m.length]}
+const LCORE=["s3_nm","s3_uc","s3_lc","s3_snd"];   /* shown by every letter slide: name, big, small, sound */
+function rpBunPick(){const B=L.bun,TG=rpInit().taught;B.c++;if(B.d&&L.ph=="solo"&&B.c%4==0&&rpOpen(B.d)&&KLET().length>=7&&TG[B.d])return B.d;const m=B.m.filter(x=>LCORE.includes(x)||TG[x]);const pool=m.length?m:[L.id];return pool[B.c%pool.length]}
 
 /* ---- the quick check before a skill: only teach what is missing ---- */
 const rpBunN=()=>rpAdv()?8:3+Math.min(2,rpInit().m.bk||0);
@@ -3191,7 +3387,7 @@ function rpPreAdv(){const P=L.pre;P.i++;L.n++;const n=P.r.length,r=P.r.filter(x=
  if(!P.cand){P.ext=P.ext||0;
   if(n==3&&!P.ext){if(r<=1)return rpPreEnd("teach");if(r==3){P.ext=1;P.plan.push([L.id,null])}else{P.ext=2;P.plan.push([L.id,null],[L.id,null],[L.id,null])}}
   else if(n==4&&P.ext==1){if(r==4)return rpPreEnd("skip");P.ext=2;P.plan.push([L.id,null],[L.id,null])}
-  else if(n>=6)return rpPreEnd(r>=5?"skip":r>=3?"part":"teach")}
+  else if(n>=6)return rpPreEnd(r>=5?"skip":r>=4?"part":"teach")}
  else if(P.i>=P.plan.length||(n>=3&&P.r.slice(0,3).every(x=>!x[2]))||(rpAdv()&&n>=4&&P.r.filter(x=>!x[2]).length>=2)){P.stopped=P.i<P.plan.length;return rpPreEnd("items")}
  rpAsk()}
 function rpPreEnd(kind){const P=L.pre,R_=rpInit(),id=L.id,key=L.pkey,r=P.r,n=r.length,c=r.filter(x=>x[2]).length,M=R_.m.pre=R_.m.pre||{a:0,s:0,p:0,t:0,i:0,k:0};M.a+=n;L.pre=null;L.ph="teach";
@@ -3221,7 +3417,7 @@ function rpDisc(sl){const s=SKI[L.id],esc_=x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\
  if(!L.dsc||L.dsc.sl!==sl)L.dsc={sl,miss:0,done:0,show:0};const D=L.dsc;
  const words=`<div class="dws">${sl.words.map(w=>`<span class="dw">${sl.pics?pe(w)||"":""}${sl.nr?"":`<b>${hi(w)}</b>`}</span>`).join("")}</div>`;
  const opts=sl.opts.map((o,j)=>`<button class="opt${sl.nr?"":" lt"}" onclick="rpDiscAns(${j})">${sl.nr&&pe(o)?pe(o):o}</button>`).join("");
- L.vt=sl.say;app(`<div class="card${NR()?" nr":""}">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${D.done?sl.rule:"Let’s find out something!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)">${words}</div>${sl.ask?`<p class="qt">${sl.ask}</p>`:""}${D.done?"":`<div class="opts${sl.nr?" pics":" s"}">${opts}</div>`}${D.done?`<button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":"Next ➜"}</button>`:""}<div id="fb"></div></div>`);
+ L.vt=sl.say;app(`<div class="card lsn${NR()?" nr":""}">${LHD(0)}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${D.done?sl.rule:"Let’s find out something!"}</div></div><small>${s.st?`Stage ${s.st}: `:""}${s.n}</small><div class="big" onclick="talk(L.vt)">${words}</div>${sl.ask?`<p class="qt">${sl.ask}</p>`:""}${D.done?"":`<div class="opts${sl.nr?" pics":" s"}">${opts}</div>`}${D.done?`<button class="btn" onclick="L.ti++;rpTeach()">${NR()?"▶":"Next ➜"}</button>`:""}<div id="fb"></div></div>`);
  if(!D.done)talk(sl.say);else talk(sl.rule)}
 function rpDiscAns(j){const sl=L.slides[L.ti],D=L.dsc;if(!sl||!sl.disc||D.done)return;if(j==sl.c){D.done=1;D.show=1;sfx.ok();pupReact("yay");rpDisc(sl);return}
  D.miss++;D.show=1;sfx.no();const b=document.querySelectorAll(".opt")[j];if(b){b.classList.add("no");b.disabled=1}
@@ -3385,21 +3581,21 @@ function stOpen(id){const s=STORIES.find(x=>x.id==id);if(!s)return rpGo();L=null
 function stQs(s){const q=shuf(s.q.slice()).slice(0,3).map(x=>({t:"q",q:x[0],c:x[1],o:shuf(x.slice(1))}));const f=stFindQ(s);if(f)q.push(f);return q}
 function stFindQ(s){const ws=[...new Set(stWords(stText(s)).filter(w=>w.length>=3&&w.length<=5&&!(s.H||[]).includes(w)&&!(s.N||[]).includes(w)))];if(ws.length<4)return null;
  const t=pp(ws),near=ws.filter(w=>w!=t&&w.length==t.length&&(w[0]==t[0]||w.slice(-1)==t.slice(-1))),rest=ws.filter(w=>w!=t&&!near.includes(w)),d=shuf([...shuf(near),...shuf(rest)]).slice(0,2);return d.length<2?null:{t:"w",q:`Tap the word ${t}.`,c:t,o:shuf([t,...d]),w:t}}
-function stIntro(){const s=ST_.s,w=ST_.nw;app(`<div class="card stc">${XB()}<div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${w.length>1?"Here are some new words!":"Here is a new word!"}</div></div><div class="stnw">${w.map(x=>`<button class="stw big" onclick="talk('${x}')">${esc(x)} 🔊</button>`).join("")}</div><p class="qt">${esc(s.t)}</p><button class="btn" onclick="stRead()">${NR()?"▶":"Read ➜"}</button></div>`);talk(w.length>1?"Here are some new words. Tap each one to hear it.":"Here is a new word. Tap it to hear it.")}
+function stIntro(){const s=ST_.s,w=ST_.nw;app(`<div class="card stc lsn">${STH(0)}<p class="sttl">${esc(s.t)}</p><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${w.length>1?"Here are some new words!":"Here is a new word!"}</div></div><div class="stnw">${w.map(x=>`<button class="stw big" onclick="talk('${x}')" aria-label="Hear ${esc(x)}">${esc(x)}<span class="sts">${UIC.spk}</span></button>`).join("")}</div><button class="btn stgo" onclick="stRead()">${NR()?UIC.play:`Read ${UIC.next}`}</button></div>`);talk(w.length>1?"Here are some new words. Tap each one to hear it.":"Here is a new word. Tap it to hear it.")}
 const stTok=t=>esc(t).replace(/[A-Za-z]+/g,w=>`<span class="stw" onclick="stTapW(this)">${w}</span>`);
 function stRead(){const s=ST_.s,p=s.pages[ST_.pi],last=ST_.pi==s.pages.length-1;
- app(`<div class="card stc">${XB()}<small>${esc(s.t)} · ${ST_.pi+1}/${s.pages.length}</small><div class="stpic" role="img" aria-label="A picture for this page">${p[1]}</div><div class="stp">${stTok(p[0])}</div><div class="stbt"><button class="ghost" aria-label="Read this page to me" onclick="stSay()">🔊</button><button class="btn" onclick="stFwd()">${last?"Questions ➜":"Next ➜"}</button></div></div>`)}
+ ST_.inQ=0;app(`<div class="card stc lsn">${STH(stP())}<p class="sttl">${esc(s.t)} · page ${ST_.pi+1} of ${s.pages.length}</p><div class="stpic" role="img" aria-label="A picture for this page">${p[1]}</div><div class="stp">${stTok(p[0])}</div><div class="stbt"><button class="ghost stsay" aria-label="Read this page to me" onclick="stSay()">${UIC.spk}</button><button class="btn stgo" onclick="stFwd()">${last?"Questions":"Next"} ${UIC.next}</button></div></div>`)}
 function stTapW(e){const w=e.textContent;ST_.pt[ST_.pi]=1;ST_.tw[w.toLowerCase()]=1;e.classList.add("tapped");talk(w)}
 function stSay(){ST_.pt[ST_.pi]=1;ST_.m++;talk(ST_.s.pages[ST_.pi][0])}
 function stFwd(){const s=ST_.s;if(ST_.pi<s.pages.length-1){ST_.pi++;return stRead()}stAsk()}
 /* ---- questions: first try right counts as independent ---- */
 function stAsk(){const Q=ST_.qs[ST_.qi];if(!Q)return stEnd();ST_.t1=1;ST_.done=0;const pic=o=>/^[^A-Za-z]+$/.test(o);
- app(`<div class="card stc">${XB()}<small>${esc(ST_.s.t)}</small><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${esc(Q.q)}</div></div><div class="opts${Q.o.every(pic)?" pics":""}" id="sto">${Q.o.map((o,j)=>`<button class="opt${pic(o)?"":" lt"}" onclick="stAns(${j})">${pic(o)?`<span class="stem">${o}</span>`:esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`);talk(Q.q)}
+ ST_.inQ=1;app(`<div class="card stc lsn">${STH(stP())}<p class="sttl">${esc(ST_.s.t)}</p><div class="row"><svg class="mini" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${esc(Q.q)}</div></div><div class="opts${Q.o.every(pic)?" pics":""}" id="sto">${Q.o.map((o,j)=>`<button class="opt${pic(o)?"":" lt"}" onclick="stAns(${j})">${pic(o)?`<span class="stem">${o}</span>`:esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`);talk(Q.q)}
 function stAns(j){const Q=ST_.qs[ST_.qi];if(ST_.done)return;const ok=Q.o[j]==Q.c,bs=[...document.querySelectorAll("#sto .opt")],fb=$("#fb");
  if(ok){ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;if(ST_.t1){ST_.qc++;if(Q.t=="w")ST_.fw[0]++}
-  bs.forEach((b,i)=>{b.disabled=1;if(i==j)b.classList.add("ok")});sfx.ok();pupReact("yay");const m=ST_.t1?"Yes!":"Yes, that is it!";fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="ST_.qi++;stAsk()">${NR()?"▶":"Next ➜"}</button>`;talk(m);return}
+  bs.forEach((b,i)=>{b.disabled=1;if(i==j)b.classList.add("ok")});sfx.ok();pupReact("yay");const m=ST_.t1?"Yes!":"Yes, that is it!";fb.innerHTML=`<p><b>${m}</b></p><button class="btn stgo" onclick="ST_.qi++;stAsk()">${NR()?UIC.play:`Next ${UIC.next}`}</button>`;talk(m);return}
  sfx.no();bs[j].disabled=1;bs[j].classList.add("no");if(ST_.t1){ST_.t1=0;const h=Q.t=="w"?"Not that one. Look at the letters and try again.":"Not that one. Think about the story and try again.";fb.innerHTML=`<p><b>${h}</b></p>`;talk(h);return}
- ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;bs.forEach((b,i)=>{b.disabled=1;if(Q.o[i]==Q.c)b.classList.add("hl")});const m="That’s okay! It is this one.";fb.innerHTML=`<p><b>${m}</b></p><button class="btn" onclick="ST_.qi++;stAsk()">${NR()?"▶":"Next ➜"}</button>`;talk(m)}
+ ST_.done=1;ST_.qn++;if(Q.t=="w")ST_.fw[1]++;bs.forEach((b,i)=>{b.disabled=1;if(Q.o[i]==Q.c)b.classList.add("hl")});const m="That’s okay! It is this one.";fb.innerHTML=`<p><b>${m}</b></p><button class="btn stgo" onclick="ST_.qi++;stAsk()">${NR()?UIC.play:`Next ${UIC.next}`}</button>`;talk(m)}
 function stEnd(){const R_=rpInit(),s=ST_.s,M=stI(),pg=s.pages.length,help=Object.keys(ST_.pt).length,ind=pg-help,taps=Object.keys(ST_.tw).length,ok=ind/pg>=.75&&ST_.qn&&ST_.qc*3>=ST_.qn*2,prev=M[s.id]||{};
  M[s.id]={d:ymd(),n:(prev.n||0)+1,pg,ind,taps,qc:ST_.qc,qn:ST_.qn,fw:ST_.fw,st:ok?"ind":"help",again:!ok&&(prev.n||0)<2,at:R_.cnt};
  const m=R_.m.story=R_.m.story||{n:0,pg:0,ind:0,q:0,qc:0,fn:0,fc:0};m.n++;m.pg+=pg;m.ind+=ind;m.q+=ST_.qn;m.qc+=ST_.qc;m.fn+=ST_.fw[1];m.fc+=ST_.fw[0];
@@ -3462,7 +3658,7 @@ function plAskQ(){const d=L.dom;if(L.i>=L.flat.length||L.stop||L.end)return plDo
  if(!q||(!q.a&&q.t!="tile")){L.i++;return plAskQ()}L.q=q;L.g=g;L.done=0;L.t0=Date.now();plShow()}
 function plShow(){const q=L.q,nr=L.nrm||S.pre;let body="";if(q.t=="tile")body='<div id="tz"></div>';else if(q.t=="tapw")body=`<div class="pgw">${q.lines.map((l,li)=>`<div>${l.map((w,wi)=>{const ix=q.lines.slice(0,li).reduce((a,x)=>a+x.length,0)+wi;return`<button class="tw${ix==q.hl?" on":""}" onclick="ans(${ix})">${w}</button>`}).join(" ")}</div>`).join("")}</div>`;
  else body=(q.sb?padH(q):"")+`<div class="opts${q.ltr?" lt":""}${rpPics(q)?" pics":""}${q.a.every(o=>String(o).replace(/<[^>]+>/g,"").length<=5)?" s":""}">${q.a.map((o,i)=>`<button class="opt" onclick="ans(${i})" aria-label="${esc(nameOf(o))}">${o}</button>`).join("")}</div>`;
- app(`<div class="card${nr?" nr":""}">${plBar()}<div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.dom.n}</div></div>${q.pre||""}<div class="big" onclick="replay()">${q.big||""}</div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);plBarGo();if(q.t=="tile")tileInit();replay()}
+ app(`<div class="card lsn${nr?" nr":""}">${plBar()}<div class="stg"><div class="row"><svg class="mini" id="ldog" onclick="replay()" viewBox="-45 -110 90 125">${dogG()}</svg><div class="say">${L.dom.n}</div></div>${q.pre||""}<div class="big${q.big?"":" e"}" onclick="replay()" role="button" aria-label="Hear it again">${q.big||""}</div></div><p class="qt" onclick="replay()">${q.q}</p>${body}<div id="fb"></div></div>`);plBarGo();if(q.t=="tile")tileInit();sndAv(q);replay()}
 function plAns(i){if(L.done)return;L.done=1;SQ++;const q=L.q,ok=i==q.c;L.n++;if(ok)L.c++;const s=L.subs[L.g]=L.subs[L.g]||{n:0,c:0};s.n++;if(ok)s.c++;
  const pl=S.rp.plc;if(ok&&q.it){const k=q.it;if(k.startsWith("S:"))(pl.ok.S=pl.ok.S||[]).includes(k.slice(2))||pl.ok.S.push(k.slice(2));if(k.startsWith("L:"))(pl.ok.L=pl.ok.L||[]).includes(k.slice(2))||pl.ok.L.push(k.slice(2));(pl.ok.I=pl.ok.I||[]).push(k)}
  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=1;if(j==q.c&&ok)b.classList.add("ok");else if(j==i)b.classList.add("no")});
@@ -3470,7 +3666,7 @@ function plAns(i){if(L.done)return;L.done=1;SQ++;const q=L.q,ok=i==q.c;L.n++;if(
  const m=ok?"Yes!":"That’s okay!";const fb=$("#fb");if(fb)fb.innerHTML=`<p><b>${m}</b></p>`;SQ++;setTimeout(()=>{if(L&&L.pl&&L.done)plAdv()},ok?850:1100)}
 function plAdv(){if(!L||!L.pl)return;plAskQ()}
 function plDomEnd(){const P=rpInit(),pl=P.plc,d=L.dom,r={n:L.n,c:L.c,pct:plPct({n:L.n,c:L.c}),subs:L.subs,stop:L.stop};pl.res[d.id]=r;pl.di++;pl.lead=L.stop?"That’s okay! ":"Great job! ";save();RPX.pl=0;scr="lesson";plDomain()}
-const plCredit=(k,g,days)=>{S.sk=S.sk||{};const o=S.sk[k]||{h:"",n:0,c:0,d:[],g:[],t:0,b:0};if(skSt(k)>=3)return;o.h=days?"1111":"11";o.n=Math.max(o.n,o.h.length);o.c=Math.max(o.c,o.h.length);const d=ymd();if(!o.d.includes(d))o.d.push(d);if(!o.g.includes("place"))o.g.push("place");o.t=Date.now();o.b=Math.max(o.b,1);S.sk[k]=o},
+const plCredit=(k,g,days)=>{S.sk=S.sk||{};const o=S.sk[k]||{h:"",n:0,c:0,d:[],g:[],t:0,b:0};if(skSt(k)>=3)return;o.h=days||/^K:(s1_book|s3_nvs|s7_lv)$/.test(k)?"1111":"111";o.n=Math.max(o.n,o.h.length);o.c=Math.max(o.c,o.h.length);const d=ymd();if(!o.d.includes(d))o.d.push(d);if(!o.g.includes("place"))o.g.push("place");o.t=Date.now();o.b=Math.max(o.b,1);S.sk[k]=o},
  plPart=(k)=>{S.sk=S.sk||{};if(S.sk[k])return;S.sk[k]={h:"hh",n:2,c:2,d:[ymd()],g:["place"],t:Date.now(),b:0}};
 function plFinish(){const P=rpInit(),pl=P.plc,res=pl.res,notes=[];setTimeout(()=>{try{rpMetTouch()}catch(e){}},0);
  /* a child who clearly succeeds at a later group of games has shown the skills underneath it too, so one slightly shaky early group is not held against them */
@@ -3579,9 +3775,9 @@ function rpReportCard(){const P=rpInit(),N=esc(S.name),pf=P.prof,weak=rpWeak(),d
  <p class="skl"><small>In each stage, the number shows how many skills ${N} can do on their own. The bar keeps filling until they are all “Mastered” (right first time on different days).</small></p>
  ${STAGES.map(([n,nm])=>{const ids=stIds(n),pc=Math.round(rpPct(ids)*100);return `<details class="rps"><summary><b>Stage ${n}: ${esc(nm)}</b> <span class="rpb"><u style="width:${pc}%;background:${STAGES[n-1][3]}"></u></span> <small>${ids.filter(i=>rpSt(i)>=3).length}/${ids.length}</small></summary><ul class="rpl">${ids.map(row).join("")}</ul></details>`}).join("")}</div>`}
 /* the old level number is now only a place on the path (used by a few games) */
-function rpPlayLabel(){if(!S.placed)return`Play games with ${S.pet} to find where to start`;const n=rpNext(),s=SKI[n.id];return(n.mode=="remedial"?"Let’s practise: ":n.mode=="review"?"Remember: ":S.fin?"Keep reading: ":`Stage ${s.st}: `)+s.n}
+function rpPlayLabel(){if(!S.placed)return`Find where to start`;const n=rpNext(),s=SKI[n.id];return(n.mode=="remedial"?"Let’s practise: ":n.mode=="review"?"Remember: ":S.fin?"Keep reading: ":`Stage ${s.st}: `)+s.n}
 
-render();IDB.get("readtrail2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem("readtrail2",JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
+render();IDB.get("readtrail2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
 </script></body></html>
 
 </body></html>
