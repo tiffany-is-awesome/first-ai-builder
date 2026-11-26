@@ -807,16 +807,18 @@ const STG={
   [["C5",4],["E5",4.5],["G5",5],["C6",5.5],["B5",6],["C6",6.5],["D6",7],["E6",7.5,2.5]].forEach(([n,b,l])=>e.push([b,n,l||.5,"brass"],[b,n,l||.5,"bell"]));
   [["C",4],["F",5],["G",6],["C",7.5]].forEach(([c,b])=>{const C=chd(c);C.t.forEach(x=>e.push([b,48+12+C.r+x,c=="C"&&b>7?2.5:1,"pad"]));e.push([b,36+C.r,1,"bass"],[b,"k",0])});
   [5,6,7.5].forEach(b=>e.push([b,"x",0]));return e})()}};
-function sched(){const S2=SONGS[cur];if(!S2||!ac)return;const sd=60/S2.bpm/4;
+function sched(){const S2=SONGS[cur];if(!S2||!ac)return;const sd=60/(S2.bpm*CALM.tempo)/4;
  while(nx<ac.currentTime+.15){const t=nx+(st%2?(S2.sw||0)*sd:0),b=bar%S2.M.length,C=S2.C[bar%S2.C.length],v=1;
-  if(S2.dr)for(const k in S2.dr){const p=S2.dr[k];if(p[st%p.length]=="x")DR[k](mg,t,v*.5)}
-  const bt=S2.bs[st%S2.bs.length];if(bt!="."){const iv={r:0,f:7,o:12,t:C.t[1]}[bt]||0;I.bass(mg,t,36+C.r+iv,sd*2,.32)}
-  if(S2.cp&&S2.cp[st%S2.cp.length]=="x")C.t.slice(0,3).forEach(x=>I[S2.ci](mg,t,60+C.r+x,sd*1.5,.07));
+  if(S2.dr&&CALM.drums)for(const k in S2.dr){const p=S2.dr[k];if(p[st%p.length]=="x")DR[k](mg,t,v*.5)}
+  const bt=S2.bs[st%S2.bs.length];if(bt!="."){const iv={r:0,f:7,o:12,t:C.t[1]}[bt]||0;I.bass(mg,t,36+C.r+iv,sd*2,.32*CALM.bass)}
+  if(S2.cp&&S2.cp[st%S2.cp.length]=="x")C.t.slice(0,3).forEach(x=>I[CALM.swap[S2.ci]||S2.ci](mg,t,60+C.r+x,sd*1.5,.05));
   if(S2.pd&&st==0)C.t.slice(0,3).forEach(x=>I.pad(mg,t,60+C.r+x,sd*S2.sb*.98,.5));
-  const M=S2.M[b],tk=M[st];if(tk&&tk!="."&&tk!="-"){let l=1;while(M[st+l]=="-"||M[st+l]==".")l++;I[S2.ld](mg,t,mid(tk),Math.min(l,4)*sd,.16)}
+  const M=S2.M[b],tk=M[st];if(tk&&tk!="."&&tk!="-"){let l=1;while(M[st+l]=="-"||M[st+l]==".")l++;I[CALM.swap[S2.ld]||S2.ld](mg,t,mid(tk),Math.min(l,4)*sd,.13)}
   nx+=sd;st++;if(st>=S2.sb){st=0;bar++}}}
-function tick(){if(!ac)return;let tg=0;if(on&&cur){const sp=window.speechSynthesis&&speechSynthesis.speaking;tg=(SONGS[cur].v||.6)*(sp?.35:1)*(Date.now()<sting?0:1)*.55}
+function tick(){if(!ac)return;let tg=0;if(on&&cur){const sp=window.speechSynthesis&&speechSynthesis.speaking;tg=(SONGS[cur].v||.6)*(sp?.35:1)*(Date.now()<sting?0:1)*.55*CALM.vol}
  mg.gain.setTargetAtTime(tg,ac.currentTime,.12);if(on&&cur)sched()}
+/* Calm mode: gentler background music (no drums, softer instruments, a little slower and quieter) */
+const CALM={drums:false,tempo:.82,vol:.6,bass:.7,swap:{chip:"mallet",brass:"bell",pluck:"mallet"}};
 function play(name){name=({quiz:"daily"})[name]||name;want=name;if(!on||!init()||cur==name)return;cur=name;nx=ac.currentTime+.08;st=0;bar=0;if(!tm)tm=setInterval(tick,25)}
 function stinger(name){const z=STG[name];if(!z||!init())return;if(ac.state=="suspended")ac.resume();const bt=60/z.bpm,t0=ac.currentTime+.05;let end=0;
  z.ev.forEach(([b,n,l,ins])=>{const t=t0+b*bt;if(typeof n=="string"&&DR[n]&&n.length==1)DR[n](sg,t,ins||.6);else{const m=typeof n=="number"?n:mid(n);I[ins](sg,t,m,l*bt,ins=="pad"?.5:.18)}end=Math.max(end,b+(l||1))});
