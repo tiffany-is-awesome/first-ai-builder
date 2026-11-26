@@ -21,8 +21,8 @@ This document describes how the reading curriculum of **ReadTrail 2** (`v2/index
 | 0 Not introduced | Never taught | no record |
 | 1 Learning | Has been shown it | taught, fewer than 3 answers |
 | 2 Practising | Sometimes right, still needs help | answers with hints or mixed results |
-| 3 Developing independence | Usually right alone | the last two answers right on their own |
-| 4 Mastered | Consistent across sessions | 4 of the last 5 alone, **on at least 2 different days or 2 different activities**, and it survives a spaced review |
+| 3 Developing independence | Usually right alone | the last **three** answers right on their own (four for the three skills whose questions have only two choices: s1_book, s3_nvs, s7_lv) |
+| 4 Mastered | Consistent across sessions | 4 of the last 5 alone, with the last one right, **on at least 2 different days** |
 
 A skill that is missed in a later review drops back to Practising (the history is a rolling window). Letters, sounds and patterns are also tracked item by item (for example the sound of "m"), so the app knows exactly which sounds are weak.
 
@@ -31,7 +31,7 @@ A skill that is missed in a later review drops back to Practising (the history i
 1. **Remediation first.** If the child missed 3 of the last 5 in a skill, find the weakest prerequisite below state 3 and practise it for a few questions (smaller choices, familiar pictures, a demonstration), then go back.
 2. **A suspected pattern is checked.** If mistakes form a pattern (see section 8), a 4-question check runs before anything is taught.
 3. **Skills that are slipping are refreshed.** A skill that was reached and has fallen back gets a short refresh, not a full lesson.
-4. **Spaced review.** Skills at state 3 or 4 come back after 1, 2, 4, 7 and 14 days: inside other lessons (about 1 question in 4 in the "alone" part), as a short review lesson about every fifth lesson, and in the Daily Adventure. The wait is halved when recent answers needed hints or were wrong, and lengthened by half for skills that are solid.
+4. **Spaced review.** Skills at state 3 or 4 come back after 1, 2, 4, 7 and 14 days (the step moves up at most once a day, so one long lesson cannot push the first review two weeks away): inside other lessons (about 1 question in 4 in the "alone" part), as a short review lesson about every fifth lesson, and in the Daily Adventure. The wait is halved when recent answers needed hints or were wrong, and lengthened by half for skills that are solid.
 5. **A Mini Story every fourth lesson** when one is open (section 8).
 6. **A language track every third lesson.** A listening or vocabulary skill the child can do (they can understand stories before they can read them).
 7. **Letters keep growing in turns**, a few at a time, in one session per group (section 8).
@@ -239,7 +239,7 @@ Listening to environmental sounds; spoken word to picture; how books work and re
 
 **Flow:** assess, find what is missing, teach only that, practise, check that the child can do it alone, move on, review before it is forgotten.
 
-* **Check first.** Before a new skill starts there is a short check on single-try questions (no hints). A skill is skipped only when the child gets 4 of 4 (or 5 of 6 after a doubt) right; 2 of 3 gets 3 more questions; 1 of 3 or fewer means "teach it". For letters, only the letters or sounds that were missed are taught. One answer never counts as mastery, and a skipped skill is still reviewed later, because choosing among answers is not the same as reading alone. Questions in a check use items the child has not met in a lesson.
+* **Check first.** Before a new skill starts there is a short check on single-try questions (no hints). A skill is skipped only when the child gets 4 of 4 (or 5 of 6 after a doubt) right; 2 of 3 gets 3 more questions; after 6 questions, 5 right skips, 4 right is "knows some of it" (still gets one short demonstration) and 3 or fewer means "teach it" (3 of 6 is about what guessing gets with three choices). For letters, only the letters or sounds that were missed are taught. One answer never counts as mastery, and a skipped skill is still reviewed later, because choosing among answers is not the same as reading alone. Questions in a check use items the child has not met in a lesson.
 * **Letters are taught in groups.** One session covers a few letters: the name, big and small, the sound and a picture, then use in words, while each of those is still tracked separately. A child who already reads gets one wide check (8 letters) instead of one session per group.
 * **Real reading starts early.** After about six letters the child blends and reads real words. Word practice only uses letters the child has learned; the wrong-answer words are filtered the same way (audited at 6, 10, 14 and 20 letters, 0 out-of-letter words in stage 4 and 5 practice).
 * **Pace follows the child.** Fast and right alone: the lesson ends early (3 fast independent answers; 4 for letter groups). Right but slow: a few more varied examples, once. One miss: a hint, a demonstration, a retry. Repeated misses: remediation. Help is recorded separately ("practising") from right-first-time answers, and a mastered skill that weakens is scheduled for review.
@@ -274,7 +274,38 @@ The same rules held in every run: no skill practised before its prerequisites; n
 * Stage 6 sentences and passages come from fixed banks that are picture-supported and not limited to letters the child has learned. Only stage 4 and 5 word practice and the Mini Stories are guaranteed to use learned sounds only.
 * For a child who already decodes, letters are checked in one wide check and then by reading, not one by one. The page says this, so unchecked letters are not shown as mastered.
 * There are no baseline comparisons, so the app does not say how many years or grades a child has gained.
-* Browser voices cannot say a pure consonant sound (they say "tuh" for t). The app spells the sound the way a voice can say it ("sss", "mmm", "fff" for sounds that can be stretched; short and clipped for the rest). Recorded letter sounds would be better.
+* Browser voices cannot say a pure sound, so without recordings the app says "the sound at the start of sun". A hint word is never one of the answer pictures on screen. A grown-up can record every letter sound once in the parent area (🔤 Letter sounds in your voice); the recordings then play wherever a sound is spoken, and can be downloaded and loaded on other devices. The recording screen has not been tried with a real microphone yet.
 * Animal and environment sounds are synthesised, not recordings.
 * Reading aloud (Stage 10) uses the device's speech recognition when it exists and always accepts "read it to a grown-up".
 * **Say the sound.** After a letter sound is taught, the child is asked "Now you say it!" and can tap the microphone. This is practice, not a test: speech recognition is poor at single sounds like "sss", so any try is cheered (with an extra "I heard sss!" when it matches), nothing is marked wrong, and nothing is saved or counted towards a skill. Without a microphone, or if the child or browser says no, the child is simply asked to say it out loud. Tested with mocked microphones only, not with real speech or real children.
+
+## 11. Audit changes (November 2026)
+
+An audit with simulated learners and automated tests (see `devtest.html` and section 12) found and fixed:
+
+| Problem found | Fix |
+|---|---|
+| Sound hints named the answer: "Which picture starts with the sound at the start of **lion**?" with a lion picture; blending hints like "the start of **van**, the start of apple…" with a van picture | A spoken hint word is never one of the answer pictures (extra hint words for every sound) |
+| "Which word begins with this letter sound?" said the sound aloud, so it tested hearing first sounds, not knowing the letter | When the child works alone, the sound is not said; the child must know it from the letter |
+| "The name and the sound are different" said the letter name in the question, then asked which choice is the name; the choices were written ("em", "mmm") and not read aloud | The question does not say the name; both choices are read aloud |
+| One perfect lesson pushed the next review 14 days away (the step moved up after every right answer) | The review step moves up at most once a day: 1, 2, 4, 7, 14 days |
+| Two right answers in a row counted as "on their own" and opened the next skills (1 in 9 by luck) | Three in a row (1 in 27); four for two-choice skills |
+| A quick check of 3 right out of 6 skipped the explanation entirely | Needs 4 of 6, and still shows one demonstration |
+| Letter lessons asked about blending, "hear a sound, find the letter" and other letter skills before their explanation was ever shown | Their first explanation slide is shown before they are practised |
+| A new word was explained and then tested at once with the same sentence, and counted as independent | Counted as "with help" |
+| Story questions: only the right answer appeared in the story, so matching a heard word was enough | The templated stories also mention a wrong choice (the place they passed, what they did first, how they felt at the start, cause vs effect) |
+| "Delete account" left the backup copy, so explorers came back on the next visit | The backup copy is cleared too |
+| Tapping Home by mistake lost the lesson; the next Play started something else | The next Play goes back to the same skill |
+| No warning when the browser cannot speak | A grown-up notice on the explorer screen |
+
+Still open (needs writing, not code): the fixed passage banks (`STO`, `PAS`, `INF`, `MI`, `FA`) still often mention only the right answer; each word of the day has only one example sentence, so later vocabulary questions reuse it.
+
+## 12. How to test without children
+
+Open `v2/devtest.html` (not linked from the app). It runs the app in **sandboxes** (`index.html?sandbox=NAME`) that save under their own name, never touch real explorers, never sync, and can move their clock forward.
+
+* **Sandbox:** start as one of five simulated learners (absolute beginner, emerging, developing, advanced beginner, inconsistent), a random guesser or a perfect answerer; jump to any skill; answer right or wrong for the child; trigger remediation and review; move the clock; inspect skill states and saved data; export and import saves; reload to test saving.
+* **Automated tests:** 27 tests, each in its own sandbox; results show what happened, including failures. Also runs headless: `python3 -m http.server 8765` in `v2`, then `node tests/run.mjs` (needs Playwright).
+* **Self-audit:** measured checks (demonstrations, choices per question, hint leaks, question variety, saving, offline) plus a checklist of things only a person can judge, with a reviewed mark and notes.
+
+Simulated learners test the rules. They do not show that children learn, understand the screens or enjoy it.
