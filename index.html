@@ -1530,7 +1530,7 @@ let GB_OPEN=false;
 function gbHTML(){return `<details class="card" id="gbx" ${GB_OPEN?"open":""} ontoggle="GB_OPEN=this.open;if(this.open)gbLoad()"><summary style="cursor:pointer;font-weight:700;font-size:18px">📝 Guestbook</summary><p>Leave a note for ReadTrail! Write your <b>first name only</b>. Please don’t share emails, phone numbers or other personal info.</p><p style="margin:8px 0 4px"><label for="gbn">First name</label></p><input class="t" id="gbn" maxlength="40" autocomplete="off" placeholder="First name only" style="width:100%;box-sizing:border-box"><p style="margin:8px 0 4px"><label for="gbm">Message</label></p><textarea class="t" id="gbm" maxlength="300" rows="3" placeholder="A short message (up to 300 letters)" style="width:100%;box-sizing:border-box;resize:vertical"></textarea><div style="margin-top:8px"><button class="btn" id="gbs" onclick="gbSave()">Save note</button></div><p id="gbst" role="status" aria-live="polite"></p><ul id="gbl" style="list-style:none;padding:0;margin:0"></ul></details>`}
 function gbMsg(t){const e=document.getElementById("gbst");if(e)e.textContent=t}
 async function gbLoad(){const ul=document.getElementById("gbl");if(!ul)return;
-if(!window.QuestXData){gbMsg("The guestbook could not load. Check your internet and try again.");return}
+if(!window.QuestXData){gbMsg("The guestbook can’t connect here. Check your internet, or open ReadTrail from its own website.");return}
 gbMsg("Loading notes…");
 try{const r=await QuestXData.list("guestbook",20);const notes=Array.isArray(r)?r:(r&&r.records)||[];
 const box=document.getElementById("gbl");if(!box)return;box.replaceChildren();
@@ -1546,7 +1546,7 @@ const name=n.value.trim().slice(0,40),message=m.value.trim().slice(0,300);
 if(!name||!message){gbMsg("Please type your first name and a message.");return}
 if(/\s/.test(name)){gbMsg("Please type just your first name.");return}
 if(/[^\s@]+@[^\s@]+\.[^\s@]+/.test(name+" "+message)||/(\d[\s().-]*){7,}/.test(name+" "+message)){gbMsg("Please don’t share emails or phone numbers.");return}
-if(!window.QuestXData){gbMsg("The guestbook could not load. Check your internet and try again.");return}
+if(!window.QuestXData){gbMsg("The guestbook can’t connect here. Check your internet, or open ReadTrail from its own website.");return}
 b.disabled=true;gbMsg("Saving…");
 try{await QuestXData.save("guestbook",{name,message});m.value="";await gbLoad();gbMsg("Thanks, your note is saved! 🎉")}
 catch(e){gbMsg((e&&e.message)||"Something went wrong saving your note.")}
