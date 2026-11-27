@@ -4091,4 +4091,46 @@ setInterval(()=>{const e=document.querySelector('#cdog image[data-pose]'),m=docu
 #moonb.onpaint>*{opacity:0}
 #moonb.onpaint:hover,#moonb.onpaint:focus-visible{box-shadow:0 0 0 4px rgba(255,240,200,.7),0 0 40px rgba(255,230,170,.8)!important}
 </style>
+<script>
+/* ===== Talk bubbles never cover Play or the other buttons =====
+   While a chat is open the buttons are hidden (they were only faded), so both bubbles have the whole sky.
+   Otherwise a bubble above the child or Biscuit first tries its normal spot; if that touches a button,
+   it gets wider (so it is shorter), then the words get a little smaller; if there is still no room,
+   it moves beside the speaker, on whichever side has more room, keeping clear of the other character. */
+function bubFit(){bubFit0();bubStack()}
+function bubFit0(){const sc=document.querySelector("#sc.camp");if(!sc)return;const chatting=sc.classList.contains("look");
+ const obs=chatting?[]:[...sc.querySelectorAll("#t-play,.flb,.moonb,.camphelp")].concat([...document.querySelectorAll("#app>.top button,#app>.top .coin")]);
+ const R=e=>e.getBoundingClientRect(),hit=(r,q)=>Math.min(r.right,q.right)-Math.max(r.left,q.left)>1&&Math.min(r.bottom,q.bottom)-Math.max(r.top,q.top)>1;
+ for(const [bid,cid,oid] of [["bd","cdog","ckid"],["bk","ckid","cdog"]]){const b=document.getElementById(bid),c=document.getElementById(cid),oc=document.getElementById(oid);if(!b||!c)continue;
+  b.style.removeProperty("max-width");b.style.removeProperty("font-size");b.style.removeProperty("max-height");b.style.removeProperty("overflow-y");b.classList.remove("bubside");
+  ["left","right","bottom","top"].forEach(k=>b.style.removeProperty(k));
+  if(b.style.display=="none"||!b.textContent.trim()&&!b.querySelector("input,textarea"))continue;
+  const bad=()=>obs.filter(o=>o.offsetParent!==null&&hit(R(b),R(o)));if(!bad().length)continue;
+  const W=innerWidth,cr=R(c),orr=oc?R(oc):null;
+  b.style.setProperty("max-width",Math.min(W*.92,520)+"px","important");if(!bad().length)continue;
+  for(const f of [15,14,13]){b.style.setProperty("font-size",f+"px","important");if(!bad().length)break}if(!bad().length)continue;
+  b.classList.add("bubside");b.style.setProperty("font-size","14px","important");
+  const inner=orr?(orr.left>cr.right?orr.left-cr.right:cr.left-orr.right):0,toLeft=!orr||orr.right<=cr.left,
+   roomIn=Math.max(0,inner-12),roomOut=toLeft?W-cr.right-12:cr.left-12,goOut=roomOut>=roomIn||roomIn<140,room=Math.max(140,goOut?roomOut:roomIn);
+  if(Math.max(roomIn,roomOut)<140){   /* tiny screen: over the fire, just below both faces */
+   const hb=Math.max(cr.top+cr.height*.4,orr?orr.top+orr.height*.4:0)+4;b.classList.add("bubside");
+   b.style.setProperty("left","10px","important");b.style.setProperty("right","10px","important");b.style.setProperty("max-width","none","important");
+   b.style.setProperty("top",Math.round(hb)+"px","important");b.style.setProperty("bottom","auto","important");
+   b.style.setProperty("max-height",Math.max(56,Math.round(innerHeight-hb-8))+"px","important");b.style.setProperty("overflow-y","auto","important");continue}
+  const leftSide=goOut?!toLeft:toLeft;   /* which side of the speaker the bubble sits on */
+  b.style.setProperty("max-width",Math.min(room,340)+"px","important");
+  if(leftSide){b.style.setProperty("right",Math.round(Math.min(W-6-140,W-cr.left+4))+"px","important");b.style.setProperty("left","auto","important")}
+  else{b.style.setProperty("left",Math.round(Math.min(W-6-140,cr.right+4))+"px","important");b.style.setProperty("right","auto","important")}
+  b.style.setProperty("bottom",Math.round(innerHeight-(cr.top+cr.height*.6))+"px","important");
+  const top=Math.max(0,...bad().map(o=>R(o).bottom));if(top){const avail=Math.round(cr.top+cr.height*.4-top-8);b.style.setProperty("max-height",Math.max(56,avail)+"px","important");b.style.setProperty("overflow-y","auto","important")}}}
+/* in a chat, Biscuit's words sit above the child's typing box, never on top of it */
+function bubStack(){const a=document.getElementById("bd"),b=document.getElementById("bk");if(!a||!b||a.style.display=="none"||b.style.display=="none")return;
+ const r=a.getBoundingClientRect(),q=b.getBoundingClientRect();if(!(Math.min(r.right,q.right)-Math.max(r.left,q.left)>2&&Math.min(r.bottom,q.bottom)-Math.max(r.top,q.top)>2))return;
+ a.style.setProperty("bottom",Math.round(innerHeight-q.top+10)+"px","important");a.style.setProperty("top","auto","important");
+ const r2=a.getBoundingClientRect();if(r2.top<6){a.style.setProperty("max-height",Math.round(q.top-16)+"px","important");a.style.setProperty("overflow-y","auto","important")}}
+{const cp2=campPos;campPos=function(){cp2.apply(this,arguments);try{bubFit()}catch(e){}
+ for(const id of ["bd","bk","sc"]){const b=document.getElementById(id);if(b&&!b._bf){b._bf=1;let busy=0;new MutationObserver(()=>{if(busy)return;busy=1;requestAnimationFrame(()=>{try{bubFit()}catch(e){}busy=0})}).observe(b,id=="sc"?{attributes:true,attributeFilter:["class"]}:{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["style"]})}}}}
+</script>
+<style>#sc.camp.look .campsky{opacity:0!important;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+#sc.camp .bub.bubside::after{display:none}</style>
 </body></html>
