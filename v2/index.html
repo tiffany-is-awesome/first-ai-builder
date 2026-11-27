@@ -3938,7 +3938,8 @@ function rpReportCard(){const P=rpInit(),N=esc(S.name),pf=P.prof,weak=rpWeak(),d
 /* the old level number is now only a place on the path (used by a few games) */
 function rpPlayLabel(){if(!S.placed)return`Find where to start`;const n=rpNext(),s=SKI[n.id];return(n.mode=="remedial"?"Let’s practise: ":n.mode=="review"?"Remember: ":S.fin?"Keep reading: ":`Stage ${s.st}: `)+s.n}
 
-render();IDB.get("readtrail2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
+/* the first drawing can come before the later parts of the page have loaded; never let that stop saved progress from loading */
+try{render()}catch(e){}IDB.get("readtrail2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
 </script></body></html>
 
 <script>
@@ -3985,12 +3986,13 @@ button,[role=button],.node,.bk-cv{-webkit-touch-callout:none;-webkit-user-select
    above the child and the puppy, shrinking the bubbles a little only when they would not fit. */
 function campFit(){const sc=document.querySelector("#sc.camp");if(!sc)return;const sky=sc.querySelector(".campsky"),fl=sc.querySelector(".campfl");if(!sky||!fl)return;
  const B=sc.getBoundingClientRect().bottom,tops=["#ckid","#cdog"].map(q=>document.querySelector(q)).filter(Boolean).map(e=>e.getBoundingClientRect().top);
- if(tops.length)sc.style.setProperty("--skyb",Math.round(B-Math.min(...tops)+12)+"px");
+ if(tops.length)sc.style.setProperty("--skyb",Math.round(Math.max(B-Math.min(...tops)+12,window.BUBTOP?B-BUBTOP+10:0))+"px");
+ campGrid(sky,fl);
  sky.style.paddingLeft=sky.style.paddingRight="";const m=document.getElementById("moonb");
  if(m){const mr=m.getBoundingClientRect(),sr=sky.getBoundingClientRect();if(mr.bottom>sr.top+4){const pad=mr.left>innerWidth/2?innerWidth-mr.left+8:mr.right+8;if(pad<innerWidth*.3)sky.style.paddingLeft=sky.style.paddingRight=Math.round(pad)+"px"}}
  fl.style.removeProperty("--bs");const f=fl.querySelector(".flb");if(!f)return;let bs=f.offsetWidth,n=0;
  const need=()=>[...sky.children].reduce((h,c)=>h+c.getBoundingClientRect().height,0)+f.offsetWidth*.22+14;
- while(need()>sky.clientHeight&&bs>48&&n++<30){bs-=6;fl.style.setProperty("--bs",bs+"px")}}
+ while(need()>sky.clientHeight&&bs>48&&n++<30){bs-=6;fl.style.setProperty("--bs",bs+"px");campGrid(sky,fl)}}
 {const cp0=campPos;campPos=function(){cp0.apply(this,arguments);try{campFit()}catch(e){}}}
 window.addEventListener("resize",()=>{try{campPos()}catch(e){}});
 </script>
@@ -4134,3 +4136,76 @@ function bubStack(){const a=document.getElementById("bd"),b=document.getElementB
 <style>#sc.camp.look .campsky{opacity:0!important;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
 #sc.camp .bub.bubside::after{display:none}</style>
 </body></html>
+<style>
+/* ===== Talk bubbles: their own space just above the heads; the buttons stay, evenly spread =====
+   The buttons are never faded or hidden while someone is talking; they sit in straight, even rows
+   (balanced, e.g. 4 + 4 instead of 5 + 3) and simply get a little smaller when the bubbles need room. */
+#sc.camp.look .campsky{opacity:1!important;visibility:visible!important}
+#sc.camp .campfl{justify-content:center!important;align-items:center!important;column-gap:var(--cg,16px)!important;row-gap:var(--rg,14px)!important}
+#sc.camp .flb,#sc.camp .flb:nth-child(even){margin:0!important}
+#sc.camp .campsky{top:var(--skyt,66px)!important}
+#sc.camp .bub.bubfit{max-height:none;overflow:visible}
+#sc.camp .bub.bubfit::after{left:var(--tx,16px)!important;right:auto!important}
+#sc.camp .bub.bubnotail::after{display:none}
+/* phone on its side, in a chat: the buttons and Play shrink to stay above the heads, below the picture strip */
+@media(max-height:519px) and (orientation:landscape){#sc.camp.look .campsky{bottom:var(--skyb,40%)!important;justify-content:space-evenly!important}#sc.camp.look .campplay.btn.play{min-height:44px;font-size:20px}#sc.camp.look .campplay small{display:none}}
+</style>
+<script>
+/* even rows: as few rows as fit, with the same number of buttons in each (the last row at most one short) */
+function campGrid(sky,fl){const bs=fl.querySelector(".flb");if(!bs)return;const n=fl.querySelectorAll(".flb").length,s=bs.offsetWidth,W=sky.clientWidth-parseFloat(getComputedStyle(sky).paddingLeft||0)-parseFloat(getComputedStyle(sky).paddingRight||0)-4;
+ const gap=Math.max(10,Math.round(s*.22));let rows=1;while(rows<n&&Math.ceil(n/rows)*s+(Math.ceil(n/rows)-1)*gap>W)rows++;
+ const cols=Math.ceil(n/rows);fl.style.setProperty("--cg",gap+"px");fl.style.setProperty("--rg",Math.round(s*.26+6)+"px");
+ fl.style.setProperty("max-width",(cols*s+(cols-1)*gap+2)+"px","important");fl.style.setProperty("width","100%","important")}
+/* Biscuit's bubble above Biscuit, the child's above the child; side by side when there is room, otherwise one above the other.
+   They never touch each other, never sit on a face, and the buttons move up out of their way. */
+bubFit=function(force){const sc=document.querySelector("#sc.camp");if(!sc)return;
+ /* only lay out again when something really changed (the words, who is talking, the screen size) */
+ const g=id=>{const e=document.getElementById(id);return e?e.style.display+"|"+e.textContent+"|"+e.children.length:"-"},sig=[g("bd"),g("bk"),innerWidth,innerHeight,sc.className,!!document.getElementById("chb"),sc.querySelectorAll(".flb").length].join("~");
+ if(!force&&sc._bsig===sig)return;sc._bsig=sig;
+ const W=innerWidth,H=innerHeight,vis=e=>e&&e.style.display!="none"&&(e.textContent.trim()||e.querySelector("input,textarea"));
+ const chb=document.getElementById("chb");sc.style.setProperty("--skyt",(sc.classList.contains("look")&&chb&&chb.getClientRects().length?Math.round(chb.getBoundingClientRect().bottom+8):66)+"px");
+ const P=[["bd","cdog"],["bk","ckid"]].map(([b,c])=>({b:document.getElementById(b),c:document.getElementById(c)})).filter(o=>o.c);
+ const show=P.filter(o=>vis(o.b));P.filter(o=>o.b&&!vis(o.b)).forEach(o=>o.b.classList.remove("bubfit","bubnotail"));
+ if(!show.length){if(window.BUBTOP){BUBTOP=0;campFit()}return}
+ for(const o of show){const r=o.c.getBoundingClientRect();o.head=r.top+r.height*.04;o.cx=r.left+r.width*.5;const b=o.b;b.classList.add("bubfit");b.classList.remove("bubnotail","bubside");
+  ["left","right","top","bottom","max-height","overflow-y","font-size","transform"].forEach(k=>b.style.removeProperty(k))}
+ const put=(o,maxw,left,bottom)=>{const b=o.b;b.style.setProperty("max-width",Math.round(maxw)+"px","important");b.style.setProperty("width","max-content","important");
+  const w=Math.min(b.offsetWidth,maxw),L=Math.round(Math.max(left[0],Math.min(left[1]-w,o.cx-w/2)));
+  b.style.setProperty("left",L+"px","important");b.style.setProperty("right","auto","important");b.style.setProperty("top","auto","important");b.style.setProperty("bottom",Math.round(bottom)+"px","important");
+  b.style.setProperty("--tx",Math.round(Math.max(12,Math.min(w-30,o.cx-L-10)))+"px");return b.getBoundingClientRect()};
+ const M=8,base=o=>H-o.head+12,minTop=(parseFloat(sc.style.getPropertyValue("--skyt"))||66)+4;let top;
+ const lay=()=>{
+ if(H<520&&W>H){/* short, wide screens (a phone on its side): there is no room above the heads, so each bubble sits beside its speaker */
+  top=H;for(const o of show){const r=o.c.getBoundingClientRect(),other=show.find(x=>x!==o)||P.find(x=>x!==o),orr=other&&other.c.getBoundingClientRect(),left=!orr||r.left<orr.left;
+   const pl=document.getElementById("t-play"),pr=pl&&pl.getClientRects().length?pl.getBoundingClientRect():null;
+   let room=left?r.left+r.width*.15-M:W-r.right+r.width*.15-M;if(pr)room=Math.min(room,left?pr.left-6-M:W-M-pr.right-6);
+   const b=o.b,mw=Math.max(130,Math.min(room,320));
+   b.style.setProperty("max-width",mw+"px","important");b.style.setProperty("width","max-content","important");const w=Math.min(b.offsetWidth,mw);
+   let L=left?r.left+r.width*.15-w:r.right-r.width*.15;if(pr)L=left?Math.min(L,pr.left-6-w):Math.max(L,pr.right+6);L=Math.max(M,Math.min(W-M-w,L));b.style.setProperty("left",Math.round(L)+"px","important");b.style.setProperty("right","auto","important");
+   b.style.setProperty("top","auto","important");b.style.setProperty("bottom",Math.round(H-(r.top+r.height*.55))+"px","important");b.classList.add("bubnotail");
+   /* keep below any button above it in the same column */
+   let q=b.getBoundingClientRect();const lim=Math.max(minTop,...[...sc.querySelectorAll(".flb")].map(e=>e.getBoundingClientRect()).filter(e=>e.right>q.left&&e.left<q.right).map(e=>e.bottom+6));
+   let fs=parseFloat(getComputedStyle(b).fontSize);while(q.top<lim&&fs>13){fs--;b.style.setProperty("font-size",fs+"px","important");q=b.getBoundingClientRect()}
+   if(q.top<lim){b.style.setProperty("max-height",Math.max(56,Math.round(q.bottom-lim))+"px","important");b.style.setProperty("overflow-y","auto","important");q=b.getBoundingClientRect()}
+   top=Math.min(top,q.top)}
+  top=Math.max(top,minTop);return}
+ if(show.length==1){const o=show[0];top=put(o,Math.min(W-2*M,380),[M,W-M],base(o)).top}
+ else{const [d,k]=show,lo=k.cx<d.cx?k:d,hi=lo===k?d:k,mid=(k.cx+d.cx)/2,half=Math.min(mid-M-6,W-mid-M-6);
+  let side=half>=150;
+  if(side){const a=put(lo,Math.min(half,340),[M,mid-6],base(lo)),c=put(hi,Math.min(half,340),[mid+6,W-M],base(hi));top=Math.min(a.top,c.top);
+   if(a.right>c.left-4)side=false}
+  if(!side){/* one above the other: the child's (with the typing box) lower, Biscuit's above it */
+   const mw=Math.min(W-2*M,380),low=put(k,mw,[M,W-M],Math.max(base(k),base(d))),up=put(d,mw,[M,W-M],H-low.top+10);d.b.classList.add("bubnotail");top=up.top}}
+};
+ lay();let f=parseFloat(getComputedStyle(show[0].b).fontSize);
+ while(top<minTop&&f>13){f--;for(const o of show)o.b.style.setProperty("font-size",f+"px","important");lay()}
+ if(top<minTop)for(const o of show){const r=o.b.getBoundingClientRect();if(r.top<minTop){o.b.style.setProperty("max-height",Math.max(60,Math.round(r.bottom-minTop))+"px","important");o.b.style.setProperty("overflow-y","auto","important")}}
+ top=Math.max(top,minTop);
+ BUBTOP=H<520&&W>H?0:top;campFit()};
+bubStack=function(){};
+window.BUBTOP=0;
+/* the picture strip in a chat appears a moment later: check again (cheap: nothing happens unless something changed) */
+setInterval(()=>{try{bubFit()}catch(e){}},400);
+</script>
+<script>/* a returning explorer: the first drawing of the campfire ran before the painted scene was ready, so draw home again now that everything has loaded */
+if(scr=="home")try{render()}catch(e){}</script>
