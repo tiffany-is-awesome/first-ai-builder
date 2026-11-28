@@ -6,7 +6,7 @@ Tiffany's watercolour illustrations, cut out on transparent backgrounds (WebP).
 - `bg-home.webp`: the painted campfire background on the home screen.
 - `characters/`: the explorer (girl and boy) and Biscuit, cut from her character pictures.
   - Poses: front, side, back, read, wave, thumb (try again), think, point, cheer, walk, walkc (colourful backpack), yawn.
-  - Biscuit: front, side, back, sit, talk, walk, eat. Note: `dog-walk` and `dog-eat` show a floppy-eared dog that does not match the character sheet yet.
+  - Biscuit: front, side, back, sit, talk, walk, eat, and `dog-icon` (his face, cut from `dog-sit`, for the Pet care button). Note: `dog-walk` and `dog-eat` show a floppy-eared dog that does not match the character sheet yet.
 
 The app embeds the pictures it uses directly in `v2/index.html`, so it still works as one file. The explorer's skin tone and shirt, and Biscuit's fur, are recoloured in the browser to match each child's choices.
 
