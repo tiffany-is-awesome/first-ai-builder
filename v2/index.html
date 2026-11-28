@@ -1,4 +1,7 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.sgh{margin-top:8px;background:linear-gradient(160deg,#0f2552,#1d4a7a)}
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>/* ReadTrail 2 styles (kept separate from the page viewer's own block above) */
+.sgh{margin-top:8px;background:linear-gradient(160deg,#0f2552,#1d4a7a)}
 .sgec{text-align:center;margin:12px auto 0;max-width:560px;background:#fffaf0;color:#14284b;border-radius:22px;padding:12px 16px;box-shadow:0 4px 0 #c2512f}.sgec .cgtip{color:#14284b}.sgblend{font-size:20px;color:#14284b}.sgblend b{color:#c2512f}
 .sgword{font-family:Fredoka,'Baloo 2',sans-serif;font-size:clamp(48px,11vw,84px);font-weight:700;letter-spacing:.04em;line-height:1.1;color:#14284b}
 .sghl{color:#e0654a;text-decoration:underline;text-decoration-thickness:6px;text-underline-offset:8px}
@@ -1845,7 +1848,7 @@ function campHome(play,list){CAMPB=0;window.CAMPL=list;
 <button class="moonb" id="moonb" onclick="campWord()" aria-label="Word of the day"><span></span></button>
 <button class="ghost camphelp" onclick="tour(0)" aria-label="Show me around">?</button>
 <div class="campsky"><div class="campfl">${fl}</div>${play}</div>
-${window.CHBG?campPaint():`<div class="campgnd"><svg viewBox="0 0 400 270" preserveAspectRatio="xMidYMax slice" role="img" aria-label="A child and a puppy by a campfire on the savanna"><g filter="url(#grain)">${ngLand(rng(5))}</g>${ngChars(1)}</svg></div>`}
+${window.CHBG&&typeof campPaint=="function"?campPaint():`<div class="campgnd"><svg viewBox="0 0 400 270" preserveAspectRatio="xMidYMax slice" role="img" aria-label="A child and a puppy by a campfire on the savanna"><g filter="url(#grain)">${ngLand(rng(5))}</g>${ngChars(1)}</svg></div>`}
 <div class="bub" id="bd" style="display:none"></div><div class="bub" id="bk" style="display:none"></div></div>`}
 /* keep the talk bubbles right above the child's and the puppy's heads, whatever the screen size */
 function campPos(){const sc=$("#sc.camp");if(!sc)return;const d=$("#cdog"),k=$("#ckid");if(d){const r=d.getBoundingClientRect();sc.style.setProperty("--dr",Math.max(6,innerWidth-(r.left+r.width/2)-24)+"px");sc.style.setProperty("--db",Math.max(10,innerHeight-r.top+8)+"px")}
@@ -2388,11 +2391,19 @@ finally{const bb=document.getElementById("gbs");if(bb)bb.disabled=false}}
 function set(){const sw=(a,k)=>a.map(c=>`<button class="sw" style="background:${c}" aria-label="color" onclick="S['${k}']='${c}';save();set()"></button>`).join("");
 app(bar(1)+`<h2>Settings</h2><div class="card"><div class="chips"><button class="btn" onclick="S.theme=S.theme=='night'?'day':S.theme=='day'?'sunset':'night';save();render()">${S.theme=="night"?"🌙 Night (campfire)":S.theme=="sunset"?"🌅 Sunset (baobab)":"☀️ Day (mountain walk)"}</button><button class="ghost" onclick="S.voice=!S.voice;save();set()">Voice: ${S.voice?"on":"off"}</button><button class="ghost" onclick="S.hov=S.hov===false;save();set()">Read buttons aloud: ${S.hov===false?"off":"on"}</button><button class="ghost" onclick="S.nosfx=!S.nosfx;save();set()">Sound effects: ${S.nosfx?"off":"on"}</button><button class="ghost" onclick="S.calm=!S.calm;save();render()">Calm mode: ${S.calm?"on":"off"}</button><button class="ghost" onclick="parentOpen()">👪 Parent area</button><button class="ghost" onclick="S.girl=!S.girl;save();set()">Explorer: ${S.girl?"Girl 👧":"Boy 👦"}</button><button class="ghost" onclick="S.pre=!S.pre;PREFULL=0;save();set()">🧸 Little reader mode (ages 4–5): ${S.pre?"on":"off"}</button></div><p>Reading voice</p><div class="row" style="flex-wrap:wrap"><select class="t" id="vsel" style="flex:1;min-width:200px" onchange="S.vname=this.value;save();pickV();vTest()"><option value="">Automatic (most natural voice)</option>${vOK().sort((a,b)=>vRk(b)-vRk(a)).map(v=>`<option value="${esc(v.name)}" ${S.vname==v.name?"selected":""}>${esc(v.name)}${VOX&&VOX.name==v.name&&!S.vname?" ✓":""}</option>`).join("")}</select><button class="ghost" onclick="vTest()">▶ Hear it</button></div><small>Voices come from this device. For a more natural voice on a Mac, iPhone or iPad, add one in the device’s Settings → Accessibility → Spoken Content → Voices (for example Ava or Zoe, Premium), then pick it here.</small><p>Skin</p><div class="chips">${sw(SK,"skin")}</div><p>Shirt</p><div class="chips">${sw(SH,"shirt")}</div><p>Hair</p><div class="chips">${sw(HAIRS,"hair")}</div><p>Dog fur</p><div class="chips">${sw(FU,"fur")}</div><p>Dog’s name</p><input class="t" id="pn" value="${esc(S.pet)}" maxlength="14"><button class="btn" onclick="S.pet=$('#pn').value.trim()||'Biscuit';save();set()">Save name</button> <button class="ghost" onclick="placeIntro()">Play the starting games again</button> <button class="ghost" onclick="if(confirm('Delete this explorer and all progress?')){(ALL.del=ALL.del||[]).push(ALL.cur);delete ALL.kids[ALL.cur];ALL.cur=null;save();render()}">Delete explorer</button> <button class="ghost" onclick="wipeAll()">Delete account</button></div>`+gbHTML());if(GB_OPEN)gbLoad()}
 
-function onboard(){if(ob<3){app(`<div class="card"><div class="row"><svg class="mini" viewBox="-45 -110 90 125" style="width:120px">${dogG()}</svg><div class="say">Woof! Hi ${S.name}! I’m your new friend. What will you name me?</div></div><input class="t" id="pn" maxlength="14" placeholder="Biscuit"><button class="btn" onclick="S.pet=$('#pn').value.trim()||'Biscuit';save();ob=3;onboard()">That’s my name!</button></div>`);talk("Woof! What will you name me?")}else{S.toured=1;save();scr="home";home();setTimeout(()=>tour(0,()=>{ob=0;placeIntro()}),300)}}
+function onboard(){if(ob<3){const dpic=typeof CHR!="undefined"&&CHR["dog-sit"]?`<img src="${CHR["dog-sit"]}" alt="" style="width:170px;height:170px;object-fit:contain">`:`<svg class="mini" viewBox="-45 -110 90 125" style="width:140px">${dogG()}</svg>`,hi=/^Explorer( \d+)?$/.test(S.name)?"friend":S.name;
+app(`<div class="card nkc"><div class="row">${dpic}<div class="say" style="font-size:24px">Woof! Hi ${hi}! I’m your new puppy. My name is <b>Biscuit</b>. <button class="nksay" onclick="talk('Woof! I am your new puppy. My name is Biscuit. Tap the big button to play!')" aria-label="Hear this">🔊</button></div></div><button class="btn nkgo" onclick="S.pet=($('#pn').value.trim()||'Biscuit');save();ob=3;onboard()">🐾 Let’s play!</button><details style="margin-top:18px;font-size:18px"><summary style="cursor:pointer;padding:8px 0">Grown-ups: give the puppy another name</summary><input class="t" id="pn" maxlength="14" placeholder="Biscuit"></details></div>`);talk("Woof! I am your new puppy. My name is Biscuit. Tap the big button to play!")}else{S.toured=1;save();scr="home";home();setTimeout(()=>tour(0,()=>{ob=0;placeIntro()}),300)}}
 const as=(k,f)=>{const o=S;S=k;const r=f();S=o;return r};
-function who(){const ks=Object.entries(ALL.kids);if(!CLD&&!ks.length)return app(`<div class="card" style="text-align:center;margin-top:40px"><div class="banner"><h1>ReadTrail 2</h1></div><p style="font-size:22px">☁️ Looking for your explorers…</p></div>`);app(`<div class="top"><span class="l"></span><span class="coin">${UID?"☁️ Saved to your account":"💾 Saved on this device"}</span></div><div class="card" style="text-align:center"><div class="banner"><h1>ReadTrail 2</h1></div><p>${ks.length?"Who’s exploring today?":"Welcome! Make your first explorer."}</p>${window.speechSynthesis&&window.SpeechSynthesisUtterance?"":`<p style="background:#fff3cd;border:2px solid #e0a800;border-radius:12px;padding:10px;font-size:16px;text-align:left">🔇 <b>For grown-ups:</b> this browser cannot speak. ReadTrail talks to children who cannot read yet, so it needs a voice. Please open it in Chrome, Edge or Safari, or on another device.</p>`}<div class="grid">${ks.map(([id,k])=>`<button class="nb" onclick="choose('${id}')"><svg viewBox="-32 -54 64 100" style="width:72px;height:105px">${as(k,()=>kidG(0))}</svg><br>${k.name}<br><small>Level ${k.level}</small></button>`).join("")}</div></div><div class="card"><h2>New explorer</h2><label>Name<input class="t" id="nm" maxlength="14" autocomplete="off"></label><label>Age<select class="t" id="ag">${[4,5,6,7,8,9,10].map(a=>`<option value="${a}" ${a==6?"selected":""}>${a}</option>`).join("")}</select></label><label>My explorer is a<select class="t" id="gd"><option value="0">Boy 👦</option><option value="1">Girl 👧</option></select></label><button class="btn" onclick="newKid()">Start ➜</button></div>${ks.length?'<p style="text-align:center"><button class="ghost" onclick="wipeAll()">Delete account</button></p>':""}`)}
+function who(){const ks=Object.entries(ALL.kids);if(!CLD&&!ks.length)return app(`<div class="card" style="text-align:center;margin-top:40px"><div class="banner"><h1>ReadTrail 2</h1></div><p style="font-size:22px">☁️ Looking for your explorers…</p></div>`);app(`<div class="top"><span class="l"></span><span class="coin">${UID?"☁️ Saved to your account":"💾 Saved on this device"}</span></div><div class="card" style="text-align:center"><div class="banner"><h1>ReadTrail 2</h1></div><p>${ks.length?"Who’s exploring today?":"Welcome! Make your first explorer."}</p>${window.speechSynthesis&&window.SpeechSynthesisUtterance?"":`<p style="background:#fff3cd;border:2px solid #e0a800;border-radius:12px;padding:10px;font-size:16px;text-align:left">🔇 <b>For grown-ups:</b> this browser cannot speak. ReadTrail talks to children who cannot read yet, so it needs a voice. Please open it in Chrome, Edge or Safari, or on another device.</p>`}<div class="grid">${ks.map(([id,k])=>`<button class="nb" onclick="choose('${id}')"><svg viewBox="-32 -54 64 100" style="width:72px;height:105px">${as(k,()=>kidG(0))}</svg><br>${k.name}<br><small>Level ${k.level}</small></button>`).join("")}</div></div><div class="card nkc"><h2>${ks.length?"New explorer":"Let’s make your explorer"} <button class="nksay" onclick="nkHelp()" aria-label="Hear this">🔊</button></h2>
+<p class="nkq">1 · Tap your explorer</p><div class="nkg">${[0,1].map(g=>`<button class="nkp${g==0?" on":""}" data-g="${g}" onclick="nkG(${g})" aria-label="${g?"Girl":"Boy"}">${typeof CHR!="undefined"&&CHR[(g?"girl":"boy")+"-read"]?`<img src="${CHR[(g?"girl":"boy")+"-read"]}" alt="">`:`<span style="font-size:80px">${g?"👧":"👦"}</span>`}<b>${g?"Girl":"Boy"}</b></button>`).join("")}</div><input type="hidden" id="gd" value="0">
+<p class="nkq">2 · How old are you?</p><div class="nka">${[4,5,6,7,8,9,10].map(a=>`<button class="nkn${a==6?" on":""}" data-a="${a}" onclick="nkA(${a})">${a}</button>`).join("")}</div><input type="hidden" id="ag" value="6">
+<p class="nkq">3 · Name <small>(a grown-up can type it, or skip)</small></p><input class="t" id="nm" maxlength="14" autocomplete="off" placeholder="Type a name, or just tap Start">
+<button class="btn nkgo" onclick="newKid()">${UIC&&UIC.play?UIC.play:""} Start ➜</button></div>${ks.length?'<p style="text-align:center"><button class="ghost" onclick="wipeAll()">Delete account</button></p>':""}`)}
 function choose(id){ALL.cur=id;adopt();save();scr="home";render()}
-function newKid(){const n=$("#nm").value.trim();if(!n){$("#nm").focus();return}const id="k"+Date.now().toString(36);ALL.kids[id]=Object.assign(clone(),{name:esc(n),age:+$("#ag").value||6,girl:$("#gd").value=="1",placed:false,pre:(+$("#ag").value||6)<=5});ob=1;choose(id)}
+function nkHelp(){talk("Tap the boy or the girl. Then tap how old you are. Then tap the big Start button.")}
+function nkG(g){$("#gd").value=g;document.querySelectorAll(".nkp").forEach(b=>b.classList.toggle("on",b.dataset.g==g));try{sfx.click()}catch(e){}talk(g?"Girl":"Boy")}
+function nkA(a){$("#ag").value=a;document.querySelectorAll(".nkn").forEach(b=>b.classList.toggle("on",b.dataset.a==a));try{sfx.click()}catch(e){}talk(String(a))}
+function newKid(){let n=$("#nm").value.trim();if(!n){const c=Object.keys(ALL.kids).length;n=c?"Explorer "+(c+1):"Explorer"}const id="k"+Date.now().toString(36);ALL.kids[id]=Object.assign(clone(),{name:esc(n),age:+$("#ag").value||6,girl:$("#gd").value=="1",placed:false,pre:(+$("#ag").value||6)<=5});ob=1;choose(id)}
 /* account sync: wait for saved explorers before offering sign-up, and merge saves instead of overwriting */
 let CLD=0;
 function mergeAll(a,b){const base=(a.ts||0)>=(b.ts||0)?a:b,oth=base===a?b:a,del=new Set([...(a.del||[]),...(b.del||[])]);base.kids=base.kids||{};
@@ -3938,7 +3949,7 @@ function rpReportCard(){const P=rpInit(),N=esc(S.name),pf=P.prof,weak=rpWeak(),d
 /* the old level number is now only a place on the path (used by a few games) */
 function rpPlayLabel(){if(!S.placed)return`Find where to start`;const n=rpNext(),s=SKI[n.id];return(n.mode=="remedial"?"Let’s practise: ":n.mode=="review"?"Remember: ":S.fin?"Keep reading: ":`Stage ${s.st}: `)+s.n}
 
-/* the first drawing can come before the later parts of the page have loaded; never let that stop saved progress from loading */
+/* first draw; it is drawn again at the very end of the page, once the painted scene and characters have loaded */
 try{render()}catch(e){}IDB.get("readtrail2").then(v=>{try{if(v){const o=JSON.parse(v);if(Object.keys(o.kids||{}).length&&(o.ts||0)>(ALL.ts||0)){ALL=mergeAll(ALL,o);adopt();try{localStorage.setItem(LSK,JSON.stringify(ALL))}catch(e){}if(scr!="lesson")render()}}}catch(e){}}).finally(cloud);
 </script></body></html>
 
@@ -4104,50 +4115,54 @@ setInterval(()=>{const e=document.querySelector('#cdog image[data-pose]'),m=docu
 #moonb.onpaint>*{opacity:0}
 #moonb.onpaint:hover,#moonb.onpaint:focus-visible{box-shadow:0 0 0 4px rgba(255,240,200,.7),0 0 40px rgba(255,230,170,.8)!important}
 </style>
-<script>
-/* ===== Talk bubbles never cover Play or the other buttons =====
-   While a chat is open the buttons are hidden (they were only faded), so both bubbles have the whole sky.
-   Otherwise a bubble above the child or Biscuit first tries its normal spot; if that touches a button,
-   it gets wider (so it is shorter), then the words get a little smaller; if there is still no room,
-   it moves beside the speaker, on whichever side has more room, keeping clear of the other character. */
-function bubFit(){bubFit0();bubStack()}
-function bubFit0(){const sc=document.querySelector("#sc.camp");if(!sc)return;const chatting=sc.classList.contains("look");
- const obs=chatting?[]:[...sc.querySelectorAll("#t-play,.flb,.moonb,.camphelp")].concat([...document.querySelectorAll("#app>.top button,#app>.top .coin")]);
- const R=e=>e.getBoundingClientRect(),hit=(r,q)=>Math.min(r.right,q.right)-Math.max(r.left,q.left)>1&&Math.min(r.bottom,q.bottom)-Math.max(r.top,q.top)>1;
- for(const [bid,cid,oid] of [["bd","cdog","ckid"],["bk","ckid","cdog"]]){const b=document.getElementById(bid),c=document.getElementById(cid),oc=document.getElementById(oid);if(!b||!c)continue;
-  b.style.removeProperty("max-width");b.style.removeProperty("font-size");b.style.removeProperty("max-height");b.style.removeProperty("overflow-y");b.classList.remove("bubside");
-  ["left","right","bottom","top"].forEach(k=>b.style.removeProperty(k));
-  if(b.style.display=="none"||!b.textContent.trim()&&!b.querySelector("input,textarea"))continue;
-  const bad=()=>obs.filter(o=>o.offsetParent!==null&&hit(R(b),R(o)));if(!bad().length)continue;
-  const W=innerWidth,cr=R(c),orr=oc?R(oc):null;
-  b.style.setProperty("max-width",Math.min(W*.92,520)+"px","important");if(!bad().length)continue;
-  for(const f of [15,14,13]){b.style.setProperty("font-size",f+"px","important");if(!bad().length)break}if(!bad().length)continue;
-  b.classList.add("bubside");b.style.setProperty("font-size","14px","important");
-  const inner=orr?(orr.left>cr.right?orr.left-cr.right:cr.left-orr.right):0,toLeft=!orr||orr.right<=cr.left,
-   roomIn=Math.max(0,inner-12),roomOut=toLeft?W-cr.right-12:cr.left-12,goOut=roomOut>=roomIn||roomIn<140,room=Math.max(140,goOut?roomOut:roomIn);
-  if(Math.max(roomIn,roomOut)<140){   /* tiny screen: over the fire, just below both faces */
-   const hb=Math.max(cr.top+cr.height*.4,orr?orr.top+orr.height*.4:0)+4;b.classList.add("bubside");
-   b.style.setProperty("left","10px","important");b.style.setProperty("right","10px","important");b.style.setProperty("max-width","none","important");
-   b.style.setProperty("top",Math.round(hb)+"px","important");b.style.setProperty("bottom","auto","important");
-   b.style.setProperty("max-height",Math.max(56,Math.round(innerHeight-hb-8))+"px","important");b.style.setProperty("overflow-y","auto","important");continue}
-  const leftSide=goOut?!toLeft:toLeft;   /* which side of the speaker the bubble sits on */
-  b.style.setProperty("max-width",Math.min(room,340)+"px","important");
-  if(leftSide){b.style.setProperty("right",Math.round(Math.min(W-6-140,W-cr.left+4))+"px","important");b.style.setProperty("left","auto","important")}
-  else{b.style.setProperty("left",Math.round(Math.min(W-6-140,cr.right+4))+"px","important");b.style.setProperty("right","auto","important")}
-  b.style.setProperty("bottom",Math.round(innerHeight-(cr.top+cr.height*.6))+"px","important");
-  const top=Math.max(0,...bad().map(o=>R(o).bottom));if(top){const avail=Math.round(cr.top+cr.height*.4-top-8);b.style.setProperty("max-height",Math.max(56,avail)+"px","important");b.style.setProperty("overflow-y","auto","important")}}}
-/* in a chat, Biscuit's words sit above the child's typing box, never on top of it */
-function bubStack(){const a=document.getElementById("bd"),b=document.getElementById("bk");if(!a||!b||a.style.display=="none"||b.style.display=="none")return;
- const r=a.getBoundingClientRect(),q=b.getBoundingClientRect();if(!(Math.min(r.right,q.right)-Math.max(r.left,q.left)>2&&Math.min(r.bottom,q.bottom)-Math.max(r.top,q.top)>2))return;
- a.style.setProperty("bottom",Math.round(innerHeight-q.top+10)+"px","important");a.style.setProperty("top","auto","important");
- const r2=a.getBoundingClientRect();if(r2.top<6){a.style.setProperty("max-height",Math.round(q.top-16)+"px","important");a.style.setProperty("overflow-y","auto","important")}}
-{const cp2=campPos;campPos=function(){cp2.apply(this,arguments);try{bubFit()}catch(e){}
- for(const id of ["bd","bk","sc"]){const b=document.getElementById(id);if(b&&!b._bf){b._bf=1;let busy=0;new MutationObserver(()=>{if(busy)return;busy=1;requestAnimationFrame(()=>{try{bubFit()}catch(e){}busy=0})}).observe(b,id=="sc"?{attributes:true,attributeFilter:["class"]}:{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:["style"]})}}}}
-</script>
-<style>#sc.camp.look .campsky{opacity:0!important;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
-#sc.camp .bub.bubside::after{display:none}</style>
-</body></html>
 <style>
+/* first-time explorer screen: big pictures and numbers instead of drop-down menus */
+.nkc h2{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nksay{border:0;background:#ffe9c7;border-radius:50%;width:60px;height:60px;font-size:30px;cursor:pointer;box-shadow:0 3px 0 #e2b67a}
+.nkq{font-size:22px;font-weight:700;margin:18px 0 8px}.nkq small{font-weight:400;font-size:16px;opacity:.75}
+.nkg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nkp{border:5px solid #e8d8bd;background:#fffaf0;border-radius:24px;padding:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;font-size:24px;min-height:200px;transition:transform .15s}
+.nkp b{color:#1b2a4a;margin-top:6px}.nkp img{height:170px;max-width:100%;object-fit:contain}
+.nkp.on{border-color:#ff7a1a;background:#fff1de;transform:scale(1.03);box-shadow:0 0 0 6px rgba(255,122,26,.25)}
+.nka{display:flex;flex-wrap:wrap;gap:12px}
+.nkn{width:76px;height:76px;border-radius:50%;border:4px solid #e8d8bd;background:#fffaf0;font-size:32px;font-weight:800;cursor:pointer;color:#1b2a4a}
+.nkn.on{background:#ff7a1a;border-color:#d85d00;color:#fff;transform:scale(1.08)}
+.nkgo{display:block;width:100%;margin-top:22px;font-size:30px;min-height:84px;animation:nkPulse 1.8s ease-in-out infinite}
+@keyframes nkPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.nkgo{animation:none}}
+</style>
+
+<script>
+/* ===== Stuck helper for children who have never used a tablet =====
+   If nobody touches the screen for a while, Biscuit says what to do on this screen and a hand points at the main button.
+   At most twice per screen; never during lessons, games, stories or the welcome tour (those have their own help). */
+(function(){let t=null,n=0,key="";const QUIET=16000;
+ const target=()=>{for(const q of ["#t-play",".nkgo",".btn.play",".nkp:not(.on)",".btn"]){const e=[...document.querySelectorAll(q)].find(x=>{const r=x.getBoundingClientRect();return r.width>40&&r.height>30&&r.bottom>0&&r.top<innerHeight});if(e)return e}return null};
+ const words=()=>{if(document.querySelector(".nkc .nkp"))return "Tap the boy or the girl. Then tap the big Start button.";if(document.querySelector(".nkc .nkgo"))return "Tap the big orange button!";
+  if(document.querySelector("#t-play"))return "Tap the big Play button to start!";const f=typeof SCRSAY!="undefined"&&SCRSAY[scr];return f?f():"Tap the big button."};
+ const clear=()=>{const h=document.getElementById("idlehand");if(h)h.remove();document.querySelectorAll(".idleglow").forEach(e=>e.classList.remove("idleglow"))};
+ const fire=()=>{try{if(document.querySelector("#tour,.modal:not(.hidden)")||scr=="lesson"||(typeof BK!="undefined"&&BK)||document.hidden)return arm();
+   const k=scr+"|"+(document.querySelector("#app")||{}).childElementCount;if(k!=key){key=k;n=0}if(n>=2)return;n++;
+   const e=target();if(!e)return arm();clear();e.classList.add("idleglow");const r=e.getBoundingClientRect(),h=document.createElement("div");h.id="idlehand";h.textContent="👆";h.setAttribute("aria-hidden","true");
+   h.style.left=Math.round(r.left+Math.min(r.width*.78,r.width-50))+"px";h.style.top=Math.round(Math.min(innerHeight-90,r.bottom-10))+"px";document.body.appendChild(h);
+   try{if(!(window.speechSynthesis&&speechSynthesis.speaking))talk(words())}catch(_){}arm()}catch(_){}};
+ const arm=()=>{clearTimeout(t);t=setTimeout(fire,QUIET)};
+ addEventListener("pointerdown",()=>{clear();arm()},true);addEventListener("keydown",arm,true);arm();})();
+/* every script has loaded now: draw the current screen again so the painted scene and characters appear (never during a lesson) */
+try{if(scr!="lesson")render()}catch(e){}
+</script>
+<style>
+/* no accidental double-tap zoom on buttons; touches feel immediate */
+button,a,[onclick],.opt,.tw{touch-action:manipulation}
+#idlehand{position:fixed;z-index:99990;font-size:64px;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35));animation:idleTap 1s ease-in-out infinite}
+@keyframes idleTap{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.top .ghost,.top button{min-height:52px;min-width:52px}
+.idleglow{box-shadow:0 0 0 8px rgba(255,214,90,.85),0 0 40px rgba(255,200,60,.9)!important}
+@media (prefers-reduced-motion:reduce){#idlehand{animation:none}}
+</style>
+<!-- campfire layout: talk bubbles above the heads, buttons in even rows, nothing overlapping -->
+<style>
+
 /* ===== Talk bubbles: their own space just above the heads; the buttons stay, evenly spread =====
    The buttons are never faded or hidden while someone is talking; they sit in straight, even rows
    (balanced, e.g. 4 + 4 instead of 5 + 3) and simply get a little smaller when the bubbles need room. */
@@ -4164,8 +4179,9 @@ function bubStack(){const a=document.getElementById("bd"),b=document.getElementB
  #sc.camp.look .campplay.btn.play{min-height:44px!important;font-size:20px!important;padding:2px 18px!important}#sc.camp.look .campplay small{display:none}}
 /* phone on its side, in a chat: the buttons and Play shrink to stay above the heads, below the picture strip */
 @media(max-height:519px) and (orientation:landscape){#sc.camp.look .campsky{bottom:calc(var(--skyb,40%) + 8px)!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:14px!important}#sc.camp.look .campfl{flex:0 1 auto!important;margin:0!important}#sc.camp.look .campplay.btn.play{flex:0 0 auto;width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;padding:2px 18px!important}#sc.camp.look .campplay.btn.play{min-height:44px;font-size:20px}#sc.camp.look .campplay small{display:none}}
-</style>
-<script>
+
+</style><script>
+
 /* even rows: as few rows as fit, with the same number of buttons in each (the last row at most one short) */
 function campGrid(sky,fl){const bs=fl.querySelector(".flb");if(!bs)return;const n=fl.querySelectorAll(".flb").length,s=bs.offsetWidth,pl=getComputedStyle(sky).flexDirection=="row"&&sky.querySelector(".campplay"),W=(pl?-pl.offsetWidth-14:0)+sky.clientWidth-parseFloat(getComputedStyle(sky).paddingLeft||0)-parseFloat(getComputedStyle(sky).paddingRight||0)-4;
  const lw=Math.max(0,...[...fl.querySelectorAll(".flb b")].map(e=>e.getBoundingClientRect().width)),gap=Math.max(10,Math.round(s*.22),Math.ceil(lw-s+8));let rows=1;while(rows<n&&Math.ceil(n/rows)*s+(Math.ceil(n/rows)-1)*gap>W)rows++;
@@ -4223,6 +4239,10 @@ window.BUBTOP=0;
 setInterval(()=>{try{bubFit();const m=document.getElementById("moonb"),sc=document.querySelector("#sc.camp");
  /* the painted scene may place the moon a moment after the buttons were laid out: lay out again when it does */
  if(m&&sc){const k=(m.getAttribute("style")||"").replace(/transform[^;]*;?/g,"")+innerWidth+"x"+innerHeight;if(sc._msig!==k){sc._msig=k;campFit()}}}catch(e){}},400);
+
+/* a returning explorer: the first drawing of the campfire ran before the painted scene was ready, so draw home again now that everything has loaded */
+if(scr=="home")try{render()}catch(e){}
 </script>
-<script>/* a returning explorer: the first drawing of the campfire ran before the painted scene was ready, so draw home again now that everything has loaded */
-if(scr=="home")try{render()}catch(e){}</script>
+</body></html>
+
+</body></html>
